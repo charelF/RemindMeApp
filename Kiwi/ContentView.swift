@@ -25,13 +25,17 @@ struct ContentView: View {
                 ForEach(notes) { note in
                     VStack(alignment: .leading) {
                         Text("\(note.content ?? "")")
-                        Text("\(note.timestamp!, formatter: noteFormatter)")
-                            .font(.footnote)
-                            .foregroundColor(Color.gray)
+                        HStack {
+                            Text("\(note.timestamp!, formatter: noteFormatter)")
+                                .font(.footnote)
+                                .foregroundColor(Color.gray)
+                            Spacer() // (1)
+                        }
                     }
+                    .contentShape(Rectangle()) // This together with (1) makes whole area clickable
                     .foregroundColor(priorityToColor(note))
                     .onTapGesture{changePriority(note)}
-//                    .listRowBackground(priorityToColor(note))
+                    .listRowBackground(priorityToColor(note).opacity(0.1))
                 }
                 .onDelete(perform: deleteNotes)
 
