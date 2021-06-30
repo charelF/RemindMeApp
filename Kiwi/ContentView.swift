@@ -9,6 +9,13 @@ import SwiftUI
 import CoreData
 import UserNotifications
 
+enum NotificationInterval: String, Equatable, CaseIterable {
+    case high  = "Hourly"
+    case medium = "Daily"
+    case low  = "Weekly"
+    case off = "Never"
+}
+
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
@@ -18,6 +25,7 @@ struct ContentView: View {
     
     private var notes: FetchedResults<Note>
     @State private var noteContent: String = ""
+    @State var interval: NotificationInterval = .high
     
     var body: some View {
         VStack {
@@ -29,6 +37,7 @@ struct ContentView: View {
                             .font(.footnote)
                             .foregroundColor(Color.gray)
                     }
+                    .listRowBackground(Color.green)
                 }
                 .onDelete(perform: deleteNotes)
 
@@ -50,9 +59,10 @@ struct ContentView: View {
                     Text("send notification")
                 }
 
-                Picker(selection: .constant(1), label: /*@START_MENU_TOKEN@*/Text("Picker")/*@END_MENU_TOKEN@*/) {
-                    /*@START_MENU_TOKEN@*/Text("1").tag(1)/*@END_MENU_TOKEN@*/
-                    /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
+                Picker(selection: $interval, label: Text("Picker")) {
+                    ForEach(NotificationInterval.allCases, id: \.self) { value in
+                        Text(value.rawValue).tag(value)
+                    }
                 }
                 .padding(.all)
                 .pickerStyle(SegmentedPickerStyle())
