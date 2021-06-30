@@ -19,45 +19,48 @@ struct ContentView: View {
     @State private var noteContent: String = ""
 
     var body: some View {
-        NavigationView {
-            
-            List {
-                ForEach(notes) { note in
-                    VStack(alignment: .leading) {
-                        Text("\(note.content ?? "/")")
-                        Text("\(note.timestamp!, formatter: noteFormatter)")
-                            .font(.footnote)
-                            .foregroundColor(Color.gray)
-                    }
-                }
-                .onDelete(perform: deleteNotes)
-            
-                HStack {
-                    TextField(
-                        "New Note",
-                        text: $noteContent,
-                        onCommit:addNote
-                    )
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+        List {
+            ForEach(notes) { note in
+                VStack(alignment: .leading) {
+                    Text("\(note.content ?? "___")")
+                    Text("\(note.timestamp!, formatter: noteFormatter)")
+                        .font(.footnote)
+                        .foregroundColor(Color.gray)
                 }
             }
+            .onDelete(perform: deleteNotes)
+
+            HStack {
+                TextField(
+                    "New Note",
+                    text: $noteContent,
+                    onCommit:addNote
+                )
+                    .textFieldStyle(DefaultTextFieldStyle())
+            }
         }
+        .listStyle(GroupedListStyle())
     }
 
     private func addNote() {
         withAnimation {
-            let newNote = Note(context: viewContext)
-            newNote.timestamp = Date()
-            newNote.content = noteContent
-            noteContent = ""
+            if noteContent == "" {
+                return
+            } else {
+                let newNote = Note(context: viewContext)
+                newNote.timestamp = Date()
+                newNote.content = noteContent
+                noteContent = ""
 
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                do {
+                    try viewContext.save()
+                } catch {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    let nsError = error as NSError
+                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                }
+                return
             }
         }
     }
