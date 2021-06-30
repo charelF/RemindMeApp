@@ -27,7 +27,7 @@ struct ContentView: View {
                         Text("\(note.content ?? "")")
                             .padding(.vertical, 0.2)
                         HStack {
-                            Text("\(note.timestamp!, formatter: noteFormatter) - Priority: \(describePriority(note))")
+                            Text("Time: \(note.timestamp!, formatter: noteFormatter) - Reminder: \(describePriority(note))")
                                 .font(.footnote)
                                 .foregroundColor(Color.gray.opacity(0.6))
                             Spacer() // (1)
@@ -44,21 +44,26 @@ struct ContentView: View {
                 }
                 .onDelete(perform: deleteNotes)
 
+            TextField(
+                "New Note",
+                text: $noteContent,
+                onCommit:addNote
+            )
             }
             .listStyle(GroupedListStyle())
             
-            Spacer()
-            
-            VStack {
-                TextField(
-                    "New Note",
-                    text: $noteContent,
-                    onCommit:addNote
-                )
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            }
-            .padding(.all)
-            .cornerRadius(20)
+//            Spacer()
+//
+//            VStack {
+//                TextField(
+//                    "New Note",
+//                    text: $noteContent,
+//                    onCommit:addNote
+//                )
+//                .textFieldStyle(RoundedBorderTextFieldStyle())
+//            }
+//            .padding(.all)
+//            .cornerRadius(20)
 
         }
     }
@@ -72,36 +77,36 @@ struct ContentView: View {
         case 3:
             return Color.red
         case 4:
-            return Color.blue
+            return Color.purple
         default:
-            return nil
+            return Color.gray
         }
     }
     
     func describePriority(_ note: Note) -> String {
         switch note.priority {
         case 1:
-            return "low"
+            return "Weekly"
         case 2:
-            return "medium"
+            return "Daily"
         case 3:
-            return "high"
+            return "Hourly"
         case 4:
-            return "--debug--"
+            return "Every 5 Minutes"
+        case 5:
+            return "DEBUG"
         default:
-            return "none"
+            return "Never"
         }
     }
     
     private func updateNotifications(_ note: Note) {
-        print(note.content ?? "no string")
-        print(note.id?.uuidString ?? "no id")
-        print("----")
         
         let notificationCenter = UNUserNotificationCenter.current()
         
         // first remove the current Notifications
         if let noteUUID = note.id { // unwrap optional
+            notificationCenter.removePendingNotificationRequests(withIdentifiers: [noteUUID.uuidString])
             notificationCenter.removeDeliveredNotifications(withIdentifiers: [noteUUID.uuidString])
             
             let content = UNMutableNotificationContent()
@@ -117,6 +122,8 @@ struct ContentView: View {
             case 3:
                 trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60*60, repeats: true)
             case 4:
+                trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60*5, repeats: true)
+            case 5:
                 trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
             case 0:
                 return
@@ -163,7 +170,7 @@ struct ContentView: View {
     
     private func changePriority(_ note: Note) {
         note.priority += 1
-        note.priority %= 5
+        note.priority %= 6
         
         do {
             try viewContext.save()
@@ -179,6 +186,17 @@ struct ContentView: View {
     private func deleteNotes(offsets: IndexSet) {
         withAnimation {
             offsets.map { notes[$0] }.forEach(viewContext.delete)
+            print(offsets)
+            
+            // delete delivered and scheduled notifications for these notes
+            for i in offsets {
+                print(i)
+                if let noteUUID = notes[i].id {
+                    let notificationCenter = UNUserNotificationCenter.current()
+                    notificationCenter.removePendingNotificationRequests(withIdentifiers: [noteUUID.uuidString])
+                    notificationCenter.removeDeliveredNotifications(withIdentifiers: [noteUUID.uuidString])
+                }
+            }
 
             do {
                 try viewContext.save()
