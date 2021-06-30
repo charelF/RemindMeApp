@@ -45,13 +45,40 @@ struct ContentView: View {
             
             Spacer()
             
-            Picker(selection: .constant(1), label: /*@START_MENU_TOKEN@*/Text("Picker")/*@END_MENU_TOKEN@*/) {
-                /*@START_MENU_TOKEN@*/Text("1").tag(1)/*@END_MENU_TOKEN@*/
-                /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
-            }
-            .padding(.all)
-            .pickerStyle(SegmentedPickerStyle())
+            VStack {
+                Button(action: sendNotification) {
+                    Text("send notification")
+                }
 
+                Picker(selection: .constant(1), label: /*@START_MENU_TOKEN@*/Text("Picker")/*@END_MENU_TOKEN@*/) {
+                    /*@START_MENU_TOKEN@*/Text("1").tag(1)/*@END_MENU_TOKEN@*/
+                    /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
+                }
+                .padding(.all)
+                .pickerStyle(SegmentedPickerStyle())
+            }
+
+        }
+    }
+    
+    private func sendNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "Feed the cat"
+        content.subtitle = "It looks hungry"
+        content.sound = UNNotificationSound.default
+        
+        // show this notification five seconds from now
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+
+        // choose a random identifier
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+        // add our notification request
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.add(request) { (error) in
+            if error != nil {
+                // TODO: handle error
+           }
         }
     }
 
