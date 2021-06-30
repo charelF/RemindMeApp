@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import UserNotifications
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -17,29 +18,41 @@ struct ContentView: View {
     
     private var notes: FetchedResults<Note>
     @State private var noteContent: String = ""
-
+    
     var body: some View {
-        List {
-            ForEach(notes) { note in
-                VStack(alignment: .leading) {
-                    Text("\(note.content ?? "___")")
-                    Text("\(note.timestamp!, formatter: noteFormatter)")
-                        .font(.footnote)
-                        .foregroundColor(Color.gray)
+        VStack {
+            List {
+                ForEach(notes) { note in
+                    VStack(alignment: .leading) {
+                        Text("\(note.content ?? "___")")
+                        Text("\(note.timestamp!, formatter: noteFormatter)")
+                            .font(.footnote)
+                            .foregroundColor(Color.gray)
+                    }
+                }
+                .onDelete(perform: deleteNotes)
+
+                HStack {
+                    TextField(
+                        "New Note",
+                        text: $noteContent,
+                        onCommit:addNote
+                    )
+                        .textFieldStyle(DefaultTextFieldStyle())
                 }
             }
-            .onDelete(perform: deleteNotes)
-
-            HStack {
-                TextField(
-                    "New Note",
-                    text: $noteContent,
-                    onCommit:addNote
-                )
-                    .textFieldStyle(DefaultTextFieldStyle())
+            .listStyle(GroupedListStyle())
+            
+            Spacer()
+            
+            Picker(selection: .constant(1), label: /*@START_MENU_TOKEN@*/Text("Picker")/*@END_MENU_TOKEN@*/) {
+                /*@START_MENU_TOKEN@*/Text("1").tag(1)/*@END_MENU_TOKEN@*/
+                /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
             }
+            .padding(.all)
+            .pickerStyle(SegmentedPickerStyle())
+
         }
-        .listStyle(GroupedListStyle())
     }
 
     private func addNote() {
