@@ -20,38 +20,26 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            VStack {
-                
-                List {
-                    ForEach(notes) { note in
-                        VStack(alignment: .leading) {
-                            Text("\(note.content ?? "/")")
-                            Text("\(note.timestamp!, formatter: noteFormatter)")
-                                .font(.footnote)
-                                .foregroundColor(Color.gray)
-                        }
-                        
-                    }
-                    .onDelete(perform: deleteNotes)
-                
-                    HStack {
-                        TextField(
-                            "New Note",
-                            text: $noteContent,
-                            onCommit:addNote
-                        )
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
+            
+            List {
+                ForEach(notes) { note in
+                    VStack(alignment: .leading) {
+                        Text("\(note.content ?? "/")")
+                        Text("\(note.timestamp!, formatter: noteFormatter)")
+                            .font(.footnote)
+                            .foregroundColor(Color.gray)
                     }
                 }
-                    
-//                .navigationBarItems(
-//                    leading: EditButton(),
-//                    trailing: Button(action: addNote) {
-//                        Image(systemName: "plus")
-//                    }
-//                )
-                
+                .onDelete(perform: deleteNotes)
             
+                HStack {
+                    TextField(
+                        "New Note",
+                        text: $noteContent,
+                        onCommit:addNote
+                    )
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
             }
         }
     }
