@@ -12,32 +12,56 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true)],
         animation: .default)
-    private var items: FetchedResults<Item>
+    
+    private var notes: FetchedResults<Note>
+    @State private var noteContent: String = ""
 
     var body: some View {
-        List {
-            ForEach(items) { item in
-                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-            }
-            .onDelete(perform: deleteItems)
-        }
-        .toolbar {
-            #if os(iOS)
-            EditButton()
-            #endif
-
-            Button(action: addItem) {
-                Label("Add Item", systemImage: "plus")
+        NavigationView {
+            VStack {
+                
+                List {
+                    ForEach(notes) { note in
+                        VStack(alignment: .leading) {
+                            Text("\(note.content ?? "/")")
+                            Text("\(note.timestamp!, formatter: noteFormatter)")
+                                .font(.footnote)
+                                .foregroundColor(Color.gray)
+                        }
+                        
+                    }
+                    .onDelete(perform: deleteNotes)
+                
+                    HStack {
+                        TextField(
+                            "New Note",
+                            text: $noteContent,
+                            onCommit:addNote
+                        )
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                    }
+                }
+                    
+//                .navigationBarItems(
+//                    leading: EditButton(),
+//                    trailing: Button(action: addNote) {
+//                        Image(systemName: "plus")
+//                    }
+//                )
+                
+            
             }
         }
     }
 
-    private func addItem() {
+    private func addNote() {
         withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+            let newNote = Note(context: viewContext)
+            newNote.timestamp = Date()
+            newNote.content = noteContent
+            noteContent = ""
 
             do {
                 try viewContext.save()
@@ -50,9 +74,9 @@ struct ContentView: View {
         }
     }
 
-    private func deleteItems(offsets: IndexSet) {
+    private func deleteNotes(offsets: IndexSet) {
         withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+            offsets.map { notes[$0] }.forEach(viewContext.delete)
 
             do {
                 try viewContext.save()
@@ -66,7 +90,7 @@ struct ContentView: View {
     }
 }
 
-private let itemFormatter: DateFormatter = {
+private let noteFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .short
     formatter.timeStyle = .medium
