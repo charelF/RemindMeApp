@@ -9,13 +9,6 @@ import SwiftUI
 import CoreData
 import UserNotifications
 
-enum NotificationInterval: String, Equatable, CaseIterable {
-    case high  = "Hourly"
-    case medium = "Daily"
-    case low  = "Weekly"
-    case off = "Never"
-}
-
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
@@ -25,53 +18,58 @@ struct ContentView: View {
     
     private var notes: FetchedResults<Note>
     @State private var noteContent: String = ""
-    @State var interval: NotificationInterval = .high
     
     var body: some View {
         VStack {
             List {
                 ForEach(notes) { note in
                     VStack(alignment: .leading) {
-                        Text("\(note.content ?? "___")")
+                        Text("\(note.content ?? "")")
                         Text("\(note.timestamp!, formatter: noteFormatter)")
                             .font(.footnote)
                             .foregroundColor(Color.gray)
                     }
-                    .listRowBackground(Color.green)
+                    .foregroundColor(priorityToColor(note))
+                    .onTapGesture{changePriority(note)}
+//                    .listRowBackground(priorityToColor(note))
                 }
                 .onDelete(perform: deleteNotes)
 
-                HStack {
-                    TextField(
-                        "New Note",
-                        text: $noteContent,
-                        onCommit:addNote
-                    )
-                        .textFieldStyle(DefaultTextFieldStyle())
-                }
             }
             .listStyle(GroupedListStyle())
             
             Spacer()
             
             VStack {
-                Button(action: sendNotification) {
+                Button(action: scheduleNotifications) {
                     Text("send notification")
                 }
-
-                Picker(selection: $interval, label: Text("Picker")) {
-                    ForEach(NotificationInterval.allCases, id: \.self) { value in
-                        Text(value.rawValue).tag(value)
-                    }
-                }
-                .padding(.all)
-                .pickerStyle(SegmentedPickerStyle())
-            }
+                
+                TextField(
+                    "New Note",
+                    text: $noteContent,
+                    onCommit:addNote
+                )
+                    .textFieldStyle(DefaultTextFieldStyle())
+            }.padding(.all)
 
         }
     }
     
-    private func sendNotification() {
+    func priorityToColor(_ note: Note) -> Color {
+        switch note.priority {
+        case 1:
+            return Color.green
+        case 2:
+            return Color.yellow
+        case 3:
+            return Color.red
+        default:
+            return Color.gray
+        }
+    }
+    
+    private func scheduleNotifications() {
         let content = UNMutableNotificationContent()
         content.title = "Feed the cat"
         content.subtitle = "It looks hungry"
@@ -113,6 +111,21 @@ struct ContentView: View {
                 return
             }
         }
+    }
+    
+    private func changePriority(_ note: Note) {
+        note.priority += 1
+        note.priority %= 4
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        return
     }
 
     private func deleteNotes(offsets: IndexSet) {
