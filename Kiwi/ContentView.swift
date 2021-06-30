@@ -25,16 +25,21 @@ struct ContentView: View {
                 ForEach(notes) { note in
                     VStack(alignment: .leading) {
                         Text("\(note.content ?? "")")
+                            .padding(.vertical, 0.2)
                         HStack {
-                            Text("\(note.timestamp!, formatter: noteFormatter)")
+                            Text("\(note.timestamp!, formatter: noteFormatter) - Priority: \(describePriority(note))")
                                 .font(.footnote)
-                                .foregroundColor(Color.gray)
+                                .foregroundColor(Color.gray.opacity(0.6))
                             Spacer() // (1)
                         }
+                        .padding(.bottom, 0.2)
                     }
                     .contentShape(Rectangle()) // This together with (1) makes whole area clickable
                     .foregroundColor(priorityToColor(note))
-                    .onTapGesture{changePriority(note)}
+                    .onTapGesture{
+                        changePriority(note)
+                        updateNotifications(note)
+                    }
                     .listRowBackground(priorityToColor(note).opacity(0.1))
                 }
                 .onDelete(perform: deleteNotes)
@@ -45,22 +50,20 @@ struct ContentView: View {
             Spacer()
             
             VStack {
-                Button(action: scheduleNotifications) {
-                    Text("send notification")
-                }
-                
                 TextField(
                     "New Note",
                     text: $noteContent,
                     onCommit:addNote
                 )
-                    .textFieldStyle(DefaultTextFieldStyle())
-            }.padding(.all)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            .padding(.all)
+            .cornerRadius(20)
 
         }
     }
     
-    func priorityToColor(_ note: Note) -> Color {
+    func priorityToColor(_ note: Note) -> Color? {
         switch note.priority {
         case 1:
             return Color.green
@@ -68,29 +71,69 @@ struct ContentView: View {
             return Color.yellow
         case 3:
             return Color.red
+        case 4:
+            return Color.blue
         default:
-            return Color.gray
+            return nil
         }
     }
     
-    private func scheduleNotifications() {
-        let content = UNMutableNotificationContent()
-        content.title = "Feed the cat"
-        content.subtitle = "It looks hungry"
-        content.sound = UNNotificationSound.default
+    func describePriority(_ note: Note) -> String {
+        switch note.priority {
+        case 1:
+            return "low"
+        case 2:
+            return "medium"
+        case 3:
+            return "high"
+        case 4:
+            return "--debug--"
+        default:
+            return "none"
+        }
+    }
+    
+    private func updateNotifications(_ note: Note) {
+        print(note.content ?? "no string")
+        print(note.id?.uuidString ?? "no id")
+        print("----")
         
-        // show this notification five seconds from now
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-
-        // choose a random identifier
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
-        // add our notification request
         let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.add(request) { (error) in
-            if error != nil {
-                // TODO: handle error
-           }
+        
+        // first remove the current Notifications
+        if let noteUUID = note.id { // unwrap optional
+            notificationCenter.removeDeliveredNotifications(withIdentifiers: [noteUUID.uuidString])
+            
+            let content = UNMutableNotificationContent()
+            content.title = note.content ?? "Empty Note"
+            content.sound = UNNotificationSound.default
+            
+            let trigger: UNTimeIntervalNotificationTrigger
+            switch note.priority {
+            case 1:
+                trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60*60*24*5, repeats: true)
+            case 2:
+                trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60*60*24, repeats: true)
+            case 3:
+                trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60*60, repeats: true)
+            case 4:
+                trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            case 0:
+                return
+            default:
+                return
+            }
+            
+            let request = UNNotificationRequest(identifier: noteUUID.uuidString, content: content, trigger: trigger)
+            
+            notificationCenter.add(request) { (error) in
+                if error != nil {
+                    // TODO: handle error
+                }
+            }
+        } else {
+            print("Note has no id")
+            return
         }
     }
 
@@ -102,6 +145,7 @@ struct ContentView: View {
                 let newNote = Note(context: viewContext)
                 newNote.timestamp = Date()
                 newNote.content = noteContent
+                newNote.id = UUID()
                 noteContent = ""
 
                 do {
@@ -119,7 +163,7 @@ struct ContentView: View {
     
     private func changePriority(_ note: Note) {
         note.priority += 1
-        note.priority %= 4
+        note.priority %= 5
         
         do {
             try viewContext.save()
@@ -151,7 +195,7 @@ struct ContentView: View {
 private let noteFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .short
-    formatter.timeStyle = .medium
+    formatter.timeStyle = .short
     return formatter
 }()
 

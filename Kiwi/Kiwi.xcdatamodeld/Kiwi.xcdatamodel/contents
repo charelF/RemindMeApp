@@ -5,11 +5,12 @@
     </entity>
     <entity name="Note" representedClassName="Note" syncable="YES" codeGenerationType="class">
         <attribute name="content" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="priority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <elements>
         <element name="Item" positionX="-450.6098022460938" positionY="74.76882934570312" width="128" height="44"/>
-        <element name="Note" positionX="-45" positionY="9" width="128" height="74"/>
+        <element name="Note" positionX="-45" positionY="9" width="128" height="89"/>
     </elements>
 </model>
