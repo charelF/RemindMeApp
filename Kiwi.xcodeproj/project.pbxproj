@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A2957A44268EF2C7005DF8C3 /* NotesLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A43268EF2C7005DF8C3 /* NotesLogic.swift */; };
+		A2957A46268EF638005DF8C3 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A45268EF638005DF8C3 /* NotesView.swift */; };
+		A2957A48268EF739005DF8C3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A47268EF739005DF8C3 /* SettingsView.swift */; };
 		A2B36597268C4BBF00284561 /* KiwiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B36596268C4BBF00284561 /* KiwiApp.swift */; };
 		A2B36599268C4BBF00284561 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B36598268C4BBF00284561 /* ContentView.swift */; };
 		A2B3659B268C4BC100284561 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B3659A268C4BC100284561 /* Assets.xcassets */; };
@@ -16,6 +19,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A2957A43268EF2C7005DF8C3 /* NotesLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesLogic.swift; sourceTree = "<group>"; };
+		A2957A45268EF638005DF8C3 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
+		A2957A47268EF739005DF8C3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A2B36593268C4BBF00284561 /* Kiwi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kiwi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2B36596268C4BBF00284561 /* KiwiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KiwiApp.swift; sourceTree = "<group>"; };
 		A2B36598268C4BBF00284561 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -58,6 +64,9 @@
 			children = (
 				A2B36596268C4BBF00284561 /* KiwiApp.swift */,
 				A2B36598268C4BBF00284561 /* ContentView.swift */,
+				A2957A47268EF739005DF8C3 /* SettingsView.swift */,
+				A2957A45268EF638005DF8C3 /* NotesView.swift */,
+				A2957A43268EF2C7005DF8C3 /* NotesLogic.swift */,
 				A2B3659A268C4BC100284561 /* Assets.xcassets */,
 				A2B3659F268C4BC100284561 /* Persistence.swift */,
 				A2B365A4268C4BC100284561 /* Info.plist */,
@@ -144,9 +153,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2957A48268EF739005DF8C3 /* SettingsView.swift in Sources */,
 				A2B365A0268C4BC100284561 /* Persistence.swift in Sources */,
 				A2B365A3268C4BC100284561 /* Kiwi.xcdatamodeld in Sources */,
+				A2957A46268EF638005DF8C3 /* NotesView.swift in Sources */,
 				A2B36599268C4BBF00284561 /* ContentView.swift in Sources */,
+				A2957A44268EF2C7005DF8C3 /* NotesLogic.swift in Sources */,
 				A2B36597268C4BBF00284561 /* KiwiApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
