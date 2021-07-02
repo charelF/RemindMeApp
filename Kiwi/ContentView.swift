@@ -20,51 +20,53 @@ struct ContentView: View {
     @State private var noteContent: String = ""
     
     var body: some View {
-        VStack {
-            List {
-                ForEach(notes) { note in
-                    VStack(alignment: .leading) {
-                        Text("\(note.content ?? "")")
-                            .padding(.vertical, 0.2)
-                        HStack {
-                            Text("Time: \(note.timestamp!, formatter: noteFormatter) - Reminder: \(describePriority(note))")
-                                .font(.footnote)
-                                .foregroundColor(Color.gray.opacity(0.6))
-                            Spacer() // (1)
+        TabView {
+            VStack {
+                List {
+                    ForEach(notes) { note in
+                        VStack(alignment: .leading) {
+                            Text("\(note.content ?? "")")
+                                .padding(.vertical, 0.2)
+                            HStack {
+                                Text("Time: \(note.timestamp!, formatter: noteFormatter) - Reminder: \(describePriority(note))")
+                                    .font(.footnote)
+                                    .foregroundColor(Color.gray.opacity(0.6))
+                                Spacer() // (1)
+                            }
+                            .padding(.bottom, 0.2)
                         }
-                        .padding(.bottom, 0.2)
+                        .contentShape(Rectangle()) // This together with (1) makes whole area clickable
+                        .foregroundColor(priorityToColor(note))
+                        .onTapGesture{
+                            changePriority(note)
+                            updateNotifications(note)
+                        }
+                        .listRowBackground(priorityToColor(note).opacity(0.1))
                     }
-                    .contentShape(Rectangle()) // This together with (1) makes whole area clickable
-                    .foregroundColor(priorityToColor(note))
-                    .onTapGesture{
-                        changePriority(note)
-                        updateNotifications(note)
-                    }
-                    .listRowBackground(priorityToColor(note).opacity(0.1))
+                    .onDelete(perform: deleteNotes)
+
+                TextField(
+                    "New Note",
+                    text: $noteContent,
+                    onCommit:addNote
+                )
                 }
-                .onDelete(perform: deleteNotes)
+                .listStyle(GroupedListStyle())
 
-            TextField(
-                "New Note",
-                text: $noteContent,
-                onCommit:addNote
-            )
             }
-            .listStyle(GroupedListStyle())
+            .tabItem {
+                Image(systemName: "note")
+                Text("Notes")
+            }
             
-//            Spacer()
-//
-//            VStack {
-//                TextField(
-//                    "New Note",
-//                    text: $noteContent,
-//                    onCommit:addNote
-//                )
-//                .textFieldStyle(RoundedBorderTextFieldStyle())
-//            }
-//            .padding(.all)
-//            .cornerRadius(20)
-
+            List {
+                Text("Settings")
+            }
+            .tabItem {
+                Image(systemName: "gear")
+                Text("Settings")
+            }
+            
         }
     }
     
