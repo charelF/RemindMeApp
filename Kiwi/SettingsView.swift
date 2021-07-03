@@ -8,11 +8,26 @@
 import SwiftUI
 
 enum Interval: String, Equatable, CaseIterable {
-    case month = "Month"
-    case week = "Week"
-    case day = "Day"
-    case hour = "Hour"
-    case minute = "Minute"
+    case ten_minutes = "Every 10 minutes"
+    case thirty_minutes = "Every 30 minutes"
+    case hour = "Hourly"
+    case three_hours = "Every 3 hours"
+    case six_hours = "Every 6 hours"
+    case twelve_hours = "Twice a day"
+    case day = "Daily"
+    case two_days = "Every other day"
+    case week = "Weekly"
+    case month = "Monthly"
+}
+
+enum Weekday: String, Equatable, CaseIterable {
+    case monday = "Mon"
+    case tuesday = "Tue"
+    case wednesday = "Wed"
+    case thursday = "Thu"
+    case friday = "Fri"
+    case saturday = "Sat"
+    case sunday = "Sun"
 }
 
 struct SettingsView: View {
@@ -25,8 +40,8 @@ struct SettingsView: View {
     @State var priority3: Bool = true
     
     @State var nightBreakStart = Date()
-    @State var interval: Interval = .day
-    @State var amount: Int = 2
+    @State var interval: Interval = .hour
+    @State var weekday: Weekday = .monday
     
     var body: some View {
         List {
@@ -57,24 +72,30 @@ struct SettingsView: View {
                 
                 if priority1 {
                     
-                    Stepper(value: $amount, in: 1...30) {
-                        Text("Number of reminders")
-                    }
-
-                    
-                    
                     Picker(selection: $interval, label: Text("per")) {
                         ForEach(Interval.allCases, id: \.self) { value in
                             Text(value.rawValue).tag(value)
                         }
                     }
-//                    .pickerStyle(SegmentedPickerStyle())
+                    .pickerStyle(WheelPickerStyle())
                     
-                    DatePicker("First reminder at", selection: $nightBreakStart, displayedComponents: .hourAndMinute)
-                    
+                    switch interval {
+                    case .ten_minutes, .thirty_minutes, .hour, .three_hours:
+                        EmptyView()
+                    case .week, .month:
+                        Picker(selection: $weekday, label: Text("Reminder on")) {
+                            ForEach(Weekday.allCases, id: \.self) { value in
+                                Text(value.rawValue).tag(value)
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        
+                        DatePicker("First reminder at", selection: $nightBreakStart, displayedComponents: [.hourAndMinute])
+                    default:
+                        DatePicker("First reminder at", selection: $nightBreakStart, displayedComponents: [.hourAndMinute])
+                    }
                 }
             }
-            
         }.listStyle(GroupedListStyle())
     }
 }
