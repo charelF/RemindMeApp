@@ -18,85 +18,86 @@ enum Interval: String, Equatable, CaseIterable {
     case two_days = "Every other day"
     case week = "Weekly"
     case month = "Monthly"
+    case never = "Never"
 }
-
-enum Weekday: String, Equatable, CaseIterable {
-    case monday = "Mon"
-    case tuesday = "Tue"
-    case wednesday = "Wed"
-    case thursday = "Thu"
-    case friday = "Fri"
-    case saturday = "Sat"
-    case sunday = "Sun"
-}
+//
+//enum Weekday: String, Equatable, CaseIterable {
+//    case monday = "Mon"
+//    case tuesday = "Tue"
+//    case wednesday = "Wed"
+//    case thursday = "Thu"
+//    case friday = "Fri"
+//    case saturday = "Sat"
+//    case sunday = "Sun"
+//}
 
 struct SettingsView: View {
     
     @State var nightBreak: Bool = true
+    @State var nightStart: Date = createTime(hour: 22, minute: 00) ?? Date()
+    @State var nightEnd: Date = createTime(hour: 07, minute: 59) ?? Date()
     
-    @State var priority0: Bool = true
-    @State var priority1: Bool = true
-    @State var priority2: Bool = true
-    @State var priority3: Bool = true
     
-    @State var nightBreakStart = Date()
-    @State var interval: Interval = .hour
-    @State var weekday: Weekday = .monday
+    @State var priority0Interval: Interval = .hour
+    @State var priority0Date: Date = createTime(hour: 08, minute: 00) ?? Date()
+    
+    @State var priority1Interval: Interval = .hour
+    @State var priority2Interval: Interval = .hour
+    
+//    @State var weekday: Weekday = .monday
     
     var body: some View {
-        List {
-            Section(header: Text("General")) {
-                Toggle(isOn: $nightBreak.animation()) {
-                    Text("Sleep mode")
-                }
-                
-                if nightBreak {
-                    HStack {
-                        DatePicker("from", selection: $nightBreakStart, displayedComponents: .hourAndMinute)
-                        DatePicker("until", selection: $nightBreakStart, displayedComponents: .hourAndMinute)
+        NavigationView {
+            List {
+                Section(header: Text("General")) {
+                    
+                    Toggle(isOn: $nightBreak.animation()) {
+                        Text("Sleep mode")
                     }
                     
-                }
-            }
-            
-            Section(header: Text("No notification")) {
-                Toggle(isOn: $priority0) {
-                    Text("No notification notes")
-                }
-            }
-            
-            Section(header: Text("Low Priority")) {
-                Toggle(isOn: $priority1.animation()) {
-                    Text("Low priority notes")
+                    if nightBreak {
+                        HStack {
+                            DatePicker(selection: $nightStart, displayedComponents: .hourAndMinute) {
+                                Text("From").frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            DatePicker(selection: $nightEnd, displayedComponents: .hourAndMinute) {
+                                Text("until").frame(maxWidth: .infinity, alignment: .center)
+                            }
+                        }
+                        
+                    }
                 }
                 
-                if priority1 {
-                    
-                    Picker(selection: $interval, label: Text("per")) {
+                
+                
+                Section(header: Text("Low Priority").foregroundColor(Color.secondary)) {
+                        
+                    Picker(selection: $priority0Interval, label: Text("Notification interval")) {
                         ForEach(Interval.allCases, id: \.self) { value in
                             Text(value.rawValue).tag(value)
                         }
                     }
-                    .pickerStyle(WheelPickerStyle())
-                    
-                    switch interval {
-                    case .ten_minutes, .thirty_minutes, .hour, .three_hours:
+                        
+                    switch priority0Interval {
+                    case .ten_minutes, .thirty_minutes, .hour, .never:
                         EmptyView()
                     case .week, .month:
-                        Picker(selection: $weekday, label: Text("Reminder on")) {
-                            ForEach(Weekday.allCases, id: \.self) { value in
-                                Text(value.rawValue).tag(value)
-                            }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        
-                        DatePicker("First reminder at", selection: $nightBreakStart, displayedComponents: [.hourAndMinute])
+                        DatePicker("First reminder on", selection: $priority0Date, displayedComponents: [.date, .hourAndMinute])
+//                        Picker(selection: $weekday, label: Text("Reminder on")) {
+//                            ForEach(Weekday.allCases, id: \.self) { value in
+//                                Text(value.rawValue).tag(value)
+//                            }
+//                        }
+//                        .pickerStyle(SegmentedPickerStyle())
                     default:
-                        DatePicker("First reminder at", selection: $nightBreakStart, displayedComponents: [.hourAndMinute])
+                        DatePicker("First reminder per day at", selection: $priority0Date, displayedComponents: [.hourAndMinute])
                     }
                 }
+                .foregroundColor(priorityToColor(priority: 0))
+                .listRowBackground(priorityToColor(priority: 0).opacity(0.05))
             }
-        }.listStyle(GroupedListStyle())
+            .listStyle(GroupedListStyle())
+        }
     }
 }
 

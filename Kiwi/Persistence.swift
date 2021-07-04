@@ -13,10 +13,11 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<2 {
+        for i in 0..<10 {
             let newItem = Note(context: viewContext)
             newItem.timestamp = Date()
-            newItem.content = "..."
+            newItem.content = "Note content"
+            newItem.priority = Int16(i)
             newItem.id = UUID()
         }
         do {

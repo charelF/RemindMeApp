@@ -34,12 +34,12 @@ struct NotesView: View {
                         .padding(.bottom, 0.2)
                     }
                     .contentShape(Rectangle()) // This together with (1) makes whole area clickable
-                    .foregroundColor(priorityToColor(note))
+                    .foregroundColor(priorityToColor(note: note))
                     .onTapGesture{
                         changePriority(note)
                         updateNotifications(note)
                     }
-                    .listRowBackground(priorityToColor(note).opacity(0.1))
+                    .listRowBackground(priorityToColor(note: note).opacity(0.05))
                 }
                 .onDelete(perform: deleteNotes)
 
@@ -80,7 +80,7 @@ struct NotesView: View {
     
     private func changePriority(_ note: Note) {
         note.priority += 1
-        note.priority %= 6
+        note.priority %= 4
         
         do {
             try viewContext.save()

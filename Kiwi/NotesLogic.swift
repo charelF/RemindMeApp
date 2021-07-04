@@ -10,15 +10,19 @@ import SwiftUI
 import CoreData
 import UserNotifications
 
-func priorityToColor(_ note: Note) -> Color? {
-    switch note.priority {
-    case 1:
+func priorityToColor(note: Note) -> Color? {
+    return priorityToColor(priority: Int(note.priority))
+}
+
+func priorityToColor(priority: Int) -> Color? {
+    switch priority {
+    case 0:
         return Color.green
+    case 1:
+        return Color.orange
     case 2:
-        return Color.yellow
-    case 3:
         return Color.red
-    case 4:
+    case 3:
         return Color.purple
     default:
         return Color.gray
@@ -92,3 +96,14 @@ let noteDateFormatter: DateFormatter = {
     formatter.timeStyle = .short
     return formatter
 }()
+
+
+func createTime(hour: Int, minute: Int) -> Date? {
+    let calendar = Calendar(identifier: .gregorian)
+    let date: Date?
+    var dateComponents = DateComponents()
+    dateComponents.hour = hour
+    dateComponents.minute = minute
+    date = calendar.date(from: dateComponents)
+    return date
+}
