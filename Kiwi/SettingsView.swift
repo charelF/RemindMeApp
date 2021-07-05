@@ -16,6 +16,14 @@ struct SettingsView: View {
             List {
                 Section(header: Text("General")) {
                     
+                    Toggle(isOn: $config.showNotificationTime) {
+                        Text("Show reminder description below note")
+                    }
+                    
+                    Toggle(isOn: $config.showCreationTime) {
+                        Text("Show creation date below note")
+                    }
+                    
                     Toggle(isOn: $config.nightBreak.animation()) {
                         Text("Sleep mode")
                     }
@@ -41,13 +49,16 @@ struct SettingsView: View {
                             ForEach(Interval.allCases, id: \.self) { value in
                                 Text(value.rawValue).tag(value)
                             }
+                            .navigationBarTitle("")
+                            .navigationBarHidden(true)
                         }
+                        
 
                         switch config.priorityIntervals[i] {
-                        case .ten_minutes, .thirty_minutes, .hour, .never:
+                        case .ten_minutes, .never:
                             EmptyView()
                         default:
-                            DatePicker("First reminder at", selection: $config.priorityDates[i], displayedComponents: [.hourAndMinute])
+                            DatePicker("First reminder per day at", selection: $config.priorityDates[i], displayedComponents: [.hourAndMinute])
                         }
                     }
                     .foregroundColor(priorityToColor(priority: i))
@@ -57,6 +68,9 @@ struct SettingsView: View {
             .listStyle(GroupedListStyle())
             .navigationBarTitle("")
             .navigationBarHidden(true)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            config.save()
         }
         
     }

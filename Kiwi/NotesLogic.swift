@@ -29,67 +29,6 @@ func priorityToColor(priority: Int) -> Color? {
     }
 }
 
-func describePriority(_ note: Note) -> String {
-    switch note.priority {
-    case 1:
-        return "Weekly"
-    case 2:
-        return "Daily"
-    case 3:
-        return "Hourly"
-    case 4:
-        return "Every 5 Minutes"
-    case 5:
-        return "DEBUG"
-    default:
-        return "Never"
-    }
-}
-
-func updateNotifications(_ note: Note) {
-    
-    let notificationCenter = UNUserNotificationCenter.current()
-    
-    // first remove the current Notifications
-    if let noteUUID = note.id { // unwrap optional
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: [noteUUID.uuidString])
-        notificationCenter.removeDeliveredNotifications(withIdentifiers: [noteUUID.uuidString])
-        
-        let content = UNMutableNotificationContent()
-        content.title = note.content ?? "Empty Note"
-        content.sound = UNNotificationSound.default
-        
-        let trigger: UNTimeIntervalNotificationTrigger
-        switch note.priority {
-        case 1:
-            trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60*60*24*5, repeats: true)
-        case 2:
-            trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60*60*24, repeats: true)
-        case 3:
-            trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60*60, repeats: true)
-        case 4:
-            trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60*5, repeats: true)
-        case 5:
-            trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-        case 0:
-            return
-        default:
-            return
-        }
-        
-        let request = UNNotificationRequest(identifier: noteUUID.uuidString, content: content, trigger: trigger)
-        
-        notificationCenter.add(request) { (error) in
-            if error != nil {
-                // TODO: handle error
-            }
-        }
-    } else {
-        print("Note has no id")
-        return
-    }
-}
-
 let noteDateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .short

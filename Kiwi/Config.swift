@@ -9,16 +9,13 @@ import Foundation
 
 enum Interval: String, Equatable, CaseIterable {
     case ten_minutes = "Every 10 minutes"
-    case thirty_minutes = "Every 30 minutes"
     case hour = "Hourly"
     case three_hours = "Every 3 hours"
     case six_hours = "Every 6 hours"
     case twelve_hours = "Twice a day"
     case day = "Daily"
-    case two_days = "Every other day"
     case week = "Weekly"
     case month = "Monthly"
-    case year = "Yearly"
     case never = "Never"
 }
 
@@ -39,12 +36,17 @@ class Config: ObservableObject {
         "Mid priority",
         "High priority",
     ]
+    static let NUMPRIO: Int = 3
+    
+    // other settings
+    @Published var showCreationTime: Bool
+    @Published var showNotificationTime: Bool
     
     init() {
         // default initialiser to be used in content view providers and for first run
         self.nightBreak = true
         self.nightStart = createTime(hour: 22, minute: 00) ?? Date()
-        self.nightEnd = createTime(hour: 22, minute: 00) ?? Date()
+        self.nightEnd = createTime(hour: 07, minute: 59) ?? Date()
         
         self.priorityDates  = [
             createTime(hour: 08, minute: 00) ?? Date(),
@@ -57,6 +59,9 @@ class Config: ObservableObject {
             Interval.day,
             Interval.hour
         ]
+        
+        self.showCreationTime = true
+        self.showNotificationTime = true
     }
     
     static func firstLaunch() -> Config {
@@ -82,6 +87,9 @@ class Config: ObservableObject {
         UserDefaults.standard.set(nightBreak, forKey: "nightBreak")
         UserDefaults.standard.set(nightStart, forKey: "nightStart")
         UserDefaults.standard.set(nightEnd, forKey: "nightEnd")
+        
+        UserDefaults.standard.set(showNotificationTime, forKey: "showNotificationTime")
+        UserDefaults.standard.set(showCreationTime, forKey: "showCreationTime")
     }
     
     static func load() -> Config {
@@ -108,6 +116,9 @@ class Config: ObservableObject {
         if let nightEnd = UserDefaults.standard.object(forKey: "nightEnd") as? Date {
             config.nightEnd = nightEnd
         }
+        
+        config.showNotificationTime = UserDefaults.standard.bool(forKey: "showNotificationTime")
+        config.showCreationTime = UserDefaults.standard.bool(forKey: "showCreationTime")
         
         return config
     }
