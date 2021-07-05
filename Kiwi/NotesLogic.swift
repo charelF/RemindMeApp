@@ -23,7 +23,7 @@ func priorityToColor(priority: Int) -> Color? {
     case 2:
         return Color.red
     case 3:
-        return Color.purple
+        return Color.blue
     default:
         return Color.gray
     }
@@ -96,7 +96,6 @@ let noteDateFormatter: DateFormatter = {
     formatter.timeStyle = .short
     return formatter
 }()
-
 
 func createTime(hour: Int, minute: Int) -> Date? {
     let calendar = Calendar(identifier: .gregorian)

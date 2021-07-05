@@ -10,6 +10,8 @@ import SwiftUI
 struct NotesView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
+    
+    @ObservedObject var config: Config
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true)],
@@ -122,6 +124,8 @@ struct NotesView: View {
 
 struct NotesView_Previews: PreviewProvider {
     static var previews: some View {
-        NotesView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        NotesView(
+            config: Config()
+        ).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
