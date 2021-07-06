@@ -11,6 +11,23 @@
 		A2957A46268EF638005DF8C3 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A45268EF638005DF8C3 /* NotesView.swift */; };
 		A2957A48268EF739005DF8C3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A47268EF739005DF8C3 /* SettingsView.swift */; };
 		A2957A4A2692ECB9005DF8C3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A492692ECB9005DF8C3 /* Config.swift */; };
+		A2957A522693A52F005DF8C3 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2957A512693A52F005DF8C3 /* WidgetKit.framework */; };
+		A2957A542693A52F005DF8C3 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2957A532693A52F005DF8C3 /* SwiftUI.framework */; };
+		A2957A572693A52F005DF8C3 /* KiwiWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A562693A52F005DF8C3 /* KiwiWidget.swift */; };
+		A2957A5A2693A532005DF8C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2957A592693A532005DF8C3 /* Assets.xcassets */; };
+		A2957A5C2693A533005DF8C3 /* KiwiWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A2957A582693A52F005DF8C3 /* KiwiWidget.intentdefinition */; };
+		A2957A5D2693A533005DF8C3 /* KiwiWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A2957A582693A52F005DF8C3 /* KiwiWidget.intentdefinition */; };
+		A2957A602693A533005DF8C3 /* KiwiWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A2957A4F2693A52F005DF8C3 /* KiwiWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A2957A66269436DF005DF8C3 /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A65269436DF005DF8C3 /* WidgetView.swift */; };
+		A2957A6726943F5C005DF8C3 /* NotesLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A43268EF2C7005DF8C3 /* NotesLogic.swift */; };
+		A2957A6826943F5C005DF8C3 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A45268EF638005DF8C3 /* NotesView.swift */; };
+		A2957A6926943FD9005DF8C3 /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A65269436DF005DF8C3 /* WidgetView.swift */; };
+		A2957A6A26943FEB005DF8C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B3659A268C4BC100284561 /* Assets.xcassets */; };
+		A2957A6B26943FF1005DF8C3 /* Kiwi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2B365A1268C4BC100284561 /* Kiwi.xcdatamodeld */; };
+		A2957A6D26944011005DF8C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B36598268C4BBF00284561 /* ContentView.swift */; };
+		A2957A6E26944014005DF8C3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A47268EF739005DF8C3 /* SettingsView.swift */; };
+		A2957A6F2694401A005DF8C3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B3659F268C4BC100284561 /* Persistence.swift */; };
+		A2957A702694401E005DF8C3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A492692ECB9005DF8C3 /* Config.swift */; };
 		A2B36597268C4BBF00284561 /* KiwiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B36596268C4BBF00284561 /* KiwiApp.swift */; };
 		A2B36599268C4BBF00284561 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B36598268C4BBF00284561 /* ContentView.swift */; };
 		A2B3659B268C4BC100284561 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B3659A268C4BC100284561 /* Assets.xcassets */; };
@@ -19,11 +36,43 @@
 		A2B365A3268C4BC100284561 /* Kiwi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2B365A1268C4BC100284561 /* Kiwi.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		A2957A5E2693A533005DF8C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A2B3658B268C4BBF00284561 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A2957A4E2693A52F005DF8C3;
+			remoteInfo = KiwiWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A2957A642693A533005DF8C3 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A2957A602693A533005DF8C3 /* KiwiWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		A2957A43268EF2C7005DF8C3 /* NotesLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesLogic.swift; sourceTree = "<group>"; };
 		A2957A45268EF638005DF8C3 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
 		A2957A47268EF739005DF8C3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A2957A492692ECB9005DF8C3 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		A2957A4F2693A52F005DF8C3 /* KiwiWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KiwiWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2957A512693A52F005DF8C3 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		A2957A532693A52F005DF8C3 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		A2957A562693A52F005DF8C3 /* KiwiWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KiwiWidget.swift; sourceTree = "<group>"; };
+		A2957A582693A52F005DF8C3 /* KiwiWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = KiwiWidget.intentdefinition; sourceTree = "<group>"; };
+		A2957A592693A532005DF8C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A2957A5B2693A533005DF8C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A2957A65269436DF005DF8C3 /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
 		A2B36593268C4BBF00284561 /* Kiwi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kiwi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2B36596268C4BBF00284561 /* KiwiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KiwiApp.swift; sourceTree = "<group>"; };
 		A2B36598268C4BBF00284561 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -35,6 +84,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A2957A4C2693A52F005DF8C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2957A542693A52F005DF8C3 /* SwiftUI.framework in Frameworks */,
+				A2957A522693A52F005DF8C3 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A2B36590268C4BBF00284561 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -45,10 +103,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A2957A502693A52F005DF8C3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A2957A512693A52F005DF8C3 /* WidgetKit.framework */,
+				A2957A532693A52F005DF8C3 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A2957A552693A52F005DF8C3 /* KiwiWidget */ = {
+			isa = PBXGroup;
+			children = (
+				A2957A65269436DF005DF8C3 /* WidgetView.swift */,
+				A2957A562693A52F005DF8C3 /* KiwiWidget.swift */,
+				A2957A582693A52F005DF8C3 /* KiwiWidget.intentdefinition */,
+				A2957A592693A532005DF8C3 /* Assets.xcassets */,
+				A2957A5B2693A533005DF8C3 /* Info.plist */,
+			);
+			path = KiwiWidget;
+			sourceTree = "<group>";
+		};
 		A2B3658A268C4BBF00284561 = {
 			isa = PBXGroup;
 			children = (
 				A2B36595268C4BBF00284561 /* Kiwi */,
+				A2957A552693A52F005DF8C3 /* KiwiWidget */,
+				A2957A502693A52F005DF8C3 /* Frameworks */,
 				A2B36594268C4BBF00284561 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -57,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				A2B36593268C4BBF00284561 /* Kiwi.app */,
+				A2957A4F2693A52F005DF8C3 /* KiwiWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -90,6 +172,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A2957A4E2693A52F005DF8C3 /* KiwiWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A2957A612693A533005DF8C3 /* Build configuration list for PBXNativeTarget "KiwiWidgetExtension" */;
+			buildPhases = (
+				A2957A4B2693A52F005DF8C3 /* Sources */,
+				A2957A4C2693A52F005DF8C3 /* Frameworks */,
+				A2957A4D2693A52F005DF8C3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KiwiWidgetExtension;
+			productName = KiwiWidgetExtension;
+			productReference = A2957A4F2693A52F005DF8C3 /* KiwiWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		A2B36592268C4BBF00284561 /* Kiwi */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A2B365A7268C4BC100284561 /* Build configuration list for PBXNativeTarget "Kiwi" */;
@@ -97,10 +196,12 @@
 				A2B3658F268C4BBF00284561 /* Sources */,
 				A2B36590268C4BBF00284561 /* Frameworks */,
 				A2B36591268C4BBF00284561 /* Resources */,
+				A2957A642693A533005DF8C3 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A2957A5F2693A533005DF8C3 /* PBXTargetDependency */,
 			);
 			name = Kiwi;
 			productName = Kiwi;
@@ -116,6 +217,9 @@
 				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
+					A2957A4E2693A52F005DF8C3 = {
+						CreatedOnToolsVersion = 12.5;
+					};
 					A2B36592268C4BBF00284561 = {
 						CreatedOnToolsVersion = 12.5;
 					};
@@ -135,11 +239,21 @@
 			projectRoot = "";
 			targets = (
 				A2B36592268C4BBF00284561 /* Kiwi */,
+				A2957A4E2693A52F005DF8C3 /* KiwiWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A2957A4D2693A52F005DF8C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2957A6A26943FEB005DF8C3 /* Assets.xcassets in Resources */,
+				A2957A5A2693A532005DF8C3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A2B36591268C4BBF00284561 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -152,6 +266,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A2957A4B2693A52F005DF8C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2957A6726943F5C005DF8C3 /* NotesLogic.swift in Sources */,
+				A2957A6D26944011005DF8C3 /* ContentView.swift in Sources */,
+				A2957A6E26944014005DF8C3 /* SettingsView.swift in Sources */,
+				A2957A702694401E005DF8C3 /* Config.swift in Sources */,
+				A2957A5C2693A533005DF8C3 /* KiwiWidget.intentdefinition in Sources */,
+				A2957A6826943F5C005DF8C3 /* NotesView.swift in Sources */,
+				A2957A572693A52F005DF8C3 /* KiwiWidget.swift in Sources */,
+				A2957A6926943FD9005DF8C3 /* WidgetView.swift in Sources */,
+				A2957A6B26943FF1005DF8C3 /* Kiwi.xcdatamodeld in Sources */,
+				A2957A6F2694401A005DF8C3 /* Persistence.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A2B3658F268C4BBF00284561 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -160,16 +291,68 @@
 				A2B365A0268C4BC100284561 /* Persistence.swift in Sources */,
 				A2957A4A2692ECB9005DF8C3 /* Config.swift in Sources */,
 				A2B365A3268C4BC100284561 /* Kiwi.xcdatamodeld in Sources */,
+				A2957A66269436DF005DF8C3 /* WidgetView.swift in Sources */,
 				A2957A46268EF638005DF8C3 /* NotesView.swift in Sources */,
 				A2B36599268C4BBF00284561 /* ContentView.swift in Sources */,
 				A2957A44268EF2C7005DF8C3 /* NotesLogic.swift in Sources */,
+				A2957A5D2693A533005DF8C3 /* KiwiWidget.intentdefinition in Sources */,
 				A2B36597268C4BBF00284561 /* KiwiApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		A2957A5F2693A533005DF8C3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A2957A4E2693A52F005DF8C3 /* KiwiWidgetExtension */;
+			targetProxy = A2957A5E2693A533005DF8C3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		A2957A622693A533005DF8C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V6DK8MURYX;
+				INFOPLIST_FILE = KiwiWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = charelfelten.Kiwi.KiwiWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A2957A632693A533005DF8C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V6DK8MURYX;
+				INFOPLIST_FILE = KiwiWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = charelfelten.Kiwi.KiwiWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		A2B365A5268C4BC100284561 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -289,6 +472,7 @@
 		A2B365A8268C4BC100284561 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -311,6 +495,7 @@
 		A2B365A9268C4BC100284561 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -333,6 +518,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A2957A612693A533005DF8C3 /* Build configuration list for PBXNativeTarget "KiwiWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A2957A622693A533005DF8C3 /* Debug */,
+				A2957A632693A533005DF8C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A2B3658E268C4BBF00284561 /* Build configuration list for PBXProject "Kiwi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
