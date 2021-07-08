@@ -32,19 +32,13 @@ struct Provider: IntentTimelineProvider {
         var entries: [SimpleEntry] = []
         
         var notes: [Note] = []
-        var strings: [String] = ["1"]
         
-//        let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.charelfelten.Kiwi")!
-        let containerURL = PersistenceController.containerURL!
-        
-        let storeURL = containerURL.appendingPathComponent("Kiwi.sqlite")
+        let containerURL = PersistenceController.containerURL
+        let storeURL = containerURL.appendingPathComponent(PersistenceController.SQLiteStoreAppendix)
         let description = NSPersistentStoreDescription(url: storeURL)
         let container = NSPersistentCloudKitContainer(name: "Kiwi")
-//        let de
-//        let container = PersistenceController.shared.container
-        container.persistentStoreDescriptions = [description]
-//        strings.append(String(describing: description))
         
+        container.persistentStoreDescriptions = [description]
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -52,8 +46,6 @@ struct Provider: IntentTimelineProvider {
             }
         })
         
-        strings.append(String(describing: container.persistentStoreDescriptions))
-//
         let context = PersistenceController.shared.container.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
         do {
@@ -61,26 +53,11 @@ struct Provider: IntentTimelineProvider {
             // is there a nicer way to do it?
             if let tmp = result as? [Note] {
                 notes = tmp
-                strings.append(String(describing: tmp))
             }
-            strings.append("4")
         } catch {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
-
-        print(notes)
-        strings.append("3")
-        
-//        var notes2 = notes.map {String(describing: $0)}
-        
-        
-        
-        
-        
-        
-        
-        
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()

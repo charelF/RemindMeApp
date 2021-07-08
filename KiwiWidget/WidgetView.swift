@@ -24,14 +24,14 @@ struct WidgetView: View {
                 ForEach(notes, id: \.self) { note in
                     LazyVStack(alignment: .leading) {
                         Text("\(note.content ?? "empty")")
-//                            .lineLimit(1)
+                            .lineLimit(1)
                             .foregroundColor(priorityToColor(priority: Int(note.priority)))
                             .padding(.horizontal)
                             .padding(.top, 5)
                             .padding([.bottom], -1)
                         Divider()
                     }
-                    .background(priorityToColor(priority: 0).opacity(0.05))
+                    .background(priorityToColor(priority: Int(note.priority)).opacity(0.05))
                     .background(getBackgroundColor()).opacity(1)
                 }
             }
@@ -46,48 +46,12 @@ struct WidgetView: View {
             return Color.white
         }
     }
-    
-    
-    
-//    var body: some View {
-//        VStack(spacing: 0) {
-//            ForEach(notes, id: \.self) { note in
-//                VStack(
-//                    alignment: .leading) {
-//                    Divider()
-//                    Text("\(note)")
-////                        .padding([.bottom], -1)
-////                        .padding([.top], 5)
-//                        .padding(.horizontal)
-//                    .lineLimit(1)
-//                        .foregroundColor(priorityToColor(priority: 0))
-////                    Divider()
-//                }
-//                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                .background(priorityToColor(priority: 1).opacity(0.05))
-////                .frame(maxWidth: .infinity)
-//
-//
-//            }
-////            Spacer()
-//        }
-////        .frame(maxWidth: .infinity, maxHeight: .infinity)
-//    }
-    
 }
 
 struct WidgetView_Previews: PreviewProvider {
     static var previews: some View {
         WidgetView(
             notes: []
-//                "This is a long note test",
-//                "s",
-//                "short note",
-//                "----",
-//                "5",
-//                "234234",
-//                "aaa"
-//            ]
         ).previewLayout(.fixed(width: 160, height: 160))
     }
 }

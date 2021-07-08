@@ -13,10 +13,12 @@ struct PersistenceController {
     // more info: https://stackoverflow.com/questions/61571960/accessing-core-data-stack-in-mvvm-application/61572075#61572075
     static let shared = PersistenceController()
     
+    // these are static so we always use the same
     static let appGroupName = "group.charelfelten.Kiwi"
-    static let containerURL: URL? = {
+    static let SQLiteStoreAppendix = "Kiwi.sqlite"
+    static let containerURL: URL = {
         FileManager.default.containerURL(
-            forSecurityApplicationGroupIdentifier: PersistenceController.appGroupName)
+            forSecurityApplicationGroupIdentifier: PersistenceController.appGroupName)!
     }()
 
     static var preview: PersistenceController = {
@@ -44,40 +46,15 @@ struct PersistenceController {
 
     init(inMemory: Bool = false) {
         
-//        let containerURL = PersistenceController.containerURL!
-        
-        
-//        let description = NSPersistentStoreDescription(url: storeURL)
-//        let container = NSPersistentCloudKitContainer(name: "Kiwi")
-////        let de
-////        let container = PersistenceController.shared.container
-//        container.persistentStoreDescriptions = [description]
-////        strings.append(String(describing: description))
-//
-//
-//        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-//            if let error = error as NSError? {
-//                fatalError("Unresolved error \(error), \(error.userInfo)")
-//            }
-//        })
-        
         container = NSPersistentCloudKitContainer(name: "Kiwi")
         
-        let storeURL = PersistenceController.containerURL!.appendingPathComponent("Kiwi.sqlite")
+        let storeURL = PersistenceController.containerURL.appendingPathComponent(PersistenceController.SQLiteStoreAppendix)
         let description = NSPersistentStoreDescription(url: storeURL)
         container.persistentStoreDescriptions = [description]
-        
-        print("((((((")
-        print(container.persistentStoreDescriptions)
-        
         
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
-        
-        print(container.persistentStoreDescriptions)
-        
-        
         
 //        let storeURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.charelfelten.Kiwi")!.appendingPathComponent("Kiwi.sqlite")
 //
