@@ -23,6 +23,8 @@ struct NotesView: View {
     var body: some View {
         VStack {
             List {
+                Text(String(describing: PersistenceController.containerURL))
+                Text(String(describing: PersistenceController.shared.container.persistentStoreDescriptions))
                 ForEach(notes) { note in
                     VStack(alignment: .leading) {
                         HStack {
@@ -67,29 +69,43 @@ struct NotesView: View {
         }
     }
     
+//    private func addNote() {
+//        withAnimation {
+//            if noteContent == "" {
+//                return
+//            } else {
+//                let newNote = Note(context: viewContext)
+//                newNote.timestamp = Date()
+//                newNote.content = noteContent
+//                newNote.id = UUID()
+//                noteContent = ""
+//
+//                do {
+//                    try viewContext.save()
+//                } catch {
+//                    // Replace this implementation with code to handle the error appropriately.
+//                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//                    let nsError = error as NSError
+//                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+//                }
+//                return
+//            }
+//        }
+//    }
+    
     private func addNote() {
         withAnimation {
-            if noteContent == "" {
-                return
-            } else {
-                let newNote = Note(context: viewContext)
-                newNote.timestamp = Date()
-                newNote.content = noteContent
-                newNote.id = UUID()
-                noteContent = ""
-
-                do {
-                    try viewContext.save()
-                } catch {
-                    // Replace this implementation with code to handle the error appropriately.
-                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    let nsError = error as NSError
-                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-                }
-                return
-            }
+            PersistenceController.shared.addNote(noteContent)
         }
+        noteContent = ""
     }
+    
+//    private func deleteNotes() {
+//        withAnimation {
+//            PersistenceController.shared.addNote(noteContent)
+//        }
+//        noteContent = ""
+//    }
     
     private func changePriority(_ note: Note) {
         note.priority += 1

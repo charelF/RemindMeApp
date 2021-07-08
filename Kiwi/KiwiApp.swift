@@ -45,6 +45,7 @@ struct KiwiApp: App {
         WindowGroup {
             ContentView(config: config)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+
         }
     }
 }
