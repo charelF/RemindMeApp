@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WidgetView: View {
     
-    var notes: [String] = ["1"]
+    var notes: [Note]
     
     @Environment(\.colorScheme) var colorScheme
     
@@ -23,9 +23,9 @@ struct WidgetView: View {
                 Divider()
                 ForEach(notes, id: \.self) { note in
                     LazyVStack(alignment: .leading) {
-                        Text("\(note)")
+                        Text("\(note.content ?? "empty")")
 //                            .lineLimit(1)
-                            .foregroundColor(priorityToColor(priority: 0))
+                            .foregroundColor(priorityToColor(priority: Int(note.priority)))
                             .padding(.horizontal)
                             .padding(.top, 5)
                             .padding([.bottom], -1)
@@ -79,15 +79,15 @@ struct WidgetView: View {
 struct WidgetView_Previews: PreviewProvider {
     static var previews: some View {
         WidgetView(
-            notes: [
-                "This is a long note test",
-                "s",
-                "short note",
-                "----",
+            notes: []
+//                "This is a long note test",
+//                "s",
+//                "short note",
+//                "----",
 //                "5",
 //                "234234",
 //                "aaa"
-            ]
+//            ]
         ).previewLayout(.fixed(width: 160, height: 160))
     }
 }

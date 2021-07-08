@@ -15,7 +15,7 @@ struct Provider: IntentTimelineProvider {
         SimpleEntry(
             date: Date(),
             configuration: ConfigurationIntent(),
-            notes: ["test"]
+            notes: []
         )
     }
 
@@ -23,7 +23,7 @@ struct Provider: IntentTimelineProvider {
         let entry = SimpleEntry(
             date: Date(),
             configuration: configuration,
-            notes: ["test1", "test2"]
+            notes: []
         )
         completion(entry)
     }
@@ -72,6 +72,8 @@ struct Provider: IntentTimelineProvider {
         print(notes)
         strings.append("3")
         
+//        var notes2 = notes.map {String(describing: $0)}
+        
         
         
         
@@ -87,8 +89,7 @@ struct Provider: IntentTimelineProvider {
             let entry = SimpleEntry(
                 date: entryDate,
                 configuration: configuration,
-//                notes: ["test3", "test4", "test5", "test6"])
-                notes: strings)
+                notes: notes)
             entries.append(entry)
         }
 
@@ -100,7 +101,7 @@ struct Provider: IntentTimelineProvider {
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
-    var notes: [String]
+    var notes: [Note]
 }
 
 struct KiwiWidgetEntryView : View {
@@ -131,14 +132,7 @@ struct KiwiWidget_Previews: PreviewProvider {
             entry: SimpleEntry(
                 date: Date(),
                 configuration: ConfigurationIntent(),
-                notes: [
-                    "This is a long note test",
-                    "s",
-                    "short note",
-//                    "----",
-//                    "5",
-//                    "234234"
-                ]
+                notes: []
             )
         ).previewContext(WidgetPreviewContext(family: .systemSmall))
     }
