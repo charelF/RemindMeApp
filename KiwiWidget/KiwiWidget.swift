@@ -85,7 +85,6 @@ struct KiwiWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-//        Text(String(describing: entry.notes))
         WidgetView(notes: entry.notes)
     }
 }

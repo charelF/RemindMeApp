@@ -45,13 +45,13 @@ class Config: ObservableObject {
     init() {
         // default initialiser to be used in content view providers and for first run
         self.nightBreak = true
-        self.nightStart = createTime(hour: 22, minute: 00) ?? Date()
-        self.nightEnd = createTime(hour: 07, minute: 59) ?? Date()
+        self.nightStart = Config.createTime(hour: 22, minute: 00) ?? Date()
+        self.nightEnd = Config.createTime(hour: 07, minute: 59) ?? Date()
         
         self.priorityDates  = [
-            createTime(hour: 08, minute: 00) ?? Date(),
-            createTime(hour: 08, minute: 00) ?? Date(),
-            createTime(hour: 08, minute: 00) ?? Date(),
+            Config.createTime(hour: 08, minute: 00) ?? Date(),
+            Config.createTime(hour: 08, minute: 00) ?? Date(),
+            Config.createTime(hour: 08, minute: 00) ?? Date(),
         ]
         
         self.priorityIntervals = [
@@ -71,6 +71,16 @@ class Config: ObservableObject {
         // we then save them to userdefaults for subsequent launches
         config.save()
         return config
+    }
+    
+    static func createTime(hour: Int, minute: Int) -> Date? {
+        let calendar = Calendar(identifier: .gregorian)
+        let date: Date?
+        var dateComponents = DateComponents()
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+        date = calendar.date(from: dateComponents)
+        return date
     }
     
     static func save(config: Config) {

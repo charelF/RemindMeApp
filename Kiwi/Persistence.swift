@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import WidgetKit
 
 struct PersistenceController {
     
@@ -133,6 +134,28 @@ struct PersistenceController {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
+        self.refreshWidgets()
         return
+    }
+    
+//    func deleteNote
+    
+//    private func upd(_ note: Note) {
+//        note.priority += 1
+//        note.priority %= Int16(Config.NUMPRIO) // ugly
+//
+//        do {
+//            try viewContext.save()
+//        } catch {
+//            // Replace this implementation with code to handle the error appropriately.
+//            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//            let nsError = error as NSError
+//            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+//        }
+//        return
+//    }
+    
+    func refreshWidgets() {
+        WidgetCenter.shared.reloadAllTimelines()
     }
 }

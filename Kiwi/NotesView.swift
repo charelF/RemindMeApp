@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct NotesView: View {
     
@@ -23,8 +24,6 @@ struct NotesView: View {
     var body: some View {
         VStack {
             List {
-                Text(String(describing: PersistenceController.containerURL))
-                Text(String(describing: PersistenceController.shared.container.persistentStoreDescriptions))
                 ForEach(notes) { note in
                     VStack(alignment: .leading) {
                         HStack {
@@ -37,7 +36,7 @@ struct NotesView: View {
                             HStack {
                                 if config.showCreationTime {
                                     Image(systemName: "calendar")
-                                    Text("\(note.timestamp!, formatter: noteDateFormatter)")
+                                    Text("\(note.timestamp!, formatter: Note.dateFormatter)")
                                 }
                                 if config.showNotificationTime {
                                     Image(systemName: "bell")
@@ -51,12 +50,12 @@ struct NotesView: View {
                         }
                     }
                     .contentShape(Rectangle()) // This together with (1) makes whole area clickable
-                    .foregroundColor(priorityToColor(note: note))
+                    .foregroundColor(Note.priorityToColor(note: note))
                     .onTapGesture{
                         changePriority(note)
                         updateNotifications(note)
                     }
-                    .listRowBackground(priorityToColor(note: note).opacity(0.05))
+                    .listRowBackground(Note.priorityToColor(note: note).opacity(0.05))
                 }
                 .onDelete(perform: deleteNotes)
 
@@ -119,6 +118,7 @@ struct NotesView: View {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
+        WidgetCenter.shared.reloadAllTimelines()
         return
     }
 
@@ -144,6 +144,7 @@ struct NotesView: View {
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func updateNotifications(_ note: Note) {
@@ -227,34 +228,13 @@ struct NotesView: View {
         case .ten_minutes:
             trigger.append(UNTimeIntervalNotificationTrigger(timeInterval: 60*10, repeats: true))
             
-            
-//            firstNotificationTime = Date() + 60
-//
-//            var dateComponents = Calendar.current.dateComponents(
-//                [.minute, .second],
-//                from: firstNotificationTime + 5
-//            )
-//            trigger.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
-            
-            
-//            dateComponents = Calendar.current.dateComponents(
-//                [.minute, .second],
-//                from: Date() + 5
-//            )
-//            trigger.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
-//            print("___ \(Date())")
-//            print("___ \(firstNotificationTime)")
-            
-            
         case .hour:
-            var dateComponents: DateComponents
-            for interval in 0..<24 {
-                dateComponents = Calendar.current.dateComponents(
-                    [.minute, .hour, .second],
-                    from: firstNotificationTime + TimeInterval(interval*60*60)
-                )
-                trigger.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
-            }
+            let dateComponents: DateComponents = Calendar.current.dateComponents(
+                [.minute, .second],
+                from: firstNotificationTime
+            )
+            trigger.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+            
         case .three_hours:
             var dateComponents: DateComponents
             for interval in [0, 3*60*60, 6*60*60, 9*60*60, 12*60*60, 15*60*60, 18*60*60, 21*60*60] {

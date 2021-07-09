@@ -61,8 +61,8 @@ struct SettingsView: View {
                             DatePicker("First reminder per day at", selection: $config.priorityDates[i], displayedComponents: [.hourAndMinute])
                         }
                     }
-                    .foregroundColor(priorityToColor(priority: i))
-                    .listRowBackground(priorityToColor(priority: i).opacity(0.05))
+                    .foregroundColor(Note.priorityToColor(priority: i))
+                    .listRowBackground(Note.priorityToColor(priority: i).opacity(0.05))
                 }
             }
             .listStyle(GroupedListStyle())
