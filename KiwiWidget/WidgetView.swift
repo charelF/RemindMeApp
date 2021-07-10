@@ -25,10 +25,10 @@ struct WidgetView: View {
                 fallthrough
             
             @unknown default:
-                guard notes.count > 5 else {
+                guard notes.count > 4 else {
                     return notes
                 }
-                return sortedPriorityNotes[0...4].sorted(by: { $0.timestamp!.timeIntervalSince1970 < $1.timestamp!.timeIntervalSince1970 })
+                return sortedPriorityNotes[0...3].sorted(by: { $0.timestamp!.timeIntervalSince1970 < $1.timestamp!.timeIntervalSince1970 })
             }
         }
     }
@@ -42,8 +42,9 @@ struct WidgetView: View {
     
     
     var body: some View {
+        Color.secondary.opacity(0.2).overlay(
         ZStack(alignment: .top) {
-            Color.secondary.opacity(0.2)
+//            Color.secondary.opacity(0.2)
             VStack(spacing: 0) {
                 Divider()
                 ForEach(displayNotes, id: \.self) { note in
@@ -63,7 +64,7 @@ struct WidgetView: View {
                     .background(getBackgroundColor()).opacity(1)
                 }
             }
-        }
+        })
     }
     
     private func getBackgroundColor() -> Color {

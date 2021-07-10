@@ -91,6 +91,8 @@ extension Note {
             self.notificationids!.append(notificationid)
         }
         
+        // DEBUG
+        /*
         notificationCenter.getPendingNotificationRequests(completionHandler: { (notifications) in
             print("Number of pending notifications \(notifications.count)")
             for request in notifications {
@@ -102,10 +104,12 @@ extension Note {
                 }
             }
         })
+        */
     }
     
     func createNotificationTriggers(interval: Interval) -> [UNNotificationTrigger] {
-        var trigger: [UNNotificationTrigger] = []
+        var triggers: [UNNotificationTrigger] = []
+        var safetriggers: [UNNotificationTrigger] = []
         var firstNotificationTime = Date()
         
         // TODO: below code is very ugly ---
@@ -125,43 +129,51 @@ extension Note {
         switch interval {
         
         case .ten_minutes:
-            trigger.append(UNTimeIntervalNotificationTrigger(timeInterval: 60*10, repeats: true))
+//            triggers.append(UNTimeIntervalNotificationTrigger(timeInterval: 60*10, repeats: true))
+            var dateComponents: DateComponents
+            for elapsedTime in [0, 10, 20, 30, 40, 50] {
+                dateComponents = Calendar.current.dateComponents(
+                    [.minute, .second],
+                    from: firstNotificationTime + TimeInterval(elapsedTime)
+                )
+                triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+            }
             
         case .hour:
             let dateComponents: DateComponents = Calendar.current.dateComponents(
                 [.minute, .second],
                 from: firstNotificationTime
             )
-            trigger.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+            triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
             
         case .three_hours:
             var dateComponents: DateComponents
-            for interval in [0, 3*60*60, 6*60*60, 9*60*60, 12*60*60, 15*60*60, 18*60*60, 21*60*60] {
+            for elapsedTime in [0, 3*60*60, 6*60*60, 9*60*60, 12*60*60, 15*60*60, 18*60*60, 21*60*60] {
                 dateComponents = Calendar.current.dateComponents(
                     [.minute, .hour, .second],
-                    from: firstNotificationTime + TimeInterval(interval)
+                    from: firstNotificationTime + TimeInterval(elapsedTime)
                 )
-                trigger.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+                triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
             }
             
         case .six_hours:
             var dateComponents: DateComponents
-            for interval in [0, 6*60*60, 12*60*60, 18*60*60] {
+            for elapsedTime in [0, 6*60*60, 12*60*60, 18*60*60] {
                 dateComponents = Calendar.current.dateComponents(
                     [.minute, .hour, .second],
-                    from: firstNotificationTime + TimeInterval(interval)
+                    from: firstNotificationTime + TimeInterval(elapsedTime)
                 )
-                trigger.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+                triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
             }
             
         case .twelve_hours:
             var dateComponents: DateComponents
-            for interval in [0, 12*60*60] {
+            for elapsedTime in [0, 12*60*60] {
                 dateComponents = Calendar.current.dateComponents(
                     [.minute, .hour, .second],
-                    from: firstNotificationTime + TimeInterval(interval)
+                    from: firstNotificationTime + TimeInterval(elapsedTime)
                 )
-                trigger.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+                triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
             }
             
         case .day:
@@ -169,30 +181,55 @@ extension Note {
                 [.minute, .hour, .second],
                 from: firstNotificationTime
             )
-            trigger.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+            triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
             
         case .week:
             let dateComponents: DateComponents = Calendar.current.dateComponents(
                 [.minute, .hour, .weekday, .second],
                 from: firstNotificationTime
             )
-            trigger.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+            triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
             
         case .month:
             let dateComponents: DateComponents = Calendar.current.dateComponents(
                 [.minute, .hour, .day, .second],
                 from: firstNotificationTime
             )
-            trigger.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+            triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
             
         case .never:
             fallthrough
             
         default:
-            trigger = []
+            triggers = []
         }
         
-        return trigger
+        
+        
+        // night break safe guard
+        let nightStartHour = Calendar.current.component(.hour, from: Config.shared.nightStart)
+        let nightStartMinute = Calendar.current.component(.minute, from: Config.shared.nightStart)
+        let nightEndHour = Calendar.current.component(.hour, from: Config.shared.nightStart)
+        let nightEndMinute = Calendar.current.component(.minute, from: Config.shared.nightStart)
+        for trigger in triggers {
+            if let tmp = trigger as? UNCalendarNotificationTrigger {
+                if let tmphour = tmp.dateComponents.hour {
+                    if (tmphour < nightStartHour) || (tmphour == nightStartHour && tmp.dateComponents.minute! <= nightStartMinute)  {
+                        if (tmphour > nightEndHour) || (tmphour == nightEndHour && tmp.dateComponents.minute! >= nightEndMinute)  {
+                            safetriggers.append(trigger)
+                        }
+                    }
+                } else {
+                    if (tmp.dateComponents.minute! <= nightStartMinute) {
+                        if (tmp.dateComponents.minute! >= nightEndMinute) {
+                            safetriggers.append(trigger)
+                        }
+                    }
+                }
+            }
+        }
+        
+        return safetriggers
     }
     
     static let previewNotes: [Note] = {
