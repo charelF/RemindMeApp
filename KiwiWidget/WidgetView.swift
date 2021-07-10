@@ -10,35 +10,60 @@ import SwiftUI
 struct WidgetView: View {
     
     var notes: [Note]
+    var displayNotes: [Note] {
+        get {
+            let sortedPriorityNotes = notes.sorted(by: { $0.priority > $1.priority })
+            switch family {
+                
+            case .systemLarge:
+                guard notes.count > 10 else {
+                    return notes
+                }
+                return sortedPriorityNotes[0...9].sorted(by: { $0.timestamp!.timeIntervalSince1970 < $1.timestamp!.timeIntervalSince1970 })
+            
+            case .systemSmall, .systemMedium:
+                fallthrough
+            
+            @unknown default:
+                guard notes.count > 5 else {
+                    return notes
+                }
+                return sortedPriorityNotes[0...4].sorted(by: { $0.timestamp!.timeIntervalSince1970 < $1.timestamp!.timeIntervalSince1970 })
+            }
+        }
+    }
     
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.widgetFamily) var family
     
     // Notes
     // - List not supported, so we have to use Vstack
     
+    
+    
     var body: some View {
-        Color.secondary.opacity(0.2).overlay(
         ZStack(alignment: .top) {
+            Color.secondary.opacity(0.2)
             VStack(spacing: 0) {
                 Divider()
-                ForEach(notes, id: \.self) { note in
+                ForEach(displayNotes, id: \.self) { note in
                     LazyVStack(alignment: .leading) {
                         Text("\(note.content ?? "empty")")
-                            .lineLimit(2)
+                            .lineLimit(
+                                notes.count > 2 ? 1 : 2
+                            )
                             .foregroundColor(Note.priorityToColor(priority: Int(note.priority)))
                             .padding(.horizontal, 8)
-                            .padding(.top, 5)
-                            .padding([.bottom], -1)
+                            .padding(.top, 4.5)
+                            .padding([.bottom], -1.5)
                             .font(.subheadline)
-
-                            
                         Divider()
                     }
                     .background(Note.priorityToColor(priority: Int(note.priority)).opacity(0.05))
                     .background(getBackgroundColor()).opacity(1)
                 }
             }
-        })
+        }
     }
     
     private func getBackgroundColor() -> Color {
@@ -54,15 +79,7 @@ struct WidgetView: View {
 struct WidgetView_Previews: PreviewProvider {
     static var previews: some View {
         WidgetView(
-            notes: {
-                let newItem = Note(context:
-                    PersistenceController.preview.container.viewContext)
-                newItem.timestamp = Date()
-                newItem.content = "Note content"
-                newItem.priority = Int16(0)
-                newItem.id = UUID()
-                return [newItem]
-            }()
+            notes: Note.previewNotes
         ).previewLayout(.fixed(width: 160, height: 160))
     }
 }

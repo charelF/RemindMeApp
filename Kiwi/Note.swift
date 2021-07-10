@@ -104,7 +104,6 @@ extension Note {
         })
     }
     
-    
     func createNotificationTriggers(interval: Interval) -> [UNNotificationTrigger] {
         var trigger: [UNNotificationTrigger] = []
         var firstNotificationTime = Date()
@@ -195,6 +194,18 @@ extension Note {
         
         return trigger
     }
+    
+    static let previewNotes: [Note] = {
+        let pvc = PersistenceController.preview.container.viewContext
+        var notes = [Note]()
+        notes.append(Note(context: pvc, content: "Short note"))
+        notes.append(Note(context: pvc, content: "This is a longer note with a higher priority, it may span 2 columns"))
+        notes.append(Note(context: pvc, content: "Yet another note"))
+        notes[0].priority = 0
+        notes[1].priority = 1
+        notes[2].priority = 2
+        return notes
+    }()
 }
 
 

@@ -28,7 +28,7 @@ struct PersistenceController {
         for i in 0..<10 {
             let newItem = Note(context: viewContext)
             newItem.timestamp = Date()
-            newItem.content = "Note content"
+            newItem.content = "Note Content"
             newItem.priority = Int16(i)
             newItem.id = UUID()
         }
@@ -77,20 +77,6 @@ struct PersistenceController {
     
     // up until here, everyhting was given by CoreData sample project template
     // now come my own functions
-    
-//    func addNote(_ noteContent: String) {
-//        
-//        
-//        
-//        let newNote = 
-//        newNote.timestamp = Date()
-//        newNote.content = noteContent
-//        newNote.id = UUID()
-//
-//        
-//        
-//        return
-//    }
     
     func save() {
         do {
