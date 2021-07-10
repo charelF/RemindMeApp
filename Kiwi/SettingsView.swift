@@ -53,7 +53,6 @@ struct SettingsView: View {
                             .navigationBarHidden(true)
                         }
                         
-
                         switch config.priorityIntervals[i] {
                         case .ten_minutes, .never:
                             EmptyView()

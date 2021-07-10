@@ -21,7 +21,8 @@ enum Interval: String, Equatable, CaseIterable {
 
 class Config: ObservableObject {
     
-    // we do not use singleton since it is an ObservableObject
+    // singleton despite ObservableObject, could be problematic
+    static let shared = Config()
     
     // night break
     @Published var nightBreak: Bool
@@ -57,6 +58,14 @@ class Config: ObservableObject {
         dateComponents.minute = minute
         date = calendar.date(from: dateComponents)
         return date
+    }
+    
+    func getInterval(priority: Int) -> Interval {
+        guard priority < Config.NUMPRIO && priority > 0 else {
+            print("Invalid priority")
+            return .day
+        }
+        return self.priorityIntervals[priority]
     }
     
     init() {

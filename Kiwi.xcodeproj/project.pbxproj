@@ -154,12 +154,12 @@
 				A2957A47268EF739005DF8C3 /* SettingsView.swift */,
 				A2957A45268EF638005DF8C3 /* NotesView.swift */,
 				A2957A43268EF2C7005DF8C3 /* Note.swift */,
-				A2B3659A268C4BC100284561 /* Assets.xcassets */,
 				A2B3659F268C4BC100284561 /* Persistence.swift */,
 				A2957A492692ECB9005DF8C3 /* Config.swift */,
 				A2B365A4268C4BC100284561 /* Info.plist */,
 				A2B365A1268C4BC100284561 /* Kiwi.xcdatamodeld */,
 				A2957A722694E6CB005DF8C3 /* Kiwi.entitlements */,
+				A2B3659A268C4BC100284561 /* Assets.xcassets */,
 				A2B3659C268C4BC100284561 /* Preview Content */,
 			);
 			path = Kiwi;

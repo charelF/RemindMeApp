@@ -14,7 +14,7 @@ import UserNotifications
 struct KiwiApp: App {
     let persistenceController = PersistenceController.shared
     
-    @ObservedObject var config = Config()
+    @ObservedObject var config = Config.shared
     
     init() {
         
@@ -32,7 +32,6 @@ struct KiwiApp: App {
         WindowGroup {
             ContentView(config: config)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
-
         }
     }
 }
