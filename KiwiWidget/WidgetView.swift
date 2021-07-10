@@ -26,10 +26,12 @@ struct WidgetView: View {
                         Text("\(note.content ?? "empty")")
                             .lineLimit(2)
                             .foregroundColor(Note.priorityToColor(priority: Int(note.priority)))
-                            .padding(.horizontal)
+                            .padding(.horizontal, 8)
                             .padding(.top, 5)
                             .padding([.bottom], -1)
-                            .font(.footnote)
+                            .font(.subheadline)
+
+                            
                         Divider()
                     }
                     .background(Note.priorityToColor(priority: Int(note.priority)).opacity(0.05))
