@@ -58,8 +58,8 @@ extension Note {
     
     func deleteNotifications() {
         let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: [self.id!.uuidString])
-        notificationCenter.removeDeliveredNotifications(withIdentifiers: [self.id!.uuidString])
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: self.notificationids!)
+        notificationCenter.removeDeliveredNotifications(withIdentifiers: self.notificationids!)
     }
     
     func addNotifications() {
@@ -88,40 +88,21 @@ extension Note {
                     print(error!)
                 }
             }
-            notificationids!.append(notificationid)
+            self.notificationids!.append(notificationid)
         }
+        
+        notificationCenter.getPendingNotificationRequests(completionHandler: { (notifications) in
+            print("Number of pending notifications \(notifications.count)")
+            for request in notifications {
+                if let tmp = request.trigger as? UNCalendarNotificationTrigger {
+                    print(String(describing: tmp.nextTriggerDate()))
+                }
+                if let tmp = request.trigger as? UNTimeIntervalNotificationTrigger {
+                    print(String(describing: tmp.nextTriggerDate()))
+                }
+            }
+        })
     }
-        
-        // DEBUG
-//        notificationCenter.getPendingNotificationRequests(completionHandler: { (notifications) in
-//            print("Number of pending notifications \(notifications.count)")
-//        })
-        
-//        UNUserNotificationCenter.current()
-//        .getPendingNotificationRequests(completionHandler: { requests in
-//          for (index, request) in requests.enumerated() {
-//            print("%%% notification: \(index) \(request.identifier) \(String(describing: request.trigger))")
-//            print("[][][] Next trigger date")
-//            if let tt = request.trigger as? UNCalendarNotificationTrigger {
-//                print(tt.nextTriggerDate())
-//            }
-//            if let tt = request.trigger as? UNTimeIntervalNotificationTrigger {
-//                print(tt.nextTriggerDate())
-//            }
-//            print("[][][]")
-//
-//          }
-//          }
-        
-//    }
-    
-//    func updateNotifications(interval: Interval) {
-//        // delete current pending notifications
-//        self.deleteNotifications()
-//
-//        // create new notifications
-//
-//    }
     
     
     func createNotificationTriggers(interval: Interval) -> [UNNotificationTrigger] {

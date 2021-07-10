@@ -70,7 +70,6 @@ struct NotesView: View {
             guard !noteContent.isEmpty else {
                 return
             }
-            
             _ = Note(
                 context: viewContext,
                 content: noteContent
@@ -82,10 +81,12 @@ struct NotesView: View {
     }
 
     private func updateNotePriority(_ note: Note) {
-        note.changePriority()
-        note.deleteNotifications()
-        note.addNotifications()
-        PersistenceController.shared.save()
+        withAnimation {
+            note.deleteNotifications()
+            note.changePriority()
+            note.addNotifications()
+            PersistenceController.shared.save()
+        }
     }
 
     private func deleteNotes(offsets: IndexSet) {
