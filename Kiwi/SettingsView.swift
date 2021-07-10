@@ -11,33 +11,23 @@ struct SettingsView: View {
     
     @ObservedObject var config: Config
     
+    @Environment(\.managedObjectContext) private var viewContext
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true)],
+        animation: .default)
+    private var notes: FetchedResults<Note>
+    
     var body: some View {
         NavigationView {
             List {
                 Section(header: Text("General")) {
                     
                     Toggle(isOn: $config.showNotificationTime) {
-                        Text("Show reminder description below note")
+                        Text("Show note description")
                     }
                     
                     Toggle(isOn: $config.showCreationTime) {
-                        Text("Show creation date below note")
-                    }
-                    
-                    Toggle(isOn: $config.nightBreak.animation()) {
-                        Text("Sleep mode")
-                    }
-                    
-                    if config.nightBreak {
-                        HStack {
-                            DatePicker(selection: $config.nightStart, displayedComponents: .hourAndMinute) {
-                                Text("From").frame(maxWidth: .infinity, alignment: .leading)
-                            }
-                            DatePicker(selection: $config.nightEnd, displayedComponents: .hourAndMinute) {
-                                Text("until").frame(maxWidth: .infinity, alignment: .center)
-                            }
-                        }
-                        
+                        Text("Show note creation date")
                     }
                 }
                 
@@ -51,6 +41,7 @@ struct SettingsView: View {
                             }
                             .navigationBarTitle("")
                             .navigationBarHidden(true)
+                            
                         }
                         
                         switch config.priorityIntervals[i] {
@@ -68,10 +59,19 @@ struct SettingsView: View {
             .navigationBarTitle("")
             .navigationBarHidden(true)
         }
+        // save the settings if we leave the app (goes away from foreground)
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
             config.save()
         }
-        
+        .onDisappear { updateAllNotes() }
+    }
+    
+    private func updateAllNotes() {
+        for note in notes {
+            note.deleteNotifications()
+            note.addNotifications()
+            PersistenceController.shared.save()
+        }
     }
 }
 
