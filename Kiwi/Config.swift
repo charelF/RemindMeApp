@@ -46,9 +46,6 @@ class Config: ObservableObject {
     @Published var showCreationTime: Bool
     @Published var showNotificationTime: Bool
     
-    
-    static let NUMPRIO = 3
-    
     // static functions
     static func createTime(hour: Int, minute: Int) -> Date? {
         let calendar = Calendar(identifier: .gregorian)
@@ -61,7 +58,7 @@ class Config: ObservableObject {
     }
     
     func getInterval(priority: Int) -> Interval {
-        guard priority < Config.NUMPRIO && priority > 0 else {
+        guard priority < Config.priorityCount && priority >= 0 else {
             print("Invalid priority")
             return .day
         }

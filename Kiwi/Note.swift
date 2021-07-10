@@ -46,6 +46,10 @@ extension Note {
         self.priority %= Int16(Note.priorityCount)
     }
     
+    func describePriority() -> String {
+        return Config.shared.priorityIntervals[Int(self.priority)].rawValue
+    }
+    
     convenience init(context: NSManagedObjectContext, content: String) {
         self.init(context: context)
         self.content = content
@@ -111,19 +115,20 @@ extension Note {
         var triggers: [UNNotificationTrigger] = []
         var firstNotificationTime = Date()
         
-        // TODO: below code is very ugly ---
+        
         var executed = false
-        for i in 0..<Config.NUMPRIO {
+        for i in 0..<Config.priorityCount {
             if Config.shared.priorityIntervals[i] == interval {
                 firstNotificationTime = Config.shared.priorityDates[i]
                 executed = true
             }
         }
         guard executed else {
-            print("--- Could not create notification")
+            print("--- Could not create notification ---")
+            print(interval)
+            print(self.priority)
             return []
         }
-        // TODO ---
         
         switch interval {
         

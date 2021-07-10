@@ -40,7 +40,7 @@ struct NotesView: View {
                                 }
                                 if config.showNotificationTime {
                                     Image(systemName: "bell")
-                                    Text("\(config.priorityIntervals[Int(note.priority) % Config.NUMPRIO].rawValue)")
+                                    Text("\(note.describePriority())")
                                 }
                                 Spacer() // (1)
                             }
