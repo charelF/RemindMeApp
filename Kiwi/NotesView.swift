@@ -68,83 +68,44 @@ struct NotesView: View {
         }
     }
     
-//    private func addNote() {
-//        withAnimation {
-//            if noteContent == "" {
-//                return
-//            } else {
-//                let newNote = Note(context: viewContext)
-//                newNote.timestamp = Date()
-//                newNote.content = noteContent
-//                newNote.id = UUID()
-//                noteContent = ""
-//
-//                do {
-//                    try viewContext.save()
-//                } catch {
-//                    // Replace this implementation with code to handle the error appropriately.
-//                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//                    let nsError = error as NSError
-//                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-//                }
-//                return
-//            }
-//        }
-//    }
-    
     private func addNote() {
         withAnimation {
-            PersistenceController.shared.addNote(noteContent)
+            guard !noteContent.isEmpty else {
+                return
+            }
+            
+            _ = Note(
+                context: viewContext,
+                content: noteContent
+            )
+            PersistenceController.shared.save()
+            
+            noteContent = ""
         }
-        noteContent = ""
+        
     }
     
-//    private func deleteNotes() {
-//        withAnimation {
-//            PersistenceController.shared.addNote(noteContent)
-//        }
-//        noteContent = ""
-//    }
-    
     private func changePriority(_ note: Note) {
-        note.priority += 1
-        note.priority %= Int16(Config.NUMPRIO) // ugly
-        
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-        WidgetCenter.shared.reloadAllTimelines()
-        return
+        note.changePriority()
+        PersistenceController.shared.save()
     }
 
     private func deleteNotes(offsets: IndexSet) {
         withAnimation {
+            print(offsets.first)
             offsets.map { notes[$0] }.forEach(viewContext.delete)
             
             // delete delivered and scheduled notifications for these notes
             for i in offsets {
+                print(i)
                 if let noteUUID = notes[i].id {
                     let notificationCenter = UNUserNotificationCenter.current()
                     notificationCenter.removePendingNotificationRequests(withIdentifiers: [noteUUID.uuidString])
                     notificationCenter.removeDeliveredNotifications(withIdentifiers: [noteUUID.uuidString])
                 }
             }
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+            PersistenceController.shared.save()
         }
-        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func updateNotifications(_ note: Note) {

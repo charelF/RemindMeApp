@@ -21,6 +21,8 @@ enum Interval: String, Equatable, CaseIterable {
 
 class Config: ObservableObject {
     
+    // we do not use singleton since it is an ObservableObject
+    
     // night break
     @Published var nightBreak: Bool
     @Published var nightStart: Date
@@ -36,14 +38,29 @@ class Config: ObservableObject {
         "Mid priority",
         "High priority",
     ]
-    static let NUMPRIO: Int = 3
+    static var priorityCount: Int = 3
+    static var defaultPriority: Int = 0
     
     // other settings
     @Published var showCreationTime: Bool
     @Published var showNotificationTime: Bool
     
+    
+    static let NUMPRIO = 3
+    
+    // static functions
+    static func createTime(hour: Int, minute: Int) -> Date? {
+        let calendar = Calendar(identifier: .gregorian)
+        let date: Date?
+        var dateComponents = DateComponents()
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+        date = calendar.date(from: dateComponents)
+        return date
+    }
+    
     init() {
-        // default initialiser to be used in content view providers and for first run
+        
         self.nightBreak = true
         self.nightStart = Config.createTime(hour: 22, minute: 00) ?? Date()
         self.nightEnd = Config.createTime(hour: 07, minute: 59) ?? Date()
@@ -62,29 +79,15 @@ class Config: ObservableObject {
         
         self.showCreationTime = true
         self.showNotificationTime = true
-    }
-    
-    static func firstLaunch() -> Config {
-        // on first launch, we use the default values from initialiser
-        let config = Config()
         
-        // we then save them to userdefaults for subsequent launches
-        config.save()
-        return config
-    }
-    
-    static func createTime(hour: Int, minute: Int) -> Date? {
-        let calendar = Calendar(identifier: .gregorian)
-        let date: Date?
-        var dateComponents = DateComponents()
-        dateComponents.hour = hour
-        dateComponents.minute = minute
-        date = calendar.date(from: dateComponents)
-        return date
-    }
-    
-    static func save(config: Config) {
-        return config.save()
+        // on first launch, we write default config to user defaults
+        // on subsequent launches, we overwrite default config from user defaults
+        if !UserDefaults.standard.bool(forKey: "launchedBefore") {
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            self.save()
+        } else {
+            self.load()
+        }
     }
     
     func save() {
@@ -102,34 +105,30 @@ class Config: ObservableObject {
         UserDefaults.standard.set(showCreationTime, forKey: "showCreationTime")
     }
     
-    static func load() -> Config {
-        // first initialise the object
-        let config = Config()
+    func load() {
         
         // then we load the saved settings from userdefaults
         if let priorityDatesAnyOpt = UserDefaults.standard.array(forKey: "priorityDates") {
             if let priorityDatesAny = priorityDatesAnyOpt as? [Date] {
-                config.priorityDates = priorityDatesAny
+                self.priorityDates = priorityDatesAny
             }
         }
             
         if let priorityIntervalsAnyOpt = UserDefaults.standard.array(forKey: "priorityIntervals") {
             if let priorityIntervalsAny = priorityIntervalsAnyOpt as? [String] {
-                config.priorityIntervals = priorityIntervalsAny.map { Interval(rawValue: $0) ?? .day }
+                self.priorityIntervals = priorityIntervalsAny.map { Interval(rawValue: $0) ?? .day }
             }
         }
             
-        config.nightBreak = UserDefaults.standard.bool(forKey: "nightBreak")
+        self.nightBreak = UserDefaults.standard.bool(forKey: "nightBreak")
         if let nightStart = UserDefaults.standard.object(forKey: "nightStart") as? Date {
-            config.nightStart = nightStart
+            self.nightStart = nightStart
         }
         if let nightEnd = UserDefaults.standard.object(forKey: "nightEnd") as? Date {
-            config.nightEnd = nightEnd
+            self.nightEnd = nightEnd
         }
         
-        config.showNotificationTime = UserDefaults.standard.bool(forKey: "showNotificationTime")
-        config.showCreationTime = UserDefaults.standard.bool(forKey: "showCreationTime")
-        
-        return config
+        self.showNotificationTime = UserDefaults.standard.bool(forKey: "showNotificationTime")
+        self.showCreationTime = UserDefaults.standard.bool(forKey: "showCreationTime")
     }
 }

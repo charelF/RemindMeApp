@@ -37,6 +37,23 @@ extension Note {
         formatter.timeStyle = .short
         return formatter
     }()
+    
+    static let defaultPriority: Int = 0
+    static let priorityCount: Int = 3
+    
+    func changePriority() {
+        self.priority += 1
+        self.priority %= Int16(Note.priorityCount)
+    }
+    
+    
+    
+    convenience init(context: NSManagedObjectContext, content: String) {
+        self.init(context: context)
+        self.content = content
+        self.timestamp = Date()
+        self.id = UUID()
+    }
 }
 
 
