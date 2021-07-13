@@ -21,6 +21,9 @@ struct NotesView: View {
     private var notes: FetchedResults<Note>
     @State private var noteContent: String = ""
     
+    @State private var customNotificationPopover = false
+    @State private var customNotificationDate: Date = Date()
+    
     var body: some View {
         VStack {
             List {
@@ -49,6 +52,11 @@ struct NotesView: View {
                             .padding(.bottom, 0.2)
                         }
                     }
+                    .contextMenu(ContextMenu(menuItems: {
+                        Button("Custom notification") {
+                            customNotificationPopover = true
+                        }
+                    }))
                     .contentShape(Rectangle()) // This together with (1) makes whole area clickable
                     .foregroundColor(Note.priorityToColor(note: note))
                     .onTapGesture { updateNotePriority(note) }
@@ -62,6 +70,10 @@ struct NotesView: View {
                 onCommit:addNote
             )}
             .listStyle(GroupedListStyle())
+        }
+        .sheet(isPresented: $customNotificationPopover) {
+            DatePicker(selection: $customNotificationDate, label: { /*@START_MENU_TOKEN@*/Text("Date")/*@END_MENU_TOKEN@*/ })
+                .padding()
         }
     }
     
@@ -106,6 +118,7 @@ struct NotesView_Previews: PreviewProvider {
     static var previews: some View {
         NotesView(
             config: Config()
-        ).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        )
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

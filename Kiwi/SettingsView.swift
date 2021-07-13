@@ -19,13 +19,11 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationView {
-            List {
+            Form {
                 Section(header: Text("General")) {
-                    
                     Toggle(isOn: $config.showNotificationTime) {
                         Text("Show note description")
                     }
-                    
                     Toggle(isOn: $config.showCreationTime) {
                         Text("Show note creation date")
                     }
@@ -39,9 +37,6 @@ struct SettingsView: View {
                             ForEach(Interval.allCases, id: \.self) { value in
                                 Text(value.rawValue).tag(value)
                             }
-                            .navigationBarTitle("")
-                            .navigationBarHidden(true)
-                            
                         }
                         
                         switch config.priorityIntervals[i] {
@@ -55,9 +50,7 @@ struct SettingsView: View {
                     .listRowBackground(Note.priorityToColor(priority: i).opacity(0.05))
                 }
             }
-            .listStyle(GroupedListStyle())
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
+            .navigationTitle("Settings")
         }
         // save the settings if we leave the app (goes away from foreground)
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in

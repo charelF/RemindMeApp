@@ -26,11 +26,7 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         for i in 0..<10 {
-            let newItem = Note(context: viewContext)
-            newItem.timestamp = Date()
-            newItem.content = "Note Content"
-            newItem.priority = Int16(i)
-            newItem.id = UUID()
+            let note = Note(context: viewContext, content: "test")
         }
         do {
             try viewContext.save()
