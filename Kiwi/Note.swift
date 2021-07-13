@@ -34,16 +34,27 @@ extension Note {
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
-        formatter.timeStyle = .medium
+        formatter.timeStyle = .short
         return formatter
     }()
     
     static let defaultPriority: Int = 0
-    static let priorityCount: Int = 3
+    static let priorityCount: Int = 4
     
     func changePriority() {
-        self.priority += 1
-        self.priority %= Int16(Note.priorityCount)
+        // legacy function
+        changePriority(notifyOn: nil)
+    }
+    
+    func changePriority(notifyOn date: Date?) {
+        if let _ = date {
+            self.priority = Int16(Note.priorityCount - 1)
+        } else {
+            self.customDate =  nil
+            self.priority += 1
+            // highest priority reserved for custom dates
+            self.priority %= Int16(Note.priorityCount - 1)
+        }
     }
     
     func getColor() -> Color {
@@ -51,6 +62,11 @@ extension Note {
     }
     
     func describePriority() -> String {
+        if self.priority == Int16(Note.priorityCount - 1) {
+            if let date = self.customDate {
+                return Note.dateFormatter.string(from: date)
+            }
+        }
         return Config.shared.priorityIntervals[Int(self.priority)].rawValue
     }
     
@@ -71,18 +87,35 @@ extension Note {
     }
     
     func addNotifications() {
-        let interval = Config.shared.getInterval(priority: Int(self.priority))
+        // legacy function
+        addNotifications(notifyOn: nil)
+    }
+    
+    func addNotifications(notifyOn date: Date?) {
         let notificationCenter = UNUserNotificationCenter.current()
         
         let content = UNMutableNotificationContent()
         content.title = self.content ?? "Empty Note"
         content.sound = UNNotificationSound.default
         
-        let triggers: [UNNotificationTrigger] = createNotificationTriggers(interval: interval)
-        
-        
         var notificationid: String
         var request: UNNotificationRequest
+        let triggers: [UNNotificationTrigger]
+        
+        if let safeDate = date {
+            self.customDate = safeDate
+            let dateComponents: DateComponents = Calendar.current.dateComponents(
+                [.year, .month, .day, .hour, .minute],
+                from: safeDate
+            )
+            triggers = [
+                UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+            ]
+        } else {
+            self.customDate = nil
+            let interval = Config.shared.getInterval(priority: Int(self.priority))
+            triggers = createNotificationTriggers(interval: interval)
+        }
         
         for trigger in triggers {
             notificationid = "Kiwi_\(UUID().uuidString)"

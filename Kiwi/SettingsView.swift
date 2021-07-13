@@ -61,6 +61,9 @@ struct SettingsView: View {
     
     private func updateAllNotes() {
         for note in notes {
+            guard note.priority != 3 else {
+                continue
+            }
             note.deleteNotifications()
             note.addNotifications()
             PersistenceController.shared.save()

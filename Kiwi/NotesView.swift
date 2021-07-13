@@ -21,10 +21,9 @@ struct NotesView: View {
     private var notes: FetchedResults<Note>
     @State private var noteContent: String = ""
     
-    @State private var customNotificationPopover = false
-    @State private var customNoteRow = false
-    @State private var customNoteRowID: UUID? = nil
-    @State private var customNotificationDate: Date = Date()
+    @State private var customDateNote: Note? = nil
+    @State private var showCustomDateSheet = false
+    @State private var customDate: Date = Date()
     
     var body: some View {
         List {
@@ -52,30 +51,18 @@ struct NotesView: View {
                         .foregroundColor(Color.gray.opacity(0.6))
                         .padding(.bottom, 0.2)
                     }
-                    
-                        if note.id == customNoteRowID && customNoteRow {
-                            DatePicker(selection: $customNotificationDate, label: { Text("Reminder at") })
-//                            .padding(.bottom, 0.2)
-////                            .onChange(of: customNotificationDate) { _ in
-//////                                updateNotePriority(note)
-//////                                customNoteRow = false
-//////                                print(1)
-////                            }
-                        }
                 }
                 .contentShape(Rectangle()) // This together with (1) makes whole area clickable
-                .foregroundColor(getColor(for: note))
+                .foregroundColor(note.getColor())
                 .onTapGesture {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     updateNotePriority(note)
-                    customNoteRow = false
                 }
-                .listRowBackground(getColor(for: note).opacity(0.05))
+                .listRowBackground(note.getColor().opacity(0.05))
                 .onLongPressGesture() {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-//                    customNoteRow = true
-//                    customNoteRowID = note.id
-                    customNotificationPopover = true
+                    customDateNote = note
+                    showCustomDateSheet = true
                 }
             }
             .onDelete(perform: deleteNotes)
@@ -87,14 +74,26 @@ struct NotesView: View {
         )}
         .listStyle(InsetGroupedListStyle())
         .animation(.default)
-        .sheet(isPresented: $customNotificationPopover) {
-            NavigationView {
-                DatePicker(selection: $customNotificationDate, label: { Text("Date") })
-                    .padding()
-                Text("List of notifications")
-                .navigationBarTitle(Text("Notifications"), displayMode: .inline)
+        .sheet(isPresented: $showCustomDateSheet) {
+            NavigationView{
+                VStack {
+                    DatePicker("Reminder on", selection: $customDate)
+                }
+                .padding()
+                .navigationBarItems(leading: Button(action: {
+                    showCustomDateSheet.toggle()
+                    }) {
+                        Text("Cancel")
+                    }, trailing: Button(action: {
+                        createCustomNotePriority(customDateNote)
+                        customDateNote = nil
+                        showCustomDateSheet.toggle()
+                    }) {
+                        Text("Add")
+                    }
+                )
             }
-        }
+    }
     }
     
     private func addNote() {
@@ -111,6 +110,17 @@ struct NotesView: View {
             noteContent = ""
         }
     }
+    
+    private func createCustomNotePriority(_ optionalNote: Note?) {
+        withAnimation {
+            if let note = optionalNote {
+                note.deleteNotifications()
+                note.changePriority(notifyOn: customDate)
+                note.addNotifications(notifyOn: customDate)
+                PersistenceController.shared.save()
+            }
+        }
+    }
 
     private func updateNotePriority(_ note: Note) {
         withAnimation {
@@ -118,14 +128,6 @@ struct NotesView: View {
             note.changePriority()
             note.addNotifications()
             PersistenceController.shared.save()
-        }
-    }
-    
-    private func getColor(for note: Note) -> Color {
-        if note.id == customNoteRowID && customNoteRow {
-            return Color.blue
-        } else {
-            return note.getColor()
         }
     }
 
