@@ -22,58 +22,78 @@ struct NotesView: View {
     @State private var noteContent: String = ""
     
     @State private var customNotificationPopover = false
+    @State private var customNoteRow = false
+    @State private var customNoteRowID: UUID? = nil
     @State private var customNotificationDate: Date = Date()
     
     var body: some View {
-        VStack {
-            List {
-                ForEach(notes) { note in
-                    VStack(alignment: .leading) {
+        List {
+            ForEach(notes) { note in
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("\(note.content ?? "")")
+                            .padding(.vertical, 0.2)
+                        Spacer() // (1)
+                    }
+                    
+                    if config.showCreationTime || config.showNotificationTime {
                         HStack {
-                            Text("\(note.content ?? "")")
-                                .padding(.vertical, 0.2)
+                            if config.showCreationTime {
+                                Image(systemName: "calendar")
+                                Text("\(note.timestamp!, formatter: Note.dateFormatter)")
+                            }
+                            if config.showNotificationTime {
+                                Image(systemName: "bell")
+                                Text("\(note.describePriority())")
+                            }
                             Spacer() // (1)
                         }
-                        
-                        if config.showCreationTime || config.showNotificationTime {
-                            HStack {
-                                if config.showCreationTime {
-                                    Image(systemName: "calendar")
-                                    Text("\(note.timestamp!, formatter: Note.dateFormatter)")
-                                }
-                                if config.showNotificationTime {
-                                    Image(systemName: "bell")
-                                    Text("\(note.describePriority())")
-                                }
-                                Spacer() // (1)
-                            }
-                            .font(.footnote)
-                            .foregroundColor(Color.gray.opacity(0.6))
-                            .padding(.bottom, 0.2)
-                        }
+                        .font(.footnote)
+                        .foregroundColor(Color.gray.opacity(0.6))
+                        .padding(.bottom, 0.2)
                     }
-                    .contextMenu(ContextMenu(menuItems: {
-                        Button("Custom notification") {
-                            customNotificationPopover = true
+                    
+                        if note.id == customNoteRowID && customNoteRow {
+                            DatePicker(selection: $customNotificationDate, label: { Text("Reminder at") })
+//                            .padding(.bottom, 0.2)
+////                            .onChange(of: customNotificationDate) { _ in
+//////                                updateNotePriority(note)
+//////                                customNoteRow = false
+//////                                print(1)
+////                            }
                         }
-                    }))
-                    .contentShape(Rectangle()) // This together with (1) makes whole area clickable
-                    .foregroundColor(Note.priorityToColor(note: note))
-                    .onTapGesture { updateNotePriority(note) }
-                    .listRowBackground(Note.priorityToColor(note: note).opacity(0.05))
                 }
-                .onDelete(perform: deleteNotes)
+                .contentShape(Rectangle()) // This together with (1) makes whole area clickable
+                .foregroundColor(getColor(for: note))
+                .onTapGesture {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    updateNotePriority(note)
+                    customNoteRow = false
+                }
+                .listRowBackground(getColor(for: note).opacity(0.05))
+                .onLongPressGesture() {
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+//                    customNoteRow = true
+//                    customNoteRowID = note.id
+                    customNotificationPopover = true
+                }
+            }
+            .onDelete(perform: deleteNotes)
 
-            TextField(
-                "New Note",
-                text: $noteContent,
-                onCommit:addNote
-            )}
-            .listStyle(GroupedListStyle())
-        }
+        TextField(
+            "New Note",
+            text: $noteContent,
+            onCommit:addNote
+        )}
+        .listStyle(InsetGroupedListStyle())
+        .animation(.default)
         .sheet(isPresented: $customNotificationPopover) {
-            DatePicker(selection: $customNotificationDate, label: { /*@START_MENU_TOKEN@*/Text("Date")/*@END_MENU_TOKEN@*/ })
-                .padding()
+            NavigationView {
+                DatePicker(selection: $customNotificationDate, label: { Text("Date") })
+                    .padding()
+                Text("List of notifications")
+                .navigationBarTitle(Text("Notifications"), displayMode: .inline)
+            }
         }
     }
     
@@ -100,6 +120,14 @@ struct NotesView: View {
             PersistenceController.shared.save()
         }
     }
+    
+    private func getColor(for note: Note) -> Color {
+        if note.id == customNoteRowID && customNoteRow {
+            return Color.blue
+        } else {
+            return note.getColor()
+        }
+    }
 
     private func deleteNotes(offsets: IndexSet) {
         withAnimation {
@@ -113,6 +141,8 @@ struct NotesView: View {
         }
     }
 }
+
+
 
 struct NotesView_Previews: PreviewProvider {
     static var previews: some View {

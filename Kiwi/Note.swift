@@ -33,8 +33,8 @@ extension Note {
     
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
         return formatter
     }()
     
@@ -44,6 +44,10 @@ extension Note {
     func changePriority() {
         self.priority += 1
         self.priority %= Int16(Note.priorityCount)
+    }
+    
+    func getColor() -> Color {
+        return Note.priorityToColor(note: self) ?? Color.pink
     }
     
     func describePriority() -> String {

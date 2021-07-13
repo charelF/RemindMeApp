@@ -20,15 +20,6 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("General")) {
-                    Toggle(isOn: $config.showNotificationTime) {
-                        Text("Show note description")
-                    }
-                    Toggle(isOn: $config.showCreationTime) {
-                        Text("Show note creation date")
-                    }
-                }
-                
                 ForEach(0..<3) { i in
                 
                     Section(header: Text(config.priorityDescriptions[i]).foregroundColor(Color.secondary)) {
@@ -48,6 +39,15 @@ struct SettingsView: View {
                     }
                     .foregroundColor(Note.priorityToColor(priority: i))
                     .listRowBackground(Note.priorityToColor(priority: i).opacity(0.05))
+                }
+                
+                Section(header: Text("Additional Info"), footer: Text("Toggle which additional information to show below each note in the list.")) {
+                    Toggle(isOn: $config.showNotificationTime) {
+                        Text("Show reminders")
+                    }
+                    Toggle(isOn: $config.showCreationTime) {
+                        Text("Show date")
+                    }
                 }
             }
             .navigationTitle("Settings")
