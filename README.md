@@ -1,4 +1,4 @@
-# KiwiApp
+# RemindMe
 Experimenting with a Note-Taking app in SwiftUI
 
 | Notes | Settings | Widgets | Notifications |
