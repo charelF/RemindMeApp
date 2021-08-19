@@ -1,6 +1,6 @@
 //
-//  KiwiApp.swift
-//  Kiwi
+//  RemindMeApp.swift
+//  RemindMe
 //
 //  Created by Charel Felten on 30/06/2021.
 //
@@ -11,7 +11,7 @@ import UserNotifications
 
 
 @main
-struct KiwiApp: App {
+struct RemindMeApp: App {
     let persistenceController = PersistenceController.shared
     
     @ObservedObject var config = Config.shared

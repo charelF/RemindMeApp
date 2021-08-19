@@ -1,6 +1,6 @@
 //
 //  Persistence.swift
-//  Kiwi
+//  RemindMe
 //
 //  Created by Charel Felten on 30/06/2021.
 //
@@ -15,8 +15,8 @@ struct PersistenceController {
     static let shared = PersistenceController()
     
     // these are static so we always use the same
-    static let appGroupName = "group.charelfelten.Kiwi"
-    static let SQLiteStoreAppendix = "Kiwi.sqlite"
+    static let appGroupName = "group.charelfelten.RemindMe"
+    static let SQLiteStoreAppendix = "RemindMe.sqlite"
     static let containerURL: URL = {
         FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: PersistenceController.appGroupName)!
@@ -43,7 +43,7 @@ struct PersistenceController {
 
     init(inMemory: Bool = false) {
         
-        container = NSPersistentCloudKitContainer(name: "Kiwi")
+        container = NSPersistentCloudKitContainer(name: "RemindMe")
         
         let storeURL = PersistenceController.containerURL.appendingPathComponent(PersistenceController.SQLiteStoreAppendix)
         let description = NSPersistentStoreDescription(url: storeURL)

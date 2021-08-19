@@ -1,6 +1,6 @@
 //
 //  WidgetView.swift
-//  Kiwi
+//  RemindMe
 //
 //  Created by Charel Felten on 06/07/2021.
 //

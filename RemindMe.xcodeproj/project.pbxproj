@@ -13,27 +13,27 @@
 		A2957A4A2692ECB9005DF8C3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A492692ECB9005DF8C3 /* Config.swift */; };
 		A2957A522693A52F005DF8C3 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2957A512693A52F005DF8C3 /* WidgetKit.framework */; };
 		A2957A542693A52F005DF8C3 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2957A532693A52F005DF8C3 /* SwiftUI.framework */; };
-		A2957A572693A52F005DF8C3 /* KiwiWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A562693A52F005DF8C3 /* KiwiWidget.swift */; };
+		A2957A572693A52F005DF8C3 /* RemindMeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A562693A52F005DF8C3 /* RemindMeWidget.swift */; };
 		A2957A5A2693A532005DF8C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2957A592693A532005DF8C3 /* Assets.xcassets */; };
-		A2957A5C2693A533005DF8C3 /* KiwiWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A2957A582693A52F005DF8C3 /* KiwiWidget.intentdefinition */; };
-		A2957A5D2693A533005DF8C3 /* KiwiWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A2957A582693A52F005DF8C3 /* KiwiWidget.intentdefinition */; };
-		A2957A602693A533005DF8C3 /* KiwiWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A2957A4F2693A52F005DF8C3 /* KiwiWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A2957A5C2693A533005DF8C3 /* RemindMeWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A2957A582693A52F005DF8C3 /* RemindMeWidget.intentdefinition */; };
+		A2957A5D2693A533005DF8C3 /* RemindMeWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A2957A582693A52F005DF8C3 /* RemindMeWidget.intentdefinition */; };
+		A2957A602693A533005DF8C3 /* RemindMeWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A2957A4F2693A52F005DF8C3 /* RemindMeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A2957A66269436DF005DF8C3 /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A65269436DF005DF8C3 /* WidgetView.swift */; };
 		A2957A6726943F5C005DF8C3 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A43268EF2C7005DF8C3 /* Note.swift */; };
 		A2957A6826943F5C005DF8C3 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A45268EF638005DF8C3 /* NotesView.swift */; };
 		A2957A6926943FD9005DF8C3 /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A65269436DF005DF8C3 /* WidgetView.swift */; };
 		A2957A6A26943FEB005DF8C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B3659A268C4BC100284561 /* Assets.xcassets */; };
-		A2957A6B26943FF1005DF8C3 /* Kiwi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2B365A1268C4BC100284561 /* Kiwi.xcdatamodeld */; };
+		A2957A6B26943FF1005DF8C3 /* RemindMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2B365A1268C4BC100284561 /* RemindMe.xcdatamodeld */; };
 		A2957A6D26944011005DF8C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B36598268C4BBF00284561 /* ContentView.swift */; };
 		A2957A6E26944014005DF8C3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A47268EF739005DF8C3 /* SettingsView.swift */; };
 		A2957A6F2694401A005DF8C3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B3659F268C4BC100284561 /* Persistence.swift */; };
 		A2957A702694401E005DF8C3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A492692ECB9005DF8C3 /* Config.swift */; };
-		A2B36597268C4BBF00284561 /* KiwiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B36596268C4BBF00284561 /* KiwiApp.swift */; };
+		A2B36597268C4BBF00284561 /* RemindMeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B36596268C4BBF00284561 /* RemindMeApp.swift */; };
 		A2B36599268C4BBF00284561 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B36598268C4BBF00284561 /* ContentView.swift */; };
 		A2B3659B268C4BC100284561 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B3659A268C4BC100284561 /* Assets.xcassets */; };
 		A2B3659E268C4BC100284561 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B3659D268C4BC100284561 /* Preview Assets.xcassets */; };
 		A2B365A0268C4BC100284561 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B3659F268C4BC100284561 /* Persistence.swift */; };
-		A2B365A3268C4BC100284561 /* Kiwi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2B365A1268C4BC100284561 /* Kiwi.xcdatamodeld */; };
+		A2B365A3268C4BC100284561 /* RemindMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2B365A1268C4BC100284561 /* RemindMe.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +53,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				A2957A602693A533005DF8C3 /* KiwiWidgetExtension.appex in Embed App Extensions */,
+				A2957A602693A533005DF8C3 /* RemindMeWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,18 +65,18 @@
 		A2957A45268EF638005DF8C3 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
 		A2957A47268EF739005DF8C3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A2957A492692ECB9005DF8C3 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		A2957A4F2693A52F005DF8C3 /* KiwiWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KiwiWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2957A4F2693A52F005DF8C3 /* RemindMeWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RemindMeWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2957A512693A52F005DF8C3 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		A2957A532693A52F005DF8C3 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		A2957A562693A52F005DF8C3 /* KiwiWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KiwiWidget.swift; sourceTree = "<group>"; };
-		A2957A582693A52F005DF8C3 /* KiwiWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = KiwiWidget.intentdefinition; sourceTree = "<group>"; };
+		A2957A562693A52F005DF8C3 /* RemindMeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindMeWidget.swift; sourceTree = "<group>"; };
+		A2957A582693A52F005DF8C3 /* RemindMeWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = RemindMeWidget.intentdefinition; sourceTree = "<group>"; };
 		A2957A592693A532005DF8C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2957A5B2693A533005DF8C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2957A65269436DF005DF8C3 /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
-		A2957A722694E6CB005DF8C3 /* Kiwi.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Kiwi.entitlements; path = Kiwi/Kiwi.entitlements; sourceTree = SOURCE_ROOT; };
-		A2957A732694EC1F005DF8C3 /* KiwiWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KiwiWidgetExtension.entitlements; sourceTree = "<group>"; };
-		A2B36593268C4BBF00284561 /* Kiwi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kiwi.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A2B36596268C4BBF00284561 /* KiwiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KiwiApp.swift; sourceTree = "<group>"; };
+		A2957A722694E6CB005DF8C3 /* RemindMe.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = RemindMe.entitlements; path = RemindMe/RemindMe.entitlements; sourceTree = SOURCE_ROOT; };
+		A2957A732694EC1F005DF8C3 /* RemindMeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RemindMeWidgetExtension.entitlements; sourceTree = "<group>"; };
+		A2B36593268C4BBF00284561 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2B36596268C4BBF00284561 /* RemindMeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindMeApp.swift; sourceTree = "<group>"; };
 		A2B36598268C4BBF00284561 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A2B3659A268C4BC100284561 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2B3659D268C4BC100284561 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -114,24 +114,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A2957A552693A52F005DF8C3 /* KiwiWidget */ = {
+		A2957A552693A52F005DF8C3 /* RemindMeWidget */ = {
 			isa = PBXGroup;
 			children = (
 				A2957A65269436DF005DF8C3 /* WidgetView.swift */,
-				A2957A562693A52F005DF8C3 /* KiwiWidget.swift */,
-				A2957A582693A52F005DF8C3 /* KiwiWidget.intentdefinition */,
+				A2957A562693A52F005DF8C3 /* RemindMeWidget.swift */,
+				A2957A582693A52F005DF8C3 /* RemindMeWidget.intentdefinition */,
 				A2957A592693A532005DF8C3 /* Assets.xcassets */,
 				A2957A5B2693A533005DF8C3 /* Info.plist */,
 			);
-			path = KiwiWidget;
+			path = RemindMeWidget;
 			sourceTree = "<group>";
 		};
 		A2B3658A268C4BBF00284561 = {
 			isa = PBXGroup;
 			children = (
-				A2957A732694EC1F005DF8C3 /* KiwiWidgetExtension.entitlements */,
-				A2B36595268C4BBF00284561 /* Kiwi */,
-				A2957A552693A52F005DF8C3 /* KiwiWidget */,
+				A2957A732694EC1F005DF8C3 /* RemindMeWidgetExtension.entitlements */,
+				A2B36595268C4BBF00284561 /* RemindMe */,
+				A2957A552693A52F005DF8C3 /* RemindMeWidget */,
 				A2957A502693A52F005DF8C3 /* Frameworks */,
 				A2B36594268C4BBF00284561 /* Products */,
 			);
@@ -140,16 +140,16 @@
 		A2B36594268C4BBF00284561 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A2B36593268C4BBF00284561 /* Kiwi.app */,
-				A2957A4F2693A52F005DF8C3 /* KiwiWidgetExtension.appex */,
+				A2B36593268C4BBF00284561 /* RemindMe.app */,
+				A2957A4F2693A52F005DF8C3 /* RemindMeWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A2B36595268C4BBF00284561 /* Kiwi */ = {
+		A2B36595268C4BBF00284561 /* RemindMe */ = {
 			isa = PBXGroup;
 			children = (
-				A2B36596268C4BBF00284561 /* KiwiApp.swift */,
+				A2B36596268C4BBF00284561 /* RemindMeApp.swift */,
 				A2B36598268C4BBF00284561 /* ContentView.swift */,
 				A2957A47268EF739005DF8C3 /* SettingsView.swift */,
 				A2957A45268EF638005DF8C3 /* NotesView.swift */,
@@ -157,12 +157,12 @@
 				A2B3659F268C4BC100284561 /* Persistence.swift */,
 				A2957A492692ECB9005DF8C3 /* Config.swift */,
 				A2B365A4268C4BC100284561 /* Info.plist */,
-				A2B365A1268C4BC100284561 /* Kiwi.xcdatamodeld */,
-				A2957A722694E6CB005DF8C3 /* Kiwi.entitlements */,
+				A2B365A1268C4BC100284561 /* RemindMe.xcdatamodeld */,
+				A2957A722694E6CB005DF8C3 /* RemindMe.entitlements */,
 				A2B3659A268C4BC100284561 /* Assets.xcassets */,
 				A2B3659C268C4BC100284561 /* Preview Content */,
 			);
-			path = Kiwi;
+			path = RemindMe;
 			sourceTree = "<group>";
 		};
 		A2B3659C268C4BC100284561 /* Preview Content */ = {
@@ -176,9 +176,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A2957A4E2693A52F005DF8C3 /* KiwiWidgetExtension */ = {
+		A2957A4E2693A52F005DF8C3 /* RemindMeWidgetExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A2957A612693A533005DF8C3 /* Build configuration list for PBXNativeTarget "KiwiWidgetExtension" */;
+			buildConfigurationList = A2957A612693A533005DF8C3 /* Build configuration list for PBXNativeTarget "RemindMeWidgetExtension" */;
 			buildPhases = (
 				A2957A4B2693A52F005DF8C3 /* Sources */,
 				A2957A4C2693A52F005DF8C3 /* Frameworks */,
@@ -188,14 +188,14 @@
 			);
 			dependencies = (
 			);
-			name = KiwiWidgetExtension;
+			name = RemindMeWidgetExtension;
 			productName = KiwiWidgetExtension;
-			productReference = A2957A4F2693A52F005DF8C3 /* KiwiWidgetExtension.appex */;
+			productReference = A2957A4F2693A52F005DF8C3 /* RemindMeWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		A2B36592268C4BBF00284561 /* Kiwi */ = {
+		A2B36592268C4BBF00284561 /* RemindMe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A2B365A7268C4BC100284561 /* Build configuration list for PBXNativeTarget "Kiwi" */;
+			buildConfigurationList = A2B365A7268C4BC100284561 /* Build configuration list for PBXNativeTarget "RemindMe" */;
 			buildPhases = (
 				A2B3658F268C4BBF00284561 /* Sources */,
 				A2B36590268C4BBF00284561 /* Frameworks */,
@@ -207,9 +207,9 @@
 			dependencies = (
 				A2957A5F2693A533005DF8C3 /* PBXTargetDependency */,
 			);
-			name = Kiwi;
+			name = RemindMe;
 			productName = Kiwi;
-			productReference = A2B36593268C4BBF00284561 /* Kiwi.app */;
+			productReference = A2B36593268C4BBF00284561 /* RemindMe.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -229,7 +229,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A2B3658E268C4BBF00284561 /* Build configuration list for PBXProject "Kiwi" */;
+			buildConfigurationList = A2B3658E268C4BBF00284561 /* Build configuration list for PBXProject "RemindMe" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -242,8 +242,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A2B36592268C4BBF00284561 /* Kiwi */,
-				A2957A4E2693A52F005DF8C3 /* KiwiWidgetExtension */,
+				A2B36592268C4BBF00284561 /* RemindMe */,
+				A2957A4E2693A52F005DF8C3 /* RemindMeWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -278,11 +278,11 @@
 				A2957A6D26944011005DF8C3 /* ContentView.swift in Sources */,
 				A2957A6E26944014005DF8C3 /* SettingsView.swift in Sources */,
 				A2957A702694401E005DF8C3 /* Config.swift in Sources */,
-				A2957A5C2693A533005DF8C3 /* KiwiWidget.intentdefinition in Sources */,
+				A2957A5C2693A533005DF8C3 /* RemindMeWidget.intentdefinition in Sources */,
 				A2957A6826943F5C005DF8C3 /* NotesView.swift in Sources */,
-				A2957A572693A52F005DF8C3 /* KiwiWidget.swift in Sources */,
+				A2957A572693A52F005DF8C3 /* RemindMeWidget.swift in Sources */,
 				A2957A6926943FD9005DF8C3 /* WidgetView.swift in Sources */,
-				A2957A6B26943FF1005DF8C3 /* Kiwi.xcdatamodeld in Sources */,
+				A2957A6B26943FF1005DF8C3 /* RemindMe.xcdatamodeld in Sources */,
 				A2957A6F2694401A005DF8C3 /* Persistence.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,13 +294,13 @@
 				A2957A48268EF739005DF8C3 /* SettingsView.swift in Sources */,
 				A2B365A0268C4BC100284561 /* Persistence.swift in Sources */,
 				A2957A4A2692ECB9005DF8C3 /* Config.swift in Sources */,
-				A2B365A3268C4BC100284561 /* Kiwi.xcdatamodeld in Sources */,
+				A2B365A3268C4BC100284561 /* RemindMe.xcdatamodeld in Sources */,
 				A2957A66269436DF005DF8C3 /* WidgetView.swift in Sources */,
 				A2957A46268EF638005DF8C3 /* NotesView.swift in Sources */,
 				A2B36599268C4BBF00284561 /* ContentView.swift in Sources */,
 				A2957A44268EF2C7005DF8C3 /* Note.swift in Sources */,
-				A2957A5D2693A533005DF8C3 /* KiwiWidget.intentdefinition in Sources */,
-				A2B36597268C4BBF00284561 /* KiwiApp.swift in Sources */,
+				A2957A5D2693A533005DF8C3 /* RemindMeWidget.intentdefinition in Sources */,
+				A2B36597268C4BBF00284561 /* RemindMeApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,7 +309,7 @@
 /* Begin PBXTargetDependency section */
 		A2957A5F2693A533005DF8C3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A2957A4E2693A52F005DF8C3 /* KiwiWidgetExtension */;
+			target = A2957A4E2693A52F005DF8C3 /* RemindMeWidgetExtension */;
 			targetProxy = A2957A5E2693A533005DF8C3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -320,16 +320,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = KiwiWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = RemindMeWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V6DK8MURYX;
-				INFOPLIST_FILE = KiwiWidget/Info.plist;
+				INFOPLIST_FILE = RemindMeWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = charelfelten.Kiwi.KiwiWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = charelfelten.RemindMe.RemindMeWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -342,16 +342,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = KiwiWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = RemindMeWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V6DK8MURYX;
-				INFOPLIST_FILE = KiwiWidget/Info.plist;
+				INFOPLIST_FILE = RemindMeWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = charelfelten.Kiwi.KiwiWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = charelfelten.RemindMe.RemindMeWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -481,18 +481,18 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Kiwi/Kiwi.entitlements;
+				CODE_SIGN_ENTITLEMENTS = RemindMe/RemindMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Kiwi/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"RemindMe/Preview Content\"";
 				DEVELOPMENT_TEAM = V6DK8MURYX;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Kiwi/Info.plist;
+				INFOPLIST_FILE = RemindMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = charelfelten.Kiwi;
+				PRODUCT_BUNDLE_IDENTIFIER = charelfelten.RemindMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -505,18 +505,18 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Kiwi/Kiwi.entitlements;
+				CODE_SIGN_ENTITLEMENTS = RemindMe/RemindMe.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Kiwi/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"RemindMe/Preview Content\"";
 				DEVELOPMENT_TEAM = V6DK8MURYX;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Kiwi/Info.plist;
+				INFOPLIST_FILE = RemindMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = charelfelten.Kiwi;
+				PRODUCT_BUNDLE_IDENTIFIER = charelfelten.RemindMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -526,7 +526,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A2957A612693A533005DF8C3 /* Build configuration list for PBXNativeTarget "KiwiWidgetExtension" */ = {
+		A2957A612693A533005DF8C3 /* Build configuration list for PBXNativeTarget "RemindMeWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A2957A622693A533005DF8C3 /* Debug */,
@@ -535,7 +535,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A2B3658E268C4BBF00284561 /* Build configuration list for PBXProject "Kiwi" */ = {
+		A2B3658E268C4BBF00284561 /* Build configuration list for PBXProject "RemindMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A2B365A5268C4BC100284561 /* Debug */,
@@ -544,7 +544,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A2B365A7268C4BC100284561 /* Build configuration list for PBXNativeTarget "Kiwi" */ = {
+		A2B365A7268C4BC100284561 /* Build configuration list for PBXNativeTarget "RemindMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A2B365A8268C4BC100284561 /* Debug */,
@@ -556,13 +556,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A2B365A1268C4BC100284561 /* Kiwi.xcdatamodeld */ = {
+		A2B365A1268C4BC100284561 /* RemindMe.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				A2B365A2268C4BC100284561 /* Kiwi.xcdatamodel */,
 			);
 			currentVersion = A2B365A2268C4BC100284561 /* Kiwi.xcdatamodel */;
-			path = Kiwi.xcdatamodeld;
+			path = RemindMe.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

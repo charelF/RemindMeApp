@@ -1,6 +1,6 @@
 //
 //  Config.swift
-//  Kiwi
+//  RemindMe
 //
 //  Created by Charel Felten on 05/07/2021.
 //

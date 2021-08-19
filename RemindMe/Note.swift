@@ -1,6 +1,6 @@
 //
 //  NotesLogic.swift
-//  Kiwi
+//  RemindMe
 //
 //  Created by Charel Felten on 02/07/2021.
 //
@@ -118,7 +118,7 @@ extension Note {
         }
         
         for trigger in triggers {
-            notificationid = "Kiwi_\(UUID().uuidString)"
+            notificationid = "RemindMe_\(UUID().uuidString)"
             request = UNNotificationRequest(
                 identifier: notificationid,
                 content: content,

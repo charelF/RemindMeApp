@@ -1,6 +1,6 @@
 //
-//  KiwiWidget.swift
-//  KiwiWidget
+//  RemindMeWidget.swift
+//  RemindMeWidget
 //
 //  Created by Charel Felten on 05/07/2021.
 //
@@ -35,7 +35,7 @@ struct Provider: IntentTimelineProvider {
         let containerURL = PersistenceController.containerURL
         let storeURL = containerURL.appendingPathComponent(PersistenceController.SQLiteStoreAppendix)
         let description = NSPersistentStoreDescription(url: storeURL)
-        let container = NSPersistentCloudKitContainer(name: "Kiwi")
+        let container = NSPersistentCloudKitContainer(name: "RemindMe")
         
         container.persistentStoreDescriptions = [description]
         
@@ -74,7 +74,7 @@ struct SimpleEntry: TimelineEntry {
     var notes: [Note]
 }
 
-struct KiwiWidgetEntryView : View {
+struct RemindMeWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
@@ -83,21 +83,21 @@ struct KiwiWidgetEntryView : View {
 }
 
 @main
-struct KiwiWidget: Widget {
-    let kind: String = "KiwiWidget"
+struct RemindMeWidget: Widget {
+    let kind: String = "RemindMeWidget"
 
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
-            KiwiWidgetEntryView(entry: entry)
+            RemindMeWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
     }
 }
 
-struct KiwiWidget_Previews: PreviewProvider {
+struct RemindMeWidget_Previews: PreviewProvider {
     static var previews: some View {
-        KiwiWidgetEntryView(
+        RemindMeWidgetEntryView(
             entry: SimpleEntry(
                 date: Date(),
                 configuration: ConfigurationIntent(),
