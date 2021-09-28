@@ -7,8 +7,11 @@
 
 import SwiftUI
 import WidgetKit
+import Combine
 
-struct NotesView: View {
+
+
+struct NotesView: View, KeyboardReadable {
     
     @Environment(\.managedObjectContext) private var viewContext
     
@@ -24,6 +27,7 @@ struct NotesView: View {
     @State private var customDateNote: Note? = nil
     @State private var showCustomDateSheet = false
     @State private var customDate: Date = Date()
+    @State private var isKeyboardVisible = false
     
     var body: some View {
         List {
@@ -67,13 +71,30 @@ struct NotesView: View {
             }
             .onDelete(perform: deleteNotes)
 
-        TextField(
-            "New Note",
-            text: $noteContent,
-            onCommit:addNote
-        )}
+            HStack {
+                TextField(
+                    "New Note \(String(describing: isKeyboardVisible))",
+                    text: $noteContent,
+                    onCommit:addNote
+                )
+                if (isKeyboardVisible && (!noteContent.isEmpty)) {
+                    Button(action: {
+                            addNote()
+                            hideKeyboard()
+                            noteContent = ""
+                        }) {
+                        Image(systemName: "checkmark")
+                    }
+
+                }
+            }
+            .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+                    isKeyboardVisible = newIsKeyboardVisible
+            }
+        }
         .listStyle(InsetGroupedListStyle())
         .animation(.default)
+        
         .sheet(isPresented: $showCustomDateSheet) {
             NavigationView{
                 VStack {
@@ -93,7 +114,8 @@ struct NotesView: View {
                     }
                 )
             }
-    }
+        }
+        
     }
     
     private func addNote() {
@@ -145,6 +167,37 @@ struct NotesView: View {
 }
 
 
+// -- Attribution: https://stackoverflow.com/a/65784549/9439097
+protocol KeyboardReadable {
+    var keyboardPublisher: AnyPublisher<Bool, Never> { get }
+}
+extension KeyboardReadable {
+    var keyboardPublisher: AnyPublisher<Bool, Never> {
+        Publishers.Merge(
+            NotificationCenter.default
+                .publisher(for: UIResponder.keyboardWillShowNotification)
+                .map { _ in true },
+
+            NotificationCenter.default
+                .publisher(for: UIResponder.keyboardWillHideNotification)
+                .map { _ in false }
+        )
+        .eraseToAnyPublisher()
+    }
+}
+// --
+
+
+// -- https://www.hackingwithswift.com/quick-start/swiftui/how-to-dismiss-the-keyboard-for-a-textfield
+// TODO: there is a better way to do it in iOS 15
+#if canImport(UIKit)
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+#endif
+// --
 
 struct NotesView_Previews: PreviewProvider {
     static var previews: some View {

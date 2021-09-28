@@ -20,11 +20,9 @@
 		A2957A602693A533005DF8C3 /* RemindMeWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A2957A4F2693A52F005DF8C3 /* RemindMeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A2957A66269436DF005DF8C3 /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A65269436DF005DF8C3 /* WidgetView.swift */; };
 		A2957A6726943F5C005DF8C3 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A43268EF2C7005DF8C3 /* Note.swift */; };
-		A2957A6826943F5C005DF8C3 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A45268EF638005DF8C3 /* NotesView.swift */; };
 		A2957A6926943FD9005DF8C3 /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A65269436DF005DF8C3 /* WidgetView.swift */; };
 		A2957A6A26943FEB005DF8C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B3659A268C4BC100284561 /* Assets.xcassets */; };
 		A2957A6B26943FF1005DF8C3 /* RemindMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2B365A1268C4BC100284561 /* RemindMe.xcdatamodeld */; };
-		A2957A6D26944011005DF8C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B36598268C4BBF00284561 /* ContentView.swift */; };
 		A2957A6E26944014005DF8C3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A47268EF739005DF8C3 /* SettingsView.swift */; };
 		A2957A6F2694401A005DF8C3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B3659F268C4BC100284561 /* Persistence.swift */; };
 		A2957A702694401E005DF8C3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A492692ECB9005DF8C3 /* Config.swift */; };
@@ -275,11 +273,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2957A6726943F5C005DF8C3 /* Note.swift in Sources */,
-				A2957A6D26944011005DF8C3 /* ContentView.swift in Sources */,
 				A2957A6E26944014005DF8C3 /* SettingsView.swift in Sources */,
 				A2957A702694401E005DF8C3 /* Config.swift in Sources */,
 				A2957A5C2693A533005DF8C3 /* RemindMeWidget.intentdefinition in Sources */,
-				A2957A6826943F5C005DF8C3 /* NotesView.swift in Sources */,
 				A2957A572693A52F005DF8C3 /* RemindMeWidget.swift in Sources */,
 				A2957A6926943FD9005DF8C3 /* WidgetView.swift in Sources */,
 				A2957A6B26943FF1005DF8C3 /* RemindMe.xcdatamodeld in Sources */,
