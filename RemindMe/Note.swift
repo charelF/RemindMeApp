@@ -25,6 +25,8 @@ extension Note {
         case 2:
             return Color.red
         case 3:
+            return Color.purple
+        case 4:
             return Color.blue
         default:
             return Color.gray
@@ -39,7 +41,8 @@ extension Note {
     }()
     
     static let defaultPriority: Int = 0
-    static let priorityCount: Int = 4
+    static let priorityCount: Int = 5
+    static let datePriorityNumber: Int = 4
     
     func changePriority() {
         // legacy function
@@ -47,10 +50,12 @@ extension Note {
     }
     
     func changePriority(notifyOn date: Date?) {
+        // check if the optional is nil or not
         if let _ = date {
+            // as for now, date by default the last priority
             self.priority = Int16(Note.priorityCount - 1)
         } else {
-            self.customDate =  nil
+            self.customDate = nil
             self.priority += 1
             // highest priority reserved for custom dates
             self.priority %= Int16(Note.priorityCount - 1)

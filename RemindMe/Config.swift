@@ -38,8 +38,9 @@ class Config: ObservableObject {
         "Low priority",
         "Mid priority",
         "High priority",
+        "Very high priority",
     ]
-    static var priorityCount: Int = 3
+    static var priorityCount: Int = 4
     static var defaultPriority: Int = 0
     
     // other settings
@@ -75,9 +76,11 @@ class Config: ObservableObject {
             Config.createTime(hour: 08, minute: 00) ?? Date(),
             Config.createTime(hour: 08, minute: 00) ?? Date(),
             Config.createTime(hour: 08, minute: 00) ?? Date(),
+            Config.createTime(hour: 08, minute: 00) ?? Date(),
         ]
         
         self.priorityIntervals = [
+            Interval.never,
             Interval.week,
             Interval.day,
             Interval.hour
@@ -119,12 +122,36 @@ class Config: ObservableObject {
                 self.priorityDates = priorityDatesAny
             }
         }
-            
+        
         if let priorityIntervalsAnyOpt = UserDefaults.standard.array(forKey: "priorityIntervals") {
             if let priorityIntervalsAny = priorityIntervalsAnyOpt as? [String] {
                 self.priorityIntervals = priorityIntervalsAny.map { Interval(rawValue: $0) ?? .day }
             }
         }
+        
+        // ugly code to check if the loaded data is still valid --> e.g. if number of priorities now different
+        if (self.priorityDates.count != Note.priorityCount) {
+            let difference = self.priorityDates.count - Note.priorityCount
+            if (difference > 0) {
+                // difference > 0 --> more priorityDates in UserDefaults then there are priorities --> decrease them
+                self.priorityDates = self.priorityDates.dropLast(difference)
+            } else {
+                // difference < 0 --> less priorityDates in UD --> add them with array repeating method
+                self.priorityDates += Array(repeating: Config.createTime(hour: 08, minute: 00) ?? Date(), count: -difference)
+            }
+        }
+        
+        if (self.priorityIntervals.count != Note.priorityCount) {
+            let difference = self.priorityIntervals.count - Note.priorityCount
+            if (difference > 0) {
+                // difference > 0 --> more priorityDates in UserDefaults then there are priorities --> decrease them
+                self.priorityIntervals = self.priorityIntervals.dropLast(difference)
+            } else {
+                // difference < 0 --> less priorityDates in UD --> add them with array repeating method
+                self.priorityIntervals += Array(repeating: Interval.hour, count: -difference)
+            }
+        }
+        
             
         self.nightBreak = UserDefaults.standard.bool(forKey: "nightBreak")
         if let nightStart = UserDefaults.standard.object(forKey: "nightStart") as? Date {

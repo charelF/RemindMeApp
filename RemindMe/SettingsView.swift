@@ -20,10 +20,10 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                ForEach(0..<3) { i in
-                
+                // we loop to priorityCount-1 not included because the last priority (the one at index priorityCount-1 since
+                // we index by 0) is reserved for custom date priority
+                ForEach(0..<(Note.priorityCount-1)) { i in
                     Section(header: Text(config.priorityDescriptions[i]).foregroundColor(Color.secondary)) {
-
                         Picker(selection: $config.priorityIntervals[i], label: Text("Notification interval")) {
                             ForEach(Interval.allCases, id: \.self) { value in
                                 Text(value.rawValue).tag(value)
@@ -61,7 +61,7 @@ struct SettingsView: View {
     
     private func updateAllNotes() {
         for note in notes {
-            guard note.priority != 3 else {
+            guard note.priority != Note.datePriorityNumber else {
                 continue
             }
             note.deleteNotifications()
