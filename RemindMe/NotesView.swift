@@ -68,9 +68,23 @@ struct NotesView: View, KeyboardReadable {
                     customDateNote = note
                     showCustomDateSheet = true
                 }
+                .swipeActions(edge: .trailing) {
+                    Button(role: .destructive) {
+                        deleteNote(note)
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                }
+                .swipeActions(edge: .leading) {
+                    Button {
+                        print(10)
+                    } label: {
+                        Label("Edit", systemImage: "pencil")
+                    }
+                    .tint(.blue)
+                }
             }
-            .onDelete(perform: deleteNotes)
-
+            
             HStack {
                 TextField(
                     "New Note \(String(describing: isKeyboardVisible))",
@@ -88,12 +102,13 @@ struct NotesView: View, KeyboardReadable {
 
                 }
             }
-            .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                    isKeyboardVisible = newIsKeyboardVisible
-            }
+        }
+        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+                isKeyboardVisible = newIsKeyboardVisible
         }
         .listStyle(InsetGroupedListStyle())
         .animation(.default)
+//        .animation(.default, value: notes.count)
         
         .sheet(isPresented: $showCustomDateSheet) {
             NavigationView{
@@ -153,13 +168,35 @@ struct NotesView: View, KeyboardReadable {
         }
     }
 
-    private func deleteNotes(offsets: IndexSet) {
+    // deleting via offset not needed anymore in ios 15
+//    private func deleteNotes(offsets: IndexSet) {
+//        withAnimation {
+//            var note: Note
+//            for i in offsets {
+//                note = notes[i]
+//                note.deleteNotifications()
+//                viewContext.delete(note)
+//            }
+//            PersistenceController.shared.save()
+//        }
+//    }
+    
+    private func deleteNote(_ optionalNote: Note?) {
         withAnimation {
-            var note: Note
-            for i in offsets {
-                note = notes[i]
+            if let note = optionalNote {
                 note.deleteNotifications()
                 viewContext.delete(note)
+            }
+            PersistenceController.shared.save()
+        }
+    }
+    
+    private func editNote(_ optionalNote: Note?) {
+        withAnimation {
+            if let note = optionalNote {
+                // TODO: implement
+                // requires moving cursor to the field
+                // maybe difficult
             }
             PersistenceController.shared.save()
         }
