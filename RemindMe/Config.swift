@@ -19,6 +19,8 @@ enum Interval: String, Equatable, CaseIterable {
     case never = "Never"
 }
 
+
+
 class Config: ObservableObject {
     
     // singleton despite ObservableObject, could be problematic
@@ -42,6 +44,7 @@ class Config: ObservableObject {
     ]
     static var priorityCount: Int = 4
     static var defaultPriority: Int = 0
+    static var colorTheme: String = "retro"
     
     // other settings
     @Published var showCreationTime: Bool

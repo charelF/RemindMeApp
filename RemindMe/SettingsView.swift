@@ -37,8 +37,8 @@ struct SettingsView: View {
                             DatePicker("First reminder per day at", selection: $config.priorityDates[i], displayedComponents: [.hourAndMinute])
                         }
                     }
-                    .foregroundColor(Note.priorityToColor(priority: i))
-                    .listRowBackground(Note.priorityToColor(priority: i).opacity(0.05))
+//                    .foregroundColor(Note.priorityToColor(priority: i))
+//                    .listRowBackground(Note.priorityToColor(priority: i).opacity(0.05))
                 }
                 
                 Section(header: Text("Additional Info"), footer: Text("Toggle which additional information to show below each note in the list.")) {

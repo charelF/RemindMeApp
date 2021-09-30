@@ -53,14 +53,14 @@ struct WidgetView: View {
                             .lineLimit(
                                 notes.count > 2 ? 1 : 2
                             )
-                            .foregroundColor(Note.priorityToColor(priority: Int(note.priority)))
+                            .foregroundColor(note.getForegroundColor())
                             .padding(.horizontal, 8)
                             .padding(.top, 4.5)
                             .padding([.bottom], -1.5)
                             .font(.subheadline)
                         Divider()
                     }
-                    .background(Note.priorityToColor(priority: Int(note.priority)).opacity(0.05))
+                    .background(note.getBackgroundColor())
                     .background(getBackgroundColor()).opacity(1)
                 }
             }

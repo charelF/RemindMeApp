@@ -57,12 +57,13 @@ struct NotesView: View, KeyboardReadable {
                     }
                 }
                 .contentShape(Rectangle()) // This together with (1) makes whole area clickable
-                .foregroundColor(note.getColor())
+                .foregroundColor(note.getForegroundColor())
                 .onTapGesture {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     updateNotePriority(note)
                 }
-                .listRowBackground(note.getColor().opacity(0.05))
+//                .listRowBackground(note.getColor().opacity(0.05))
+                .listRowBackground(note.getBackgroundColor())
                 .onLongPressGesture() {
                     UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                     customDateNote = note

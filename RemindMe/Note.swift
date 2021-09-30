@@ -12,24 +12,38 @@ import UserNotifications
 
 extension Note {
     
-    static func priorityToColor(note: Note) -> Color? {
-        return priorityToColor(priority: Int(note.priority))
-    }
+//    static func priorityToColor(note: Note) -> Color? {
+//        return priorityToColor(priority: Int(note.priority))
+//    }
     
-    static func priorityToColor(priority: Int) -> Color? {
-        switch priority {
-        case 0:
-            return Color.green
-        case 1:
-            return Color.orange
-        case 2:
-            return Color.red
-        case 3:
-            return Color.purple
-        case 4:
-            return Color.blue
-        default:
-            return Color.gray
+//    static func priorityToColor(priority: Int) -> Color? {
+//        switch priority {
+//        case 0:
+//            return Color.green
+//        case 1:
+//            return Color.orange
+////            return Color(UIColor(named: "yellow_retro_front")!)
+//        case 2:
+//            return Color.red
+//        case 3:
+//            return Color.purple
+//        case 4:
+//            return Color.blue
+//        default:
+//            return Color.gray
+//        }
+//    }
+    
+    static func getColor(for note: Note, foreground: Bool = true) -> Color {
+        let theme: String = Config.colorTheme
+        let priority: String = "\(note.priority)"
+        let location: String = foreground ? "f" : "b"
+        let colorCode: String = "\(theme)_\(priority)\(location)"
+        if let uicolor = UIColor(named: colorCode) {
+            return Color(uicolor)
+        } else {
+            // if cant find color, return sensible default
+            return foreground ? Color.black : Color.white
         }
     }
     
@@ -62,8 +76,12 @@ extension Note {
         }
     }
     
-    func getColor() -> Color {
-        return Note.priorityToColor(note: self) ?? Color.pink
+    func getForegroundColor() -> Color {
+        return Note.getColor(for: self, foreground: true)
+    }
+    
+    func getBackgroundColor() -> Color {
+        return Note.getColor(for: self, foreground: false)
     }
     
     func describePriority() -> String {
