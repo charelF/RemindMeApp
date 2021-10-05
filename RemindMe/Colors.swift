@@ -46,9 +46,9 @@ class Colors {
             case 2:
                 color = Color.red
             case 3:
-                color = Color.purple
-            case 4:
                 color = Color.blue
+            case 4:
+                color = Color.purple
             default:
                 color = Color.primary
             }
