@@ -20,15 +20,24 @@ struct NotesView: View {
         animation: .default)
     
     private var notes: FetchedResults<Note>
+    
+    // new note
     @State private var newNoteContent: String = ""
-    @State private var editNoteContent: String = ""
-    @State private var customDateNote: Note? = nil
+    @FocusState private var editNoteIsFocused: Bool
+    
+    // edit note
     @State private var editNote: Note? = nil
+    @State private var editNoteContent: String = ""
+    @FocusState private var newNoteIsFocused: Bool
+    
+    // custom date note
+    @State private var customDateNote: Note? = nil
     @State private var showCustomDateSheet = false
     @State private var customDate: Date = Date()
     
-    @FocusState private var editNoteIsFocused: Bool
-    @FocusState private var newNoteIsFocused: Bool
+    // dark mode
+    @Environment(\.colorScheme) var colorScheme
+    
     
     var body: some View {
         List {
@@ -43,11 +52,11 @@ struct NotesView: View {
                         
                         if (config.showCreationTime || config.showNotificationTime) {
                             HStack {
-                                if config.showCreationTime {
+                                if (config.showCreationTime) {
                                     Image(systemName: "calendar")
                                     Text("\(note.timestamp!, formatter: Note.dateFormatter)")
                                 }
-                                if config.showNotificationTime {
+                                if (config.showNotificationTime) {
                                     Image(systemName: "bell")
                                     Text("\(note.describePriority())")
                                 }
@@ -82,7 +91,14 @@ struct NotesView: View {
                             }
                         }
                     }
-                    .listRowBackground(note.getBackgroundColor()) // has to come after the context menu
+                    .listRowBackground(
+                        ZStack {
+                            // to get rid of the ugly gray backgroud (which is visible as background color is semi
+                            // transparent) we use Zstack and first put a white/black background
+                            colorScheme == .dark ? Color.black : Color.white
+                            note.getBackgroundColor()
+                        }
+                    ) // has to come after the context menu
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
                             deleteNote(note)

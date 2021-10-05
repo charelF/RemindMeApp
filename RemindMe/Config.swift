@@ -44,7 +44,7 @@ class Config: ObservableObject {
     ]
     static var priorityCount: Int = 4
     static var defaultPriority: Int = 0
-    static var colorTheme: String = "retro"
+    @Published var colorTheme: ColorTheme = .retro
     
     // other settings
     @Published var showCreationTime: Bool

@@ -16,42 +16,73 @@ enum ColorLocation: String {
     case background = "b"
 }
 
+enum ColorTheme: String, CaseIterable {
+    case defaultcolor = "Default"
+    case grayscale = "Grayscale"
+    case retro = "Retro"
+}
+
 extension Note {
-    
-//    static func priorityToColor(note: Note) -> Color? {
-//        return priorityToColor(priority: Int(note.priority))
-//    }
-    
-//    static func priorityToColor(priority: Int) -> Color? {
-//        switch priority {
-//        case 0:
-//            return Color.green
-//        case 1:
-//            return Color.orange
-////            return Color(UIColor(named: "yellow_retro_front")!)
-//        case 2:
-//            return Color.red
-//        case 3:
-//            return Color.purple
-//        case 4:
-//            return Color.blue
-//        default:
-//            return Color.gray
-//        }
-//    }
     
     static func getColor(for note: Note, in location: ColorLocation) -> Color {
         return Note.getColor(for: Int(note.priority), in: location)
     }
     
     static func getColor(for priority: Int, in location: ColorLocation) -> Color {
-        let theme: String = Config.colorTheme
-        let colorCode: String = "\(theme)_\(priority)\(location.rawValue)"
-        if let uicolor = UIColor(named: colorCode) {
-            return Color(uicolor)
-        } else {
-            // if cant find color, return sensible default
-            return ((location == .primary) || (location == .secondary)) ? Color.black : Color.white
+        let config: Config = Config.shared
+        let theme: ColorTheme = config.colorTheme
+        switch theme {
+//        case .retro:
+//            let colorCode: String = "\(theme.rawValue.lowercased())_\(priority)\(location.rawValue)"
+//            if let uicolor = UIColor(named: colorCode) {
+//                return Color(uicolor)
+//            } else {
+//                fallthrough // if we cant find anything, we fall through to default
+//            }
+        case .retro:
+            let colorCode: String = "\(theme.rawValue.lowercased())_\(priority)p"
+            var color: Color
+            if let uicolor = UIColor(named: colorCode) {
+                color =  Color(uicolor)
+                switch location {
+                case .primary:
+                    break
+                case .secondary:
+                    color = color.opacity(0.5)
+                case .background:
+                    color = color.opacity(0.05)
+                }
+                return color
+            } else {
+                fallthrough // if we cant find anything, we fall through to default
+            }
+        default:
+            var color: Color
+            switch priority {
+            case 0:
+                color = Color.green
+            case 1:
+                color = Color.orange
+            case 2:
+                color = Color.red
+            case 3:
+                color = Color.purple
+            case 4:
+                color = Color.blue
+            default:
+                color = Color.primary
+            }
+            
+            switch location {
+            case .primary:
+                break
+            case .secondary:
+                color = color.opacity(0.5)
+            case .background:
+                color = color.opacity(0.05)
+            }
+            
+            return color
         }
     }
     

@@ -17,6 +17,9 @@ struct SettingsView: View {
         animation: .default)
     private var notes: FetchedResults<Note>
     
+    // dark mode
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         NavigationView {
             Form {
@@ -38,7 +41,21 @@ struct SettingsView: View {
                         }
                     }
                     .foregroundColor(Note.getColor(for: i, in: .primary))
-                    .listRowBackground(Note.getColor(for: i, in: .background))
+                    .listRowBackground(
+                        ZStack {
+                            colorScheme == .dark ? Color.black : Color.white
+                            Note.getColor(for: i, in: .background)
+                        }
+                        
+                    )
+                }
+                
+                Section(header: Text("Theme")) {
+                    Picker(selection: $config.colorTheme, label: Text("Theme")) {
+                        ForEach(ColorTheme.allCases, id: \.self) { value in
+                            Text(value.rawValue).tag(value)
+                        }
+                    }
                 }
                 
                 Section(header: Text("Additional Info"), footer: Text("Toggle which additional information to show below each note in the list.")) {
