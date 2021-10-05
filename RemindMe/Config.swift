@@ -17,6 +17,16 @@ enum Interval: String, Equatable, CaseIterable {
     case week = "Weekly"
     case month = "Monthly"
     case never = "Never"
+    // to be added
+//    case everyMonday = "Every Monday"
+//    case everyTuesday = "Every Tuesday"
+//    case everyWednesday = "Every Wednesday"
+//    case everyThursday = "Every Thursday"
+//    case everyFriday = "Every Friday"
+//    case everySaturday = "Every Saturday"
+//    case everySunday = "Every Sunday"
+//    case weekdays = "On Weekdays"
+//    case weekends = "On Weekends"
 }
 
 
@@ -25,11 +35,6 @@ class Config: ObservableObject {
     
     // singleton despite ObservableObject, could be problematic
     static let shared = Config()
-    
-    // night break
-    @Published var nightBreak: Bool
-    @Published var nightStart: Date
-    @Published var nightEnd: Date
     
     // priority settings
     @Published var priorityDates: [Date]
@@ -71,10 +76,6 @@ class Config: ObservableObject {
     
     init() {
         
-        self.nightBreak = true
-        self.nightStart = Config.createTime(hour: 22, minute: 00) ?? Date()
-        self.nightEnd = Config.createTime(hour: 07, minute: 59) ?? Date()
-        
         self.priorityDates  = [
             Config.createTime(hour: 08, minute: 00) ?? Date(),
             Config.createTime(hour: 08, minute: 00) ?? Date(),
@@ -110,10 +111,6 @@ class Config: ObservableObject {
         
         let stringPriorityIntervals: [String] = priorityIntervals.map { $0.rawValue }
         UserDefaults.standard.set(stringPriorityIntervals, forKey: "priorityIntervals")
-        
-        UserDefaults.standard.set(nightBreak, forKey: "nightBreak")
-        UserDefaults.standard.set(nightStart, forKey: "nightStart")
-        UserDefaults.standard.set(nightEnd, forKey: "nightEnd")
         
         UserDefaults.standard.set(showNotificationTime, forKey: "showNotificationTime")
         UserDefaults.standard.set(showCreationTime, forKey: "showCreationTime")
@@ -156,15 +153,6 @@ class Config: ObservableObject {
                 // difference < 0 --> less priorityDates in UD --> add them with array repeating method
                 self.priorityIntervals += Array(repeating: Interval.hour, count: -difference)
             }
-        }
-        
-            
-        self.nightBreak = UserDefaults.standard.bool(forKey: "nightBreak")
-        if let nightStart = UserDefaults.standard.object(forKey: "nightStart") as? Date {
-            self.nightStart = nightStart
-        }
-        if let nightEnd = UserDefaults.standard.object(forKey: "nightEnd") as? Date {
-            self.nightEnd = nightEnd
         }
         
         self.showNotificationTime = UserDefaults.standard.bool(forKey: "showNotificationTime")

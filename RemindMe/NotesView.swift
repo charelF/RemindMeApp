@@ -75,6 +75,9 @@ struct NotesView: View {
                     }
                     .contextMenu {
                         VStack {
+                            Label("Created on: \(note.timestamp!, formatter: Note.dateFormatter)", systemImage: "calendar")
+                            Label("Reminders: \(note.describePriority())", systemImage: "bell")
+                            
                             Button {
                                 customDateNote = note
                                 showCustomDateSheet = true
