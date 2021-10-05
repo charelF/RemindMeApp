@@ -10,6 +10,12 @@ import SwiftUI
 import CoreData
 import UserNotifications
 
+enum ColorLocation: String {
+    case primary = "p"
+    case secondary = "s"
+    case background = "b"
+}
+
 extension Note {
     
 //    static func priorityToColor(note: Note) -> Color? {
@@ -34,16 +40,18 @@ extension Note {
 //        }
 //    }
     
-    static func getColor(for note: Note, foreground: Bool = true) -> Color {
+    static func getColor(for note: Note, in location: ColorLocation) -> Color {
+        return Note.getColor(for: Int(note.priority), in: location)
+    }
+    
+    static func getColor(for priority: Int, in location: ColorLocation) -> Color {
         let theme: String = Config.colorTheme
-        let priority: String = "\(note.priority)"
-        let location: String = foreground ? "f" : "b"
-        let colorCode: String = "\(theme)_\(priority)\(location)"
+        let colorCode: String = "\(theme)_\(priority)\(location.rawValue)"
         if let uicolor = UIColor(named: colorCode) {
             return Color(uicolor)
         } else {
             // if cant find color, return sensible default
-            return foreground ? Color.black : Color.white
+            return ((location == .primary) || (location == .secondary)) ? Color.black : Color.white
         }
     }
     
@@ -76,12 +84,16 @@ extension Note {
         }
     }
     
-    func getForegroundColor() -> Color {
-        return Note.getColor(for: self, foreground: true)
+    func getPrimaryColor() -> Color {
+        return Note.getColor(for: self, in: .primary)
+    }
+    
+    func getSecondaryColor() -> Color {
+        return Note.getColor(for: self, in: .secondary)
     }
     
     func getBackgroundColor() -> Color {
-        return Note.getColor(for: self, foreground: false)
+        return Note.getColor(for: self, in: .background)
     }
     
     func describePriority() -> String {

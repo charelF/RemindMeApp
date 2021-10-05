@@ -9,9 +9,7 @@ import SwiftUI
 import WidgetKit
 import Combine
 
-
-
-struct NotesView: View, KeyboardReadable {
+struct NotesView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
@@ -22,95 +20,129 @@ struct NotesView: View, KeyboardReadable {
         animation: .default)
     
     private var notes: FetchedResults<Note>
-    @State private var noteContent: String = ""
-    
+    @State private var newNoteContent: String = ""
+    @State private var editNoteContent: String = ""
     @State private var customDateNote: Note? = nil
+    @State private var editNote: Note? = nil
     @State private var showCustomDateSheet = false
     @State private var customDate: Date = Date()
-    @State private var isKeyboardVisible = false
+    
+    @FocusState private var editNoteIsFocused: Bool
+    @FocusState private var newNoteIsFocused: Bool
     
     var body: some View {
         List {
             ForEach(notes) { note in
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("\(note.content ?? "")")
-                            .padding(.vertical, 0.2)
-                        Spacer() // (1)
-                    }
-                    
-                    if config.showCreationTime || config.showNotificationTime {
+                if (note != editNote) {
+                    VStack(alignment: .leading) {
                         HStack {
-                            if config.showCreationTime {
-                                Image(systemName: "calendar")
-                                Text("\(note.timestamp!, formatter: Note.dateFormatter)")
-                            }
-                            if config.showNotificationTime {
-                                Image(systemName: "bell")
-                                Text("\(note.describePriority())")
-                            }
-                            Spacer() // (1)
+                            Text("\(note.content ?? "")")
+                                .padding(.vertical, 0.2)
+                            Spacer() // (1
                         }
-                        .font(.footnote)
-                        .foregroundColor(Color.gray.opacity(0.6))
-                        .padding(.bottom, 0.2)
+                        
+                        if (config.showCreationTime || config.showNotificationTime) {
+                            HStack {
+                                if config.showCreationTime {
+                                    Image(systemName: "calendar")
+                                    Text("\(note.timestamp!, formatter: Note.dateFormatter)")
+                                }
+                                if config.showNotificationTime {
+                                    Image(systemName: "bell")
+                                    Text("\(note.describePriority())")
+                                }
+                                Spacer() // (1)
+                            }
+                            .font(.footnote)
+                            .foregroundColor(note.getSecondaryColor())
+                            .padding(.bottom, 0.2)
+                        }
                     }
-                }
-                .contentShape(Rectangle()) // This together with (1) makes whole area clickable
-                .foregroundColor(note.getForegroundColor())
-                .onTapGesture {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    updateNotePriority(note)
-                }
-//                .listRowBackground(note.getColor().opacity(0.05))
-                .listRowBackground(note.getBackgroundColor())
-                .onLongPressGesture() {
-                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                    customDateNote = note
-                    showCustomDateSheet = true
-                }
-                .swipeActions(edge: .trailing) {
-                    Button(role: .destructive) {
-                        deleteNote(note)
-                    } label: {
-                        Label("Delete", systemImage: "trash")
+                    .contentShape(Rectangle()) // This together with (1) makes whole area clickable
+                    .foregroundColor(note.getPrimaryColor())
+                    .onTapGesture {
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                        updateNotePriority(note)
                     }
-                }
-                .swipeActions(edge: .leading) {
-                    Button {
-                        print(10)
-                    } label: {
-                        Label("Edit", systemImage: "pencil")
+                    .contextMenu {
+                        VStack {
+                            Button {
+                                customDateNote = note
+                                showCustomDateSheet = true
+                            } label: {
+                                Label("Custom Reminder", systemImage: "bell")
+                            }
+                            
+                            Button {
+                                editNote = note
+                                editNoteContent = note.content ?? newNoteContent
+                                editNoteIsFocused = true
+                            } label: {
+                                Label("Edit Note", systemImage: "bell")
+                            }
+                        }
                     }
-                    .tint(.blue)
-                }
-            }
+                    .listRowBackground(note.getBackgroundColor()) // has to come after the context menu
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            deleteNote(note)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
+                } else { // in the case the note is to be edited
+                    HStack {
+                        TextField(
+                            "\(editNoteContent)",
+                            text: $editNoteContent,
+                            onCommit:{
+                                editNote = nil
+                                note.content = editNoteContent
+                                PersistenceController.shared.save()
+                                editNoteContent = ""
+                                editNoteIsFocused = false
+                            }
+                        )
+                        .focused($editNoteIsFocused)
+
+                        if (!editNoteContent.isEmpty) {
+                            Button(action: {
+                                editNote = nil
+                                note.content = editNoteContent
+                                PersistenceController.shared.save()
+                                editNoteContent = ""
+                                editNoteIsFocused = false
+                                }) {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                    }
+                } // close edit note if-else
+            } // close for-each note
             
             HStack {
                 TextField(
-                    "New Note \(String(describing: isKeyboardVisible))",
-                    text: $noteContent,
-                    onCommit:addNote
+                    "New Note \(String(describing: editNoteIsFocused))",
+                    text: $newNoteContent,
+                    onCommit:{
+                        addNote()
+                        newNoteContent = ""
+                        newNoteIsFocused = false
+                    }
                 )
-                if (isKeyboardVisible && (!noteContent.isEmpty)) {
+                .focused($newNoteIsFocused)
+                if (!newNoteContent.isEmpty) {
                     Button(action: {
-                            addNote()
-                            hideKeyboard()
-                            noteContent = ""
+                        addNote()
+                        newNoteContent = ""
+                        newNoteIsFocused = false
                         }) {
                         Image(systemName: "checkmark")
                     }
-
                 }
-            }
-        }
-        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-                isKeyboardVisible = newIsKeyboardVisible
-        }
+            } // close new note cell
+        } // close list
         .listStyle(InsetGroupedListStyle())
-        .animation(.default)
-//        .animation(.default, value: notes.count)
-        
         .sheet(isPresented: $showCustomDateSheet) {
             NavigationView{
                 VStack {
@@ -130,22 +162,21 @@ struct NotesView: View, KeyboardReadable {
                     }
                 )
             }
-        }
-        
-    }
+        } // close custom note sheet
+    } // close body
     
     private func addNote() {
         withAnimation {
-            guard !noteContent.isEmpty else {
+            guard !newNoteContent.isEmpty else {
                 return
             }
             _ = Note(
                 context: viewContext,
-                content: noteContent
+                content: newNoteContent
             )
             PersistenceController.shared.save()
             
-            noteContent = ""
+            newNoteContent = ""
         }
     }
     
@@ -168,19 +199,6 @@ struct NotesView: View, KeyboardReadable {
             PersistenceController.shared.save()
         }
     }
-
-    // deleting via offset not needed anymore in ios 15
-//    private func deleteNotes(offsets: IndexSet) {
-//        withAnimation {
-//            var note: Note
-//            for i in offsets {
-//                note = notes[i]
-//                note.deleteNotifications()
-//                viewContext.delete(note)
-//            }
-//            PersistenceController.shared.save()
-//        }
-//    }
     
     private func deleteNote(_ optionalNote: Note?) {
         withAnimation {
@@ -191,51 +209,7 @@ struct NotesView: View, KeyboardReadable {
             PersistenceController.shared.save()
         }
     }
-    
-    private func editNote(_ optionalNote: Note?) {
-        withAnimation {
-            if let note = optionalNote {
-                // TODO: implement
-                // requires moving cursor to the field
-                // maybe difficult
-            }
-            PersistenceController.shared.save()
-        }
-    }
 }
-
-
-// -- Attribution: https://stackoverflow.com/a/65784549/9439097
-protocol KeyboardReadable {
-    var keyboardPublisher: AnyPublisher<Bool, Never> { get }
-}
-extension KeyboardReadable {
-    var keyboardPublisher: AnyPublisher<Bool, Never> {
-        Publishers.Merge(
-            NotificationCenter.default
-                .publisher(for: UIResponder.keyboardWillShowNotification)
-                .map { _ in true },
-
-            NotificationCenter.default
-                .publisher(for: UIResponder.keyboardWillHideNotification)
-                .map { _ in false }
-        )
-        .eraseToAnyPublisher()
-    }
-}
-// --
-
-
-// -- https://www.hackingwithswift.com/quick-start/swiftui/how-to-dismiss-the-keyboard-for-a-textfield
-// TODO: there is a better way to do it in iOS 15
-#if canImport(UIKit)
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-#endif
-// --
 
 struct NotesView_Previews: PreviewProvider {
     static var previews: some View {

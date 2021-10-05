@@ -53,7 +53,7 @@ struct WidgetView: View {
                             .lineLimit(
                                 notes.count > 2 ? 1 : 2
                             )
-                            .foregroundColor(note.getForegroundColor())
+                            .foregroundColor(note.getPrimaryColor())
                             .padding(.horizontal, 8)
                             .padding(.top, 4.5)
                             .padding([.bottom], -1.5)
