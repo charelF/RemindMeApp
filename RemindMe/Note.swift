@@ -10,65 +10,7 @@ import SwiftUI
 import CoreData
 import UserNotifications
 
-enum ColorLocation: String {
-    case primary = "p"
-    case secondary = "s"
-    case background = "b"
-}
-
-enum ColorTheme: String, CaseIterable {
-    case defaultcolor = "Default"
-    case grayscale = "Grayscale"
-    case retro = "Retro"
-}
-
 extension Note {
-    
-    static func getColor(for note: Note, in location: ColorLocation) -> Color {
-        return Note.getColor(for: Int(note.priority), in: location)
-    }
-    
-    static func getColor(for priority: Int, in location: ColorLocation) -> Color {
-        let config: Config = Config.shared
-        let theme: ColorTheme = config.colorTheme
-        var color: Color
-        switch theme {
-        case .retro:
-            let colorCode: String = "\(theme.rawValue.lowercased())_\(priority)"
-            if let uicolor = UIColor(named: colorCode) {
-                color =  Color(uicolor)
-            } else {
-                fallthrough // if we cant find anything, we fall through to default
-            }
-        default:
-            switch priority {
-            case 0:
-                color = Color.green
-            case 1:
-                color = Color.orange
-            case 2:
-                color = Color.red
-            case 3:
-                color = Color.purple
-            case 4:
-                color = Color.blue
-            default:
-                color = Color.primary
-            }
-        }
-        
-        switch location {
-        case .primary:
-            break
-        case .secondary:
-            color = color.opacity(0.5)
-        case .background:
-            // TODO: return higher opacity if in dark mode
-            color = color.opacity(0.1)
-        }
-        
-        return color
-    }
     
     static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -100,15 +42,15 @@ extension Note {
     }
     
     func getPrimaryColor() -> Color {
-        return Note.getColor(for: self, in: .primary)
+        return Colors.getColor(for: self, in: .primary)
     }
     
     func getSecondaryColor() -> Color {
-        return Note.getColor(for: self, in: .secondary)
+        return Colors.getColor(for: self, in: .secondary)
     }
     
     func getBackgroundColor() -> Color {
-        return Note.getColor(for: self, in: .background)
+        return Colors.getColor(for: self, in: .background)
     }
     
     func describePriority() -> String {

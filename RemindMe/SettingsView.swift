@@ -40,11 +40,11 @@ struct SettingsView: View {
                             DatePicker("First reminder per day at", selection: $config.priorityDates[i], displayedComponents: [.hourAndMinute])
                         }
                     }
-                    .foregroundColor(Note.getColor(for: i, in: .primary))
+                    .foregroundColor(Colors.getColor(for: i, in: .primary))
                     .listRowBackground(
                         ZStack {
                             colorScheme == .dark ? Color.black : Color.white
-                            Note.getColor(for: i, in: .background)
+                            Colors.getColor(for: i, in: .background)
                         }
                         
                     )
