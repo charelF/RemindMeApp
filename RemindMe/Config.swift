@@ -42,13 +42,13 @@ class Config: ObservableObject {
         "High priority",
         "Very high priority",
     ]
-    static var priorityCount: Int = 4
+    static var priorityCount: Int = 3
     static var defaultPriority: Int = 0
-    @Published var colorTheme: ColorTheme = .retro
     
     // other settings
     @Published var showCreationTime: Bool
     @Published var showNotificationTime: Bool
+    @Published var colorTheme: ColorTheme
     
     // static functions
     static func createTime(hour: Int, minute: Int) -> Date? {
@@ -92,6 +92,8 @@ class Config: ObservableObject {
         self.showCreationTime = true
         self.showNotificationTime = true
         
+        self.colorTheme = .defaultcolor
+        
         // on first launch, we write default config to user defaults
         // on subsequent launches, we overwrite default config from user defaults
         if !UserDefaults.standard.bool(forKey: "launchedBefore") {
@@ -115,6 +117,7 @@ class Config: ObservableObject {
         
         UserDefaults.standard.set(showNotificationTime, forKey: "showNotificationTime")
         UserDefaults.standard.set(showCreationTime, forKey: "showCreationTime")
+        UserDefaults.standard.set(colorTheme.rawValue, forKey: "colorTheme")
     }
     
     func load() {
@@ -166,5 +169,17 @@ class Config: ObservableObject {
         
         self.showNotificationTime = UserDefaults.standard.bool(forKey: "showNotificationTime")
         self.showCreationTime = UserDefaults.standard.bool(forKey: "showCreationTime")
+        
+        if let colorThemeString = UserDefaults.standard.string(forKey: "colorTheme") {
+            if let colorTheme = ColorTheme(rawValue: colorThemeString) {
+                self.colorTheme = colorTheme
+            } else {
+                // read color theme but not valid string
+                self.colorTheme = .defaultcolor
+            }
+        } else {
+            // could not find colortheme in userdefaults
+            self.colorTheme = .defaultcolor
+        }
     }
 }

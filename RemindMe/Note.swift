@@ -31,33 +31,16 @@ extension Note {
     static func getColor(for priority: Int, in location: ColorLocation) -> Color {
         let config: Config = Config.shared
         let theme: ColorTheme = config.colorTheme
+        var color: Color
         switch theme {
-//        case .retro:
-//            let colorCode: String = "\(theme.rawValue.lowercased())_\(priority)\(location.rawValue)"
-//            if let uicolor = UIColor(named: colorCode) {
-//                return Color(uicolor)
-//            } else {
-//                fallthrough // if we cant find anything, we fall through to default
-//            }
         case .retro:
-            let colorCode: String = "\(theme.rawValue.lowercased())_\(priority)p"
-            var color: Color
+            let colorCode: String = "\(theme.rawValue.lowercased())_\(priority)"
             if let uicolor = UIColor(named: colorCode) {
                 color =  Color(uicolor)
-                switch location {
-                case .primary:
-                    break
-                case .secondary:
-                    color = color.opacity(0.5)
-                case .background:
-                    color = color.opacity(0.05)
-                }
-                return color
             } else {
                 fallthrough // if we cant find anything, we fall through to default
             }
         default:
-            var color: Color
             switch priority {
             case 0:
                 color = Color.green
@@ -72,18 +55,19 @@ extension Note {
             default:
                 color = Color.primary
             }
-            
-            switch location {
-            case .primary:
-                break
-            case .secondary:
-                color = color.opacity(0.5)
-            case .background:
-                color = color.opacity(0.05)
-            }
-            
-            return color
         }
+        
+        switch location {
+        case .primary:
+            break
+        case .secondary:
+            color = color.opacity(0.5)
+        case .background:
+            // TODO: return higher opacity if in dark mode
+            color = color.opacity(0.1)
+        }
+        
+        return color
     }
     
     static let dateFormatter: DateFormatter = {
@@ -94,8 +78,8 @@ extension Note {
     }()
     
     static let defaultPriority: Int = 0
-    static let priorityCount: Int = 5
-    static let datePriorityNumber: Int = 4
+    static let priorityCount: Int = 4
+    static let datePriorityNumber: Int = 3
     
     func changePriority() {
         // legacy function
