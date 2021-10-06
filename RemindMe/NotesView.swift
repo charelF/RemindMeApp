@@ -50,13 +50,13 @@ struct NotesView: View {
                             Spacer() // (1
                         }
                         
-                        if (config.showCreationTime || config.showNotificationTime) {
+                        if (config.showCreationTime || config.showNotificationTime || (note.priority == Note.datePriorityNumber)) {
                             HStack {
                                 if (config.showCreationTime) {
                                     Image(systemName: "calendar")
                                     Text("\(note.timestamp!, formatter: Note.dateFormatter)")
                                 }
-                                if (config.showNotificationTime) {
+                                if (config.showNotificationTime || (note.priority == Note.datePriorityNumber)) {
                                     Image(systemName: "bell")
                                     Text("\(note.describePriority())")
                                 }
@@ -74,6 +74,7 @@ struct NotesView: View {
                         updateNotePriority(note)
                     }
                     .contextMenu {
+                        // bug in ios15: context menu may show outdated information
                         VStack {
                             Label("Created on: \(note.timestamp!, formatter: Note.dateFormatter)", systemImage: "calendar")
                             Label("Reminders: \(note.describePriority())", systemImage: "bell")
@@ -141,7 +142,7 @@ struct NotesView: View {
             
             HStack {
                 TextField(
-                    "New Note \(String(describing: editNoteIsFocused))",
+                    "New Note",
                     text: $newNoteContent,
                     onCommit:{
                         addNote()

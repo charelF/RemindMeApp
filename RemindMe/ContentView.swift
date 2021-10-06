@@ -27,6 +27,12 @@ struct ContentView: View {
                 Image(systemName: "gear")
                 Text("Settings")
             }
+            
+            TestVieww()
+            .tabItem {
+                Image(systemName: "camera.metering.unknown")
+                Text("Lab")
+            }
         }
     }
 }

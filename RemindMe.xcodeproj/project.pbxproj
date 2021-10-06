@@ -28,6 +28,7 @@
 		A2957A702694401E005DF8C3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A492692ECB9005DF8C3 /* Config.swift */; };
 		A2A15B1D270CA2DA002FB8D3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A15B1C270CA2DA002FB8D3 /* Colors.swift */; };
 		A2A15B1E270CA436002FB8D3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A15B1C270CA2DA002FB8D3 /* Colors.swift */; };
+		A2AED6B1270E42A600DD1CD1 /* TestVieww.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AED6B0270E42A600DD1CD1 /* TestVieww.swift */; };
 		A2B36597268C4BBF00284561 /* RemindMeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B36596268C4BBF00284561 /* RemindMeApp.swift */; };
 		A2B36599268C4BBF00284561 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B36598268C4BBF00284561 /* ContentView.swift */; };
 		A2B3659B268C4BC100284561 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B3659A268C4BC100284561 /* Assets.xcassets */; };
@@ -76,6 +77,7 @@
 		A2957A722694E6CB005DF8C3 /* RemindMe.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = RemindMe.entitlements; path = RemindMe/RemindMe.entitlements; sourceTree = SOURCE_ROOT; };
 		A2957A732694EC1F005DF8C3 /* RemindMeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RemindMeWidgetExtension.entitlements; sourceTree = "<group>"; };
 		A2A15B1C270CA2DA002FB8D3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		A2AED6B0270E42A600DD1CD1 /* TestVieww.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVieww.swift; sourceTree = "<group>"; };
 		A2B36593268C4BBF00284561 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2B36596268C4BBF00284561 /* RemindMeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindMeApp.swift; sourceTree = "<group>"; };
 		A2B36598268C4BBF00284561 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				A2B36598268C4BBF00284561 /* ContentView.swift */,
 				A2957A47268EF739005DF8C3 /* SettingsView.swift */,
 				A2957A45268EF638005DF8C3 /* NotesView.swift */,
+				A2AED6B0270E42A600DD1CD1 /* TestVieww.swift */,
 				A2957A43268EF2C7005DF8C3 /* Note.swift */,
 				A2A15B1C270CA2DA002FB8D3 /* Colors.swift */,
 				A2B3659F268C4BC100284561 /* Persistence.swift */,
@@ -292,6 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2AED6B1270E42A600DD1CD1 /* TestVieww.swift in Sources */,
 				A2957A48268EF739005DF8C3 /* SettingsView.swift in Sources */,
 				A2A15B1D270CA2DA002FB8D3 /* Colors.swift in Sources */,
 				A2B365A0268C4BC100284561 /* Persistence.swift in Sources */,
