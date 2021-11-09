@@ -48,7 +48,7 @@ struct SettingsView: View {
                         }
                         
                     )
-                }
+                } // end ForEach
                 
                 Section(header: Text("Theme")) {
                     Picker(selection: $config.colorTheme, label: Text("Theme")) {

@@ -8,8 +8,6 @@
 import SwiftUI
 import UserNotifications
 
-
-
 @main
 struct RemindMeApp: App {
     let persistenceController = PersistenceController.shared
@@ -17,7 +15,6 @@ struct RemindMeApp: App {
     @ObservedObject var config = Config.shared
     
     init() {
-        
         // request notification access
         UNUserNotificationCenter.current().requestAuthorization(options: [.sound , .alert , .badge ], completionHandler: { (granted, error) in
             if let error = error {

@@ -11,6 +11,11 @@ import Combine
 
 struct NotesView: View {
     
+//    init(config: Config){
+//        UITableView.appearance().backgroundColor = UIColor(named: "remindme_b")
+//        self.config = config
+//    }
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     @ObservedObject var config: Config
@@ -29,6 +34,7 @@ struct NotesView: View {
     @State private var editNote: Note? = nil
     @State private var editNoteContent: String = ""
     @FocusState private var newNoteIsFocused: Bool
+//    @State private var newNotesIsFocused2: Bool = true
     
     // custom date note
     @State private var customDateNote: Note? = nil
@@ -140,29 +146,39 @@ struct NotesView: View {
                 } // close edit note if-else
             } // close for-each note
             
-            HStack {
-                TextField(
-                    "New Note",
-                    text: $newNoteContent,
-                    onCommit:{
-                        addNote()
-                        newNoteContent = ""
-                        newNoteIsFocused = false
-                    }
-                )
-                .focused($newNoteIsFocused)
-                if (!newNoteContent.isEmpty) {
-                    Button(action: {
-                        addNote()
-                        newNoteContent = ""
-                        newNoteIsFocused = false
-                        }) {
-                        Image(systemName: "checkmark")
-                    }
-                }
-            } // close new note cell
+//            if (newNotesIsFocused2) {
+                HStack {
+                    TextField(
+                        "New Note",
+                        text: $newNoteContent,
+                        onCommit:{
+                            addNote()
+                            newNoteContent = ""
+                            newNoteIsFocused = false
+//                            newNotesIsFocused2 = false
+                        }
+                    )
+                    .focused($newNoteIsFocused)
+                    if (!newNoteContent.isEmpty) {
+                        Button(action: {
+                            addNote()
+                            newNoteContent = ""
+                            newNoteIsFocused = false
+//                            newNotesIsFocused2 = false
+                            }) {
+                            Image(systemName: "checkmark")
+                        }
+//                    }
+                } // close new note cell
+            } // close if of showing new note cell
         } // close list
         .listStyle(InsetGroupedListStyle())
+//        .background(
+//            .onTapGesture {
+//                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+//                newNotesIsFocused2.toggle()
+//            }
+//        )
         .sheet(isPresented: $showCustomDateSheet) {
             NavigationView{
                 VStack {
