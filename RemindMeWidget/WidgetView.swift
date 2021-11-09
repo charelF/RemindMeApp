@@ -24,6 +24,9 @@ struct WidgetView: View {
             case .systemSmall, .systemMedium:
                 fallthrough
             
+            case .systemExtraLarge:
+                fallthrough
+                
             @unknown default:
                 guard notes.count > 4 else {
                     return notes
@@ -48,7 +51,8 @@ struct WidgetView: View {
             VStack(spacing: 0) {
                 Divider()
                 ForEach(displayNotes, id: \.self) { note in
-                    LazyVStack(alignment: .leading) {
+//                    LazyVStack(alignment: .leading) {
+                    VStack(alignment: .leading) {
                         Text("\(note.content ?? "empty")")
                             .lineLimit(
                                 notes.count > 2 ? 1 : 2
@@ -60,21 +64,27 @@ struct WidgetView: View {
                             .font(.subheadline)
                         Divider()
                     }
-                    .background(note.getBackgroundColor())
-                    .background(getBackgroundColor()).opacity(1)
+//                    .background(note.getBackgroundColor())
+//                    .background(getBackgroundColor()).opacity(1)
+                    .background(
+                        ZStack {
+                            colorScheme == .dark ? Color.black : Color.white
+                            note.getWidgetBackgroundColor()
+                        }
+                    )
                 }
             }
         })
     }
     
-    private func getBackgroundColor() -> Color {
-        let darkBG = Color(red: 0.1, green: 0.1, blue: 0.1)
-        if colorScheme == .dark {
-            return darkBG
-        } else {
-            return Color.white
-        }
-    }
+//    private func getBackgroundColor() -> Color {
+//        let darkBG = Color(red: 0.1, green: 0.1, blue: 0.1)
+//        if colorScheme == .dark {
+//            return darkBG
+//        } else {
+//            return Color.white
+//        }
+//    }
 }
 
 struct WidgetView_Previews: PreviewProvider {

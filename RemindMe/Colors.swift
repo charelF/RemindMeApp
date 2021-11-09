@@ -12,6 +12,7 @@ enum ColorLocation: String {
     case primary = "p"
     case secondary = "s"
     case background = "b"
+    case widgetbackground = "b_"
 }
 
 enum ColorTheme: String, CaseIterable {
@@ -63,6 +64,9 @@ class Colors {
         case .background:
             // TODO: return higher opacity if in dark mode
             color = color.opacity(0.1)
+        case .widgetbackground:
+            // TODO: return higher opacity if in dark mode
+            color = color.opacity(0.15)
         }
         
         return color

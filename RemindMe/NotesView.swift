@@ -44,6 +44,9 @@ struct NotesView: View {
     // dark mode
     @Environment(\.colorScheme) var colorScheme
     
+    // context menu
+//    @State private var contextMenuIsVisible: Bool
+    
     
     var body: some View {
         List {
@@ -53,6 +56,8 @@ struct NotesView: View {
                         HStack {
                             Text("\(note.content ?? "")")
                                 .padding(.vertical, 0.2)
+//                                .lineLimit(2)
+                                .fixedSize(horizontal: false, vertical: true)
                             Spacer() // (1
                         }
                         
@@ -89,7 +94,7 @@ struct NotesView: View {
                                 customDateNote = note
                                 showCustomDateSheet = true
                             } label: {
-                                Label("Custom Reminder", systemImage: "bell")
+                                Label("Create Custom Reminder", systemImage: "calendar.badge.plus")
                             }
                             
                             Button {
@@ -97,10 +102,11 @@ struct NotesView: View {
                                 editNoteContent = note.content ?? newNoteContent
                                 editNoteIsFocused = true
                             } label: {
-                                Label("Edit Note", systemImage: "bell")
+                                Label("Edit Note", systemImage: "pencil")
                             }
                         }
                     }
+                    
                     .listRowBackground(
                         ZStack {
                             // to get rid of the ugly gray backgroud (which is visible as background color is semi

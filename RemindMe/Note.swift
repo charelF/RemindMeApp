@@ -53,6 +53,10 @@ extension Note {
         return Colors.getColor(for: self, in: .background)
     }
     
+    func getWidgetBackgroundColor() -> Color {
+        return Colors.getColor(for: self, in: .widgetbackground)
+    }
+    
     func describePriority() -> String {
         if self.priority == Int16(Note.priorityCount - 1) {
             if let date = self.customDate {
