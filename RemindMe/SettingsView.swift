@@ -32,6 +32,7 @@ struct SettingsView: View {
                                 Text(value.rawValue).tag(value)
                             }
                         }
+//                        .pickerStyle(.menu)
                         
                         switch config.priorityIntervals[i] {
                         case .ten_minutes, .never:
@@ -39,6 +40,7 @@ struct SettingsView: View {
                         default:
                             DatePicker("First reminder per day at", selection: $config.priorityDates[i], displayedComponents: [.hourAndMinute])
                         }
+                        
                     }
                     .foregroundColor(Colors.getColor(for: i, in: .primary))
                     .listRowBackground(

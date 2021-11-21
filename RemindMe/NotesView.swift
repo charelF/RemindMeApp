@@ -22,9 +22,8 @@ struct NotesView: View {
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true)],
-        animation: .default)
-    
-    private var notes: FetchedResults<Note>
+        animation: .default
+    ) private var notes: FetchedResults<Note>
     
     // new note
     @State private var newNoteContent: String = ""
@@ -44,46 +43,12 @@ struct NotesView: View {
     // dark mode
     @Environment(\.colorScheme) var colorScheme
     
-    // context menu
-//    @State private var contextMenuIsVisible: Bool
-    
-    
     var body: some View {
         List {
             ForEach(notes) { note in
                 if (note != editNote) {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("\(note.content ?? "")")
-                                .padding(.vertical, 0.2)
-//                                .lineLimit(2)
-                                .fixedSize(horizontal: false, vertical: true)
-                            Spacer() // (1
-                        }
-                        
-                        if (config.showCreationTime || config.showNotificationTime || (note.priority == Note.datePriorityNumber)) {
-                            HStack {
-                                if (config.showCreationTime) {
-                                    Image(systemName: "calendar")
-                                    Text("\(note.timestamp!, formatter: Note.dateFormatter)")
-                                }
-                                if (config.showNotificationTime || (note.priority == Note.datePriorityNumber)) {
-                                    Image(systemName: "bell")
-                                    Text("\(note.describePriority())")
-                                }
-                                Spacer() // (1)
-                            }
-                            .font(.footnote)
-                            .foregroundColor(note.getSecondaryColor())
-                            .padding(.bottom, 0.2)
-                        }
-                    }
-                    .contentShape(Rectangle()) // This together with (1) makes whole area clickable
-                    .foregroundColor(note.getPrimaryColor())
-                    .onTapGesture {
-                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                        updateNotePriority(note)
-                    }
+                    NoteView(config: config, note: note)
+                    
                     .contextMenu {
                         // bug in ios15: context menu may show outdated information
                         VStack {
@@ -106,7 +71,6 @@ struct NotesView: View {
                             }
                         }
                     }
-                    
                     .listRowBackground(
                         ZStack {
                             // to get rid of the ugly gray backgroud (which is visible as background color is semi
@@ -230,15 +194,6 @@ struct NotesView: View {
                 note.addNotifications(notifyOn: customDate)
                 PersistenceController.shared.save()
             }
-        }
-    }
-
-    private func updateNotePriority(_ note: Note) {
-        withAnimation {
-            note.deleteNotifications()
-            note.changePriority()
-            note.addNotifications()
-            PersistenceController.shared.save()
         }
     }
     

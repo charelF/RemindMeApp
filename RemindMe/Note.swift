@@ -28,6 +28,13 @@ extension Note {
         changePriority(notifyOn: nil)
     }
     
+    func updatePriority() {
+        self.deleteNotifications()
+        self.changePriority()
+        self.addNotifications()
+        PersistenceController.shared.save()
+    }
+    
     func changePriority(notifyOn date: Date?) {
         // check if the optional is nil or not
         if let _ = date {
