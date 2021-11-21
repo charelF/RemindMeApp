@@ -10,7 +10,13 @@ import SwiftUI
 struct NoteView: View {
     
     @ObservedObject var config: Config
+    
+    // on having a childview update when parent changes:
+    // - https://stackoverflow.com/q/57614564/9439097
+    // - https://developer.apple.com/forums/thread/123920
     @ObservedObject var note: Note
+    
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -25,7 +31,7 @@ struct NoteView: View {
                 HStack {
                     if (config.showCreationTime) {
                         Image(systemName: "calendar")
-                        Text("\(note.timestamp!, formatter: Note.dateFormatter)")
+                        Text("\(note.timestamp ?? Date.now, formatter: Note.dateFormatter)")
                     }
                     if (config.showNotificationTime || (note.priority == Note.datePriorityNumber)) {
                         Image(systemName: "bell")

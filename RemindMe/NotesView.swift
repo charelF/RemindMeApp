@@ -33,7 +33,6 @@ struct NotesView: View {
     @State private var editNote: Note? = nil
     @State private var editNoteContent: String = ""
     @FocusState private var newNoteIsFocused: Bool
-//    @State private var newNotesIsFocused2: Bool = true
     
     // custom date note
     @State private var customDateNote: Note? = nil
@@ -49,19 +48,18 @@ struct NotesView: View {
                 if (note != editNote) {
                     NoteView(config: config, note: note)
                     
+                    // context menu for the note, cant be extracted because it works with both editNote and customDateNote
                     .contextMenu {
                         // bug in ios15: context menu may show outdated information
                         VStack {
                             Label("Created on: \(note.timestamp!, formatter: Note.dateFormatter)", systemImage: "calendar")
                             Label("Reminders: \(note.describePriority())", systemImage: "bell")
-                            
                             Button {
                                 customDateNote = note
                                 showCustomDateSheet = true
                             } label: {
                                 Label("Create Custom Reminder", systemImage: "calendar.badge.plus")
                             }
-                            
                             Button {
                                 editNote = note
                                 editNoteContent = note.content ?? newNoteContent
@@ -71,21 +69,27 @@ struct NotesView: View {
                             }
                         }
                     }
+                    
+                    // the background. We could add a backgroudn to the note view, but then it does not fill the whole row
+                    // we use a ZStack to get rid of the ugly default background
+                    // has to come after the context menu for some reason
                     .listRowBackground(
                         ZStack {
-                            // to get rid of the ugly gray backgroud (which is visible as background color is semi
-                            // transparent) we use Zstack and first put a white/black background
                             colorScheme == .dark ? Color.black : Color.white
                             note.getBackgroundColor()
                         }
-                    ) // has to come after the context menu
+                    )
+                    
+                    // swipe actions (cant be extracted, because they need to be in a list)
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
-                            deleteNote(note)
+                            note.delete()
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
                     }
+                    
+                    
                 } else { // in the case the note is to be edited
                     HStack {
                         TextField(
@@ -143,12 +147,6 @@ struct NotesView: View {
             } // close if of showing new note cell
         } // close list
         .listStyle(InsetGroupedListStyle())
-//        .background(
-//            .onTapGesture {
-//                UIImpactFeedbackGenerator(style: .light).impactOccurred()
-//                newNotesIsFocused2.toggle()
-//            }
-//        )
         .sheet(isPresented: $showCustomDateSheet) {
             NavigationView{
                 VStack {
@@ -194,16 +192,6 @@ struct NotesView: View {
                 note.addNotifications(notifyOn: customDate)
                 PersistenceController.shared.save()
             }
-        }
-    }
-    
-    private func deleteNote(_ optionalNote: Note?) {
-        withAnimation {
-            if let note = optionalNote {
-                note.deleteNotifications()
-                viewContext.delete(note)
-            }
-            PersistenceController.shared.save()
         }
     }
 }

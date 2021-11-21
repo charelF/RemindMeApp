@@ -35,6 +35,13 @@ extension Note {
         PersistenceController.shared.save()
     }
     
+    func delete() {
+        let viewContext = PersistenceController.shared.container.viewContext
+        self.deleteNotifications()
+        viewContext.delete(self)
+        PersistenceController.shared.save()
+    }
+    
     func changePriority(notifyOn date: Date?) {
         // check if the optional is nil or not
         if let _ = date {
