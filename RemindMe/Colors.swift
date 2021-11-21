@@ -33,7 +33,7 @@ class Colors {
         var color: Color
         switch theme {
         case .retro, .remindme:
-            let colorCode: String = "\(theme.rawValue.lowercased())_\(priority)"
+            let colorCode: String = "\(theme.rawValue.lowercased())_\(priority.getIndex())"
             if let uicolor = UIColor(named: colorCode) {
                 color =  Color(uicolor)
             } else {
