@@ -48,7 +48,7 @@ struct NotesView: View {
                         // bug in ios15: context menu may show outdated information
                         VStack {
                             Label("Created on: \(note.timestamp!, formatter: Note.dateFormatter)", systemImage: "calendar")
-                            Label("Reminders: \(note.describePriority())", systemImage: "bell")
+                            Label("Reminders: \(note.priority.getIntervalDescription())", systemImage: "bell")
                             Button {
                                 customDateNote = note
                                 showCustomDateSheet = true
@@ -156,7 +156,7 @@ struct NotesView: View {
                         Text("Cancel")
                     }, trailing: Button(action: {
                         if let note = customDateNote {
-                            note.createCustomPriority(customDate)
+                            note.updatePriority(optionalDate: customDate)
                         }
                         customDateNote = nil
                         showCustomDateSheet.toggle()

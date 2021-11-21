@@ -12,7 +12,7 @@ struct WidgetView: View {
     var notes: [Note]
     var displayNotes: [Note] {
         get {
-            let sortedPriorityNotes = notes.sorted(by: { $0.priority > $1.priority })
+            let sortedPriorityNotes = notes.sorted(by: { $0.priority.getIndex() > $1.priority.getIndex() })
             switch family {
                 
             case .systemLarge:

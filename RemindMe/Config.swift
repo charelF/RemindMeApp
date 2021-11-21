@@ -17,7 +17,7 @@ enum Interval: String, Equatable, CaseIterable {
     case week = "Weekly"
     case month = "Monthly"
     case never = "Never"
-    // to be added
+    // TODO: to be added
 //    case everyMonday = "Every Monday"
 //    case everyTuesday = "Every Tuesday"
 //    case everyWednesday = "Every Wednesday"
@@ -41,14 +41,14 @@ class Config: ObservableObject {
     @Published var priorityIntervals: [Interval]
     
     // constants
-    let priorityDescriptions: [String] = [
-        "Low priority",
-        "Mid priority",
-        "High priority",
-        "Very high priority",
-    ]
-    static var priorityCount: Int = 3
-    static var defaultPriority: Int = 0
+//    let priorityDescriptions: [String] = [
+//        "Low priority",
+//        "Mid priority",
+//        "High priority",
+//        "Very high priority",
+//    ]
+//    static var priorityCount: Int = 3
+//    static var defaultPriority: Int = 0
     
     // other settings
     @Published var showCreationTime: Bool
@@ -66,18 +66,14 @@ class Config: ObservableObject {
         return date
     }
     
-    func getInterval(priority: Int) -> Interval {
-        guard priority < Config.priorityCount && priority >= 0 else {
-            print("Invalid priority")
-            return .day
-        }
-        return self.priorityIntervals[priority]
+    func getInterval(priority: Priority) -> Interval {
+        return self.priorityIntervals[priority.getIndex()]
     }
     
     init() {
         
+        // TODO: make this not fixed 3, but a function of priority
         self.priorityDates  = [
-            Config.createTime(hour: 08, minute: 00) ?? Date(),
             Config.createTime(hour: 08, minute: 00) ?? Date(),
             Config.createTime(hour: 08, minute: 00) ?? Date(),
             Config.createTime(hour: 08, minute: 00) ?? Date(),
@@ -87,7 +83,6 @@ class Config: ObservableObject {
             Interval.never,
             Interval.week,
             Interval.day,
-            Interval.hour
         ]
         
         self.showCreationTime = true
@@ -133,8 +128,8 @@ class Config: ObservableObject {
         }
         
         // ugly code to check if the loaded data is still valid --> e.g. if number of priorities now different
-        if (self.priorityDates.count != Note.priorityCount) {
-            let difference = self.priorityDates.count - Note.priorityCount
+        if (self.priorityDates.count != Priority.count) {
+            let difference = self.priorityDates.count - Priority.count
             if (difference > 0) {
                 // difference > 0 --> more priorityDates in UserDefaults then there are priorities --> decrease them
                 self.priorityDates = self.priorityDates.dropLast(difference)
@@ -144,8 +139,8 @@ class Config: ObservableObject {
             }
         }
         
-        if (self.priorityIntervals.count != Note.priorityCount) {
-            let difference = self.priorityIntervals.count - Note.priorityCount
+        if (self.priorityIntervals.count != Priority.count) {
+            let difference = self.priorityIntervals.count - Priority.count
             if (difference > 0) {
                 // difference > 0 --> more priorityDates in UserDefaults then there are priorities --> decrease them
                 self.priorityIntervals = self.priorityIntervals.dropLast(difference)

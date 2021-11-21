@@ -24,10 +24,10 @@ enum ColorTheme: String, CaseIterable {
 class Colors {
     
     static func getColor(for note: Note, in location: ColorLocation) -> Color {
-        return Colors.getColor(for: Int(note.priority), in: location)
+        return Colors.getColor(for: note.priority, in: location)
     }
     
-    static func getColor(for priority: Int, in location: ColorLocation) -> Color {
+    static func getColor(for priority: Priority, in location: ColorLocation) -> Color {
         let config: Config = Config.shared
         let theme: ColorTheme = config.colorTheme
         var color: Color
@@ -41,18 +41,14 @@ class Colors {
             }
         default:
             switch priority {
-            case 0:
+            case .low:
                 color = Color.green
-            case 1:
+            case .medium:
                 color = Color.orange
-            case 2:
+            case .high:
                 color = Color.red
-            case 3:
+            case .custom(_):
                 color = Color.blue
-            case 4:
-                color = Color.purple
-            default:
-                color = Color.primary
             }
         }
         

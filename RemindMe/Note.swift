@@ -10,6 +10,107 @@ import SwiftUI
 import CoreData
 import UserNotifications
 
+enum Priority: Identifiable {
+    
+    case low
+    case medium
+    case high
+    case custom(date: Date)
+    
+    mutating func next() {
+        switch self {
+        case .low:
+            self = .medium
+        case .medium:
+            self = .high
+        case .high:
+            self = .low
+        case .custom:
+            self = .low
+        }
+    }
+    
+    func getIndex() -> Int {
+        switch self {
+        case .low:
+            return 0
+        case .medium:
+            return 1
+        case .high:
+            return 2
+        case .custom(_):
+            return 3
+        }
+    }
+    
+    static var allRegularCases: [Priority] {
+        return [.low, .medium, .high]
+    }
+    
+    static var count: Int {
+        return allRegularCases.count
+    }
+    
+    func getDescription() -> String {
+        switch self {
+        case .low:
+            return "Low Priority"
+        case .medium:
+            return "Mid Priority"
+        case .high:
+            return "High Priority"
+        case .custom(_):
+            return "Custom Priority"
+        }
+    }
+    
+    func getIntervalDescription() -> String {
+        switch self {
+        case .custom(let date):
+            return Note.dateFormatter.string(from: date)
+        default:
+            return Config.shared.getInterval(priority: self).rawValue
+        }
+    }
+    
+    func isCustom() -> Bool {
+        // this is needed because I cant compare just whether note.priority == .custom,
+        // since .custom(date 1) is different from .custom(date 2), however both are custom
+        switch self {
+        case .custom(_):
+            return true
+        default:
+            return false
+        }
+    }
+    
+    // for identifable protocol
+    var id: Int { return self.getIndex() }
+}
+
+extension Note {
+    var priority: Priority {
+        // TODO: this could maybe be improved, potentially with an Int16 associatedCase in the Priority enum
+        get {
+            switch int16priority {
+            case 0:
+                return .low
+            case 1:
+                return .medium
+            case 2:
+                return .high
+            case 3:
+                return .custom(date: self.customDate!)
+            default:
+                return .low
+            }
+        }
+        set {
+            self.int16priority = Int16(newValue.getIndex())
+        }
+    }
+}
+
 extension Note {
     
     static let dateFormatter: DateFormatter = {
@@ -19,18 +120,15 @@ extension Note {
         return formatter
     }()
     
-    static let defaultPriority: Int = 0
-    static let priorityCount: Int = 4
-    static let datePriorityNumber: Int = 3
-    
-    func changePriority() {
-        // legacy function
-        changePriority(notifyOn: nil)
-    }
-    
-    func updatePriority() {
+    func updatePriority(optionalDate: Date?) {
         self.deleteNotifications()
-        self.changePriority()
+        if let date = optionalDate {
+            self.priority = Priority.custom(date: date)  // we associate for easier usage
+            self.customDate = date  // we store it here aswell in order to save changes when closing app
+        } else {
+            self.priority.next()
+            self.customDate = nil
+        }
         self.addNotifications()
         PersistenceController.shared.save()
     }
@@ -51,26 +149,6 @@ extension Note {
         PersistenceController.shared.save()
     }
     
-    func createCustomPriority(_ customDate: Date) {
-        self.deleteNotifications()
-        self.changePriority(notifyOn: customDate)
-        self.addNotifications(notifyOn: customDate)
-        PersistenceController.shared.save()
-    }
-    
-    func changePriority(notifyOn date: Date?) {
-        // check if the optional is nil or not
-        if let _ = date {
-            // as for now, date by default the last priority
-            self.priority = Int16(Note.priorityCount - 1)
-        } else {
-            self.customDate = nil
-            self.priority += 1
-            // highest priority reserved for custom dates
-            self.priority %= Int16(Note.priorityCount - 1)
-        }
-    }
-    
     func getPrimaryColor() -> Color {
         return Colors.getColor(for: self, in: .primary)
     }
@@ -87,21 +165,12 @@ extension Note {
         return Colors.getColor(for: self, in: .widgetbackground)
     }
     
-    func describePriority() -> String {
-        if self.priority == Int16(Note.priorityCount - 1) {
-            if let date = self.customDate {
-                return Note.dateFormatter.string(from: date)
-            }
-        }
-        return Config.shared.priorityIntervals[Int(self.priority)].rawValue
-    }
-    
     convenience init(context: NSManagedObjectContext, content: String) {
         self.init(context: context)
         self.content = content
         self.timestamp = Date()
         self.id = UUID()
-        self.priority = 0
+        self.priority = .low
         self.notificationids = []
         self.addNotifications()
     }
@@ -113,11 +182,6 @@ extension Note {
     }
     
     func addNotifications() {
-        // legacy function
-        addNotifications(notifyOn: nil)
-    }
-    
-    func addNotifications(notifyOn date: Date?) {
         let notificationCenter = UNUserNotificationCenter.current()
         
         let content = UNMutableNotificationContent()
@@ -128,18 +192,17 @@ extension Note {
         var request: UNNotificationRequest
         let triggers: [UNNotificationTrigger]
         
-        if let safeDate = date {
-            self.customDate = safeDate
+        switch self.priority {
+        case .custom(let date):
             let dateComponents: DateComponents = Calendar.current.dateComponents(
                 [.year, .month, .day, .hour, .minute],
-                from: safeDate
+                from: date
             )
             triggers = [
                 UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
             ]
-        } else {
-            self.customDate = nil
-            let interval = Config.shared.getInterval(priority: Int(self.priority))
+        default:
+            let interval = Config.shared.getInterval(priority: self.priority)
             triggers = createNotificationTriggers(interval: interval)
         }
         
@@ -178,11 +241,10 @@ extension Note {
         var triggers: [UNNotificationTrigger] = []
         var firstNotificationTime = Date()
         
-        
         var executed = false
-        for i in 0..<Config.priorityCount {
-            if Config.shared.priorityIntervals[i] == interval {
-                firstNotificationTime = Config.shared.priorityDates[i]
+        for priority in Priority.allRegularCases {
+            if Config.shared.priorityIntervals[priority.getIndex()] == interval {
+                firstNotificationTime = Config.shared.priorityDates[priority.getIndex()]
                 executed = true
             }
         }
@@ -197,14 +259,6 @@ extension Note {
         
         case .ten_minutes:
             triggers.append(UNTimeIntervalNotificationTrigger(timeInterval: 60*10, repeats: true))
-//            var dateComponents: DateComponents
-//            for elapsedTime in [0, 10, 20, 30, 40, 50] {
-//                dateComponents = Calendar.current.dateComponents(
-//                    [.minute, .second],
-//                    from: firstNotificationTime + TimeInterval(elapsedTime)
-//                )
-//                triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
-//            }
             
         case .hour:
             let dateComponents: DateComponents = Calendar.current.dateComponents(
@@ -279,9 +333,9 @@ extension Note {
         notes.append(Note(context: pvc, content: "Short note"))
         notes.append(Note(context: pvc, content: "This is a longer note with a higher priority, it may span 2 columns"))
         notes.append(Note(context: pvc, content: "Yet another note"))
-        notes[0].priority = 0
-        notes[1].priority = 1
-        notes[2].priority = 2
+        notes[0].priority = Priority.low
+        notes[1].priority = Priority.medium
+        notes[2].priority = Priority.high
         return notes
     }()
 }

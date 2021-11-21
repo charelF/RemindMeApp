@@ -33,9 +33,9 @@ struct OneNoteView: View {
                         Image(systemName: "calendar")
                         Text("\(note.timestamp ?? Date.now, formatter: Note.dateFormatter)")
                     }
-                    if (config.showNotificationTime || (note.priority == Note.datePriorityNumber)) {
+                    if (config.showNotificationTime || note.priority.isCustom()) {
                         Image(systemName: "bell")
-                        Text("\(note.describePriority())")
+                        Text(note.priority.getIntervalDescription())
                     }
                     Spacer()
                 }
@@ -54,7 +54,7 @@ struct OneNoteView: View {
         // if we tap once on the note, we update its priority
         .onTapGesture {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            note.updatePriority()
+            note.updatePriority(optionalDate: nil)
         }
     }
 }

@@ -23,30 +23,28 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                // we loop to priorityCount-1 not included because the last priority (the one at index priorityCount-1 since
-                // we index by 0) is reserved for custom date priority
-                ForEach(0..<(Note.priorityCount-1)) { i in
-                    Section(header: Text(config.priorityDescriptions[i]).foregroundColor(Color.secondary)) {
-                        Picker(selection: $config.priorityIntervals[i], label: Text("Notification interval")) {
+                ForEach(Priority.allRegularCases) { priority in
+                    Section(header: Text(priority.getDescription()).foregroundColor(Color.secondary)) {
+                        Picker(selection: $config.priorityIntervals[priority.getIndex()], label: Text("Notification interval")) {
                             ForEach(Interval.allCases, id: \.self) { value in
                                 Text(value.rawValue).tag(value)
                             }
                         }
 //                        .pickerStyle(.menu)
                         
-                        switch config.priorityIntervals[i] {
+                        switch config.priorityIntervals[priority.getIndex()] {
                         case .ten_minutes, .never:
                             EmptyView()
                         default:
-                            DatePicker("First reminder per day at", selection: $config.priorityDates[i], displayedComponents: [.hourAndMinute])
+                            DatePicker("First reminder per day at", selection: $config.priorityDates[priority.getIndex()], displayedComponents: [.hourAndMinute])
                         }
                         
                     }
-                    .foregroundColor(Colors.getColor(for: i, in: .primary))
+                    .foregroundColor(Colors.getColor(for: priority, in: .primary))
                     .listRowBackground(
                         ZStack {
                             colorScheme == .dark ? Color.black : Color.white
-                            Colors.getColor(for: i, in: .background)
+                            Colors.getColor(for: priority, in: .background)
                         }
                         
                     )
@@ -80,11 +78,13 @@ struct SettingsView: View {
     
     private func updateAllNotes() {
         for note in notes {
-            guard note.priority != Note.datePriorityNumber else {
+            switch note.priority {
+            case .custom(_):
                 continue
+            default:
+                note.deleteNotifications()
+                note.addNotifications()
             }
-            note.deleteNotifications()
-            note.addNotifications()
             PersistenceController.shared.save()
         }
     }
