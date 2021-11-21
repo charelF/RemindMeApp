@@ -42,6 +42,22 @@ extension Note {
         PersistenceController.shared.save()
     }
     
+    static func add(content: String) {
+        if content.isEmpty {
+            return
+        }
+        let viewContext = PersistenceController.shared.container.viewContext
+        _ = Note(context: viewContext, content: content)
+        PersistenceController.shared.save()
+    }
+    
+    func createCustomPriority(_ customDate: Date) {
+        self.deleteNotifications()
+        self.changePriority(notifyOn: customDate)
+        self.addNotifications(notifyOn: customDate)
+        PersistenceController.shared.save()
+    }
+    
     func changePriority(notifyOn date: Date?) {
         // check if the optional is nil or not
         if let _ = date {

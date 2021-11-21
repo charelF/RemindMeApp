@@ -1,5 +1,5 @@
 //
-//  NoteView.swift
+//  OneNoteView.swift
 //  RemindMe
 //
 //  Created by Charel Felten on 21/11/2021.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NoteView: View {
+struct OneNoteView: View {
     
     @ObservedObject var config: Config
     
@@ -59,8 +59,11 @@ struct NoteView: View {
     }
 }
 
-struct NoteView_Previews: PreviewProvider {
+struct OneNoteView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteView(config: Config(), note: Note.previewNotes.first!)
+        OneNoteView(config: Config(), note: Note.previewNotes.first!)
+            .previewLayout(PreviewLayout.sizeThatFits)
+            .padding()
     }
+    
 }

@@ -34,7 +34,7 @@
 		A2B3659E268C4BC100284561 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B3659D268C4BC100284561 /* Preview Assets.xcassets */; };
 		A2B365A0268C4BC100284561 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B3659F268C4BC100284561 /* Persistence.swift */; };
 		A2B365A3268C4BC100284561 /* RemindMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2B365A1268C4BC100284561 /* RemindMe.xcdatamodeld */; };
-		A2C87107274A8F1B000027A5 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C87106274A8F1B000027A5 /* NoteView.swift */; };
+		A2C87107274A8F1B000027A5 /* OneNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C87106274A8F1B000027A5 /* OneNoteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +85,7 @@
 		A2B3659F268C4BC100284561 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		A2B365A2268C4BC100284561 /* Kiwi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Kiwi.xcdatamodel; sourceTree = "<group>"; };
 		A2B365A4268C4BC100284561 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A2C87106274A8F1B000027A5 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
+		A2C87106274A8F1B000027A5 /* OneNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneNoteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,8 +155,8 @@
 				A2B36596268C4BBF00284561 /* RemindMeApp.swift */,
 				A2B36598268C4BBF00284561 /* ContentView.swift */,
 				A2957A47268EF739005DF8C3 /* SettingsView.swift */,
+				A2C87106274A8F1B000027A5 /* OneNoteView.swift */,
 				A2957A45268EF638005DF8C3 /* NotesView.swift */,
-				A2C87106274A8F1B000027A5 /* NoteView.swift */,
 				A2957A43268EF2C7005DF8C3 /* Note.swift */,
 				A2A15B1C270CA2DA002FB8D3 /* Colors.swift */,
 				A2B3659F268C4BC100284561 /* Persistence.swift */,
@@ -302,7 +302,7 @@
 				A2B365A3268C4BC100284561 /* RemindMe.xcdatamodeld in Sources */,
 				A2957A66269436DF005DF8C3 /* WidgetView.swift in Sources */,
 				A2957A46268EF638005DF8C3 /* NotesView.swift in Sources */,
-				A2C87107274A8F1B000027A5 /* NoteView.swift in Sources */,
+				A2C87107274A8F1B000027A5 /* OneNoteView.swift in Sources */,
 				A2B36599268C4BBF00284561 /* ContentView.swift in Sources */,
 				A2957A44268EF2C7005DF8C3 /* Note.swift in Sources */,
 				A2957A5D2693A533005DF8C3 /* RemindMeWidget.intentdefinition in Sources */,

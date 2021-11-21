@@ -11,11 +11,6 @@ import Combine
 
 struct NotesView: View {
     
-//    init(config: Config){
-//        UITableView.appearance().backgroundColor = UIColor(named: "remindme_b")
-//        self.config = config
-//    }
-    
     @Environment(\.managedObjectContext) private var viewContext
     
     @ObservedObject var config: Config
@@ -46,7 +41,7 @@ struct NotesView: View {
         List {
             ForEach(notes) { note in
                 if (note != editNote) {
-                    NoteView(config: config, note: note)
+                    OneNoteView(config: config, note: note)
                     
                     // context menu for the note, cant be extracted because it works with both editNote and customDateNote
                     .contextMenu {
@@ -89,7 +84,7 @@ struct NotesView: View {
                         }
                     }
                     
-                    
+                // TODO: refactor the editNote and newNote, maybe combine, just make it more elegant
                 } else { // in the case the note is to be edited
                     HStack {
                         TextField(
@@ -120,33 +115,35 @@ struct NotesView: View {
                 } // close edit note if-else
             } // close for-each note
             
-//            if (newNotesIsFocused2) {
+            if editNote == nil {
                 HStack {
                     TextField(
                         "New Note",
                         text: $newNoteContent,
                         onCommit:{
-                            addNote()
+//                            addNote()
+                            Note.add(content: newNoteContent)
                             newNoteContent = ""
                             newNoteIsFocused = false
-//                            newNotesIsFocused2 = false
                         }
                     )
                     .focused($newNoteIsFocused)
                     if (!newNoteContent.isEmpty) {
                         Button(action: {
-                            addNote()
+                            Note.add(content: newNoteContent)
                             newNoteContent = ""
                             newNoteIsFocused = false
-//                            newNotesIsFocused2 = false
-                            }) {
+                            }
+                        ) {
                             Image(systemName: "checkmark")
                         }
-//                    }
-                } // close new note cell
+                    }
+                }
             } // close if of showing new note cell
         } // close list
+        
         .listStyle(InsetGroupedListStyle())
+        
         .sheet(isPresented: $showCustomDateSheet) {
             NavigationView{
                 VStack {
@@ -158,7 +155,9 @@ struct NotesView: View {
                     }) {
                         Text("Cancel")
                     }, trailing: Button(action: {
-                        createCustomNotePriority(customDateNote)
+                        if let note = customDateNote {
+                            note.createCustomPriority(customDate)
+                        }
                         customDateNote = nil
                         showCustomDateSheet.toggle()
                     }) {
@@ -168,32 +167,6 @@ struct NotesView: View {
             }
         } // close custom note sheet
     } // close body
-    
-    private func addNote() {
-        withAnimation {
-            guard !newNoteContent.isEmpty else {
-                return
-            }
-            _ = Note(
-                context: viewContext,
-                content: newNoteContent
-            )
-            PersistenceController.shared.save()
-            
-            newNoteContent = ""
-        }
-    }
-    
-    private func createCustomNotePriority(_ optionalNote: Note?) {
-        withAnimation {
-            if let note = optionalNote {
-                note.deleteNotifications()
-                note.changePriority(notifyOn: customDate)
-                note.addNotifications(notifyOn: customDate)
-                PersistenceController.shared.save()
-            }
-        }
-    }
 }
 
 struct NotesView_Previews: PreviewProvider {
