@@ -40,16 +40,6 @@ class Config: ObservableObject {
     @Published var priorityDates: [Date]
     @Published var priorityIntervals: [Interval]
     
-    // constants
-//    let priorityDescriptions: [String] = [
-//        "Low priority",
-//        "Mid priority",
-//        "High priority",
-//        "Very high priority",
-//    ]
-//    static var priorityCount: Int = 3
-//    static var defaultPriority: Int = 0
-    
     // other settings
     @Published var showCreationTime: Bool
     @Published var showNotificationTime: Bool
@@ -72,18 +62,31 @@ class Config: ObservableObject {
     
     init() {
         
-        // TODO: make this not fixed 3, but a function of priority
-        self.priorityDates  = [
-            Config.createTime(hour: 08, minute: 00) ?? Date(),
-            Config.createTime(hour: 08, minute: 00) ?? Date(),
-            Config.createTime(hour: 08, minute: 00) ?? Date(),
-        ]
+        // some fucked up bug made me to this shit like this with these dumb pd and pi variables ????
+        var pd = [Date]()
+        var pi = [Interval]()
         
-        self.priorityIntervals = [
-            Interval.never,
-            Interval.week,
-            Interval.day,
-        ]
+        for _ in Priority.allRegularCases {
+            pd.append(Config.createTime(hour: 08, minute: 00) ?? Date())
+        }
+        
+        for priority in Priority.allRegularCases {
+            let interval: Interval
+            switch priority {
+            case .low:
+                interval = Interval.never
+            case .medium:
+                interval = Interval.week
+            case .high:
+                interval = Interval.day
+            default:
+                interval = Interval.never
+            }
+            pi.append(interval)
+        }
+        
+        self.priorityDates = pd
+        self.priorityIntervals = pi
         
         self.showCreationTime = true
         self.showNotificationTime = true

@@ -124,6 +124,8 @@ extension Note {
         self.deleteNotifications()
         if let date = optionalDate {
             self.priority = Priority.custom(date: date)  // we associate for easier usage
+            // TODO: see if its really better to use the associated value, because it creates the ugly situation of having
+            // two dates in the app, instead of a single source of truth...
             self.customDate = date  // we store it here aswell in order to save changes when closing app
         } else {
             self.priority.next()
