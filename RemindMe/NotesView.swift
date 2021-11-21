@@ -27,12 +27,12 @@ struct NotesView: View {
     
     // new note
     @State private var newNoteContent: String = ""
-    @FocusState private var editNoteIsFocused: Bool
+    @FocusState private var newNoteIsFocused: Bool
     
     // edit note
     @State private var editNote: Note? = nil
     @State private var editNoteContent: String = ""
-    @FocusState private var newNoteIsFocused: Bool
+    @FocusState private var editNoteIsFocused: Bool
     
     // custom date note
     @State private var customDateNote: Note? = nil
