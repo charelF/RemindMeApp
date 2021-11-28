@@ -31,6 +31,9 @@ enum Interval: String, Equatable, CaseIterable {
 
 
 
+
+
+
 class Config: ObservableObject {
     
     // singleton despite ObservableObject, could be problematic
@@ -56,8 +59,15 @@ class Config: ObservableObject {
         return date
     }
     
-    func getInterval(priority: Priority) -> Interval {
-        return self.priorityIntervals[priority.getIndex()]
+    func getIntervalAndDate(for priority: Priority) -> (interval: Interval, date: Date)? {
+        // TODO: maybe we can make some kind of Interval class, and then work with that instead of returning this named tuple
+        switch priority {
+        case .custom(_):
+            return nil
+        default:
+            // TODO: maybe we can avoid this rather ugly arrays
+            return (interval: self.priorityIntervals[priority.getIndex()], date: self.priorityDates[priority.getIndex()])
+        }
     }
     
     init() {

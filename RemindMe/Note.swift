@@ -69,7 +69,11 @@ enum Priority: Identifiable {
         case .custom(let date):
             return Note.dateFormatter.string(from: date)
         default:
-            return Config.shared.getInterval(priority: self).rawValue
+            if let intervalAndDate = Config.shared.getIntervalAndDate(for: self) {
+                return intervalAndDate.interval.rawValue
+            } else {
+                return "Whoops"
+            }
         }
     }
     
@@ -101,6 +105,8 @@ extension Note {
                 return .high
             case 3:
                 return .custom(date: self.customDate!)
+                // Note: I think it is a good idea to leave the date in the priority. The note.customDate is optional, whereas the date
+                // associated to the priority is not, so its safer to use.
             default:
                 return .low
             }
@@ -124,9 +130,9 @@ extension Note {
         self.deleteNotifications()
         if let date = optionalDate {
             self.priority = Priority.custom(date: date)  // we associate for easier usage
-            // TODO: see if its really better to use the associated value, because it creates the ugly situation of having
-            // two dates in the app, instead of a single source of truth...
             self.customDate = date  // we store it here aswell in order to save changes when closing app
+            // actually, self.customDate is only for the storage. But anyone accessing this date should always access it over the priority,
+            // that is safer, as the one in the priority is not optional
         } else {
             self.priority.next()
             self.customDate = nil
@@ -196,16 +202,15 @@ extension Note {
         
         switch self.priority {
         case .custom(let date):
+            // for custom notifactions we do reminders on the chosen date
             let dateComponents: DateComponents = Calendar.current.dateComponents(
                 [.year, .month, .day, .hour, .minute],
                 from: date
             )
-            triggers = [
-                UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-            ]
+            triggers = [UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)]
         default:
-            let interval = Config.shared.getInterval(priority: self.priority)
-            triggers = createNotificationTriggers(interval: interval)
+            // for other notes, we do reminders at specified intervals
+            triggers = createNotificationTriggers()
         }
         
         for trigger in triggers {
@@ -222,111 +227,72 @@ extension Note {
             }
             self.notificationids!.append(notificationid)
         }
-        
-        // DEBUG
-        /*
-        notificationCenter.getPendingNotificationRequests(completionHandler: { (notifications) in
-            print("Number of pending notifications \(notifications.count)")
-            for request in notifications {
-                if let tmp = request.trigger as? UNCalendarNotificationTrigger {
-                    print(String(describing: tmp.nextTriggerDate()))
-                }
-                if let tmp = request.trigger as? UNTimeIntervalNotificationTrigger {
-                    print(String(describing: tmp.nextTriggerDate()))
-                }
-            }
-        })
-        */
     }
     
-    func createNotificationTriggers(interval: Interval) -> [UNNotificationTrigger] {
+    func createNotificationTriggers() -> [UNNotificationTrigger] {
         var triggers: [UNNotificationTrigger] = []
-        var firstNotificationTime = Date()
         
-        var executed = false
-        for priority in Priority.allRegularCases {
-            if Config.shared.priorityIntervals[priority.getIndex()] == interval {
-                firstNotificationTime = Config.shared.priorityDates[priority.getIndex()]
-                executed = true
-            }
-        }
-        guard executed else {
-            print("--- Could not create notification ---")
-            print(interval)
-            print(self.priority)
-            return []
-        }
+        let optIntervalAndDate = Config.shared.getIntervalAndDate(for: self.priority)
         
-        switch interval {
-        
-        case .ten_minutes:
-            triggers.append(UNTimeIntervalNotificationTrigger(timeInterval: 60*10, repeats: true))
+        if let intervalAndDate = optIntervalAndDate {
+            // the optional check is because a custom priority does not have an associated interval and date
+            // however practically this _should_ never fail
+            let interval = intervalAndDate.interval
+            let firstNotificationTime = intervalAndDate.date
             
-        case .hour:
-            let dateComponents: DateComponents = Calendar.current.dateComponents(
-                [.minute, .second],
-                from: firstNotificationTime
-            )
-            triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+            switch interval {
             
-        case .three_hours:
-            var dateComponents: DateComponents
-            for elapsedTime in [0, 3*60*60, 6*60*60, 9*60*60, 12*60*60, 15*60*60, 18*60*60, 21*60*60] {
-                dateComponents = Calendar.current.dateComponents(
-                    [.minute, .hour, .second],
-                    from: firstNotificationTime + TimeInterval(elapsedTime)
-                )
+            case .ten_minutes:
+                triggers.append(UNTimeIntervalNotificationTrigger(timeInterval: 60*10, repeats: true))
+                
+            case .hour:
+                let dateComponents: DateComponents = Calendar.current.dateComponents([.minute, .second], from: firstNotificationTime)
                 triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
-            }
-            
-        case .six_hours:
-            var dateComponents: DateComponents
-            for elapsedTime in [0, 6*60*60, 12*60*60, 18*60*60] {
-                dateComponents = Calendar.current.dateComponents(
-                    [.minute, .hour, .second],
-                    from: firstNotificationTime + TimeInterval(elapsedTime)
-                )
+                
+            case .three_hours:
+                var dateComponents: DateComponents
+                for elapsedTime in [0, 3, 6, 9, 12, 15, 18, 21] {
+                    let triggerTime = firstNotificationTime + TimeInterval(elapsedTime * 60 * 60)
+                    dateComponents = Calendar.current.dateComponents([.hour, .minute, .second], from: triggerTime)
+                    triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+                }
+                
+            case .six_hours:
+                var dateComponents: DateComponents
+                for elapsedTime in [0, 6, 12, 18] {
+                    let triggerTime = firstNotificationTime + TimeInterval(elapsedTime * 60 * 60)
+                    dateComponents = Calendar.current.dateComponents([.hour, .minute, .second], from: triggerTime)
+                    triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+                }
+                
+            case .twelve_hours:
+                var dateComponents: DateComponents
+                for elapsedTime in [0, 12] {
+                    let triggerTime = firstNotificationTime + TimeInterval(elapsedTime * 60 * 60)
+                    dateComponents = Calendar.current.dateComponents([.hour, .minute, .second], from: triggerTime)
+                    triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+                }
+                
+            case .day:
+                let dateComponents: DateComponents = Calendar.current.dateComponents([.hour, .minute, .second], from: firstNotificationTime)
                 triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
-            }
-            
-        case .twelve_hours:
-            var dateComponents: DateComponents
-            for elapsedTime in [0, 12*60*60] {
-                dateComponents = Calendar.current.dateComponents(
-                    [.minute, .hour, .second],
-                    from: firstNotificationTime + TimeInterval(elapsedTime)
-                )
+                
+            case .week:
+                let dateComponents: DateComponents = Calendar.current.dateComponents([.weekday, .hour, .minute, .second], from: firstNotificationTime)
                 triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+                
+            case .month:
+                let dateComponents: DateComponents = Calendar.current.dateComponents([.day, .hour, .minute, .second], from: firstNotificationTime)
+                triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
+                
+            case .never:
+                fallthrough
+                
+            default:
+                triggers = []
             }
-            
-        case .day:
-            let dateComponents: DateComponents = Calendar.current.dateComponents(
-                [.minute, .hour, .second],
-                from: firstNotificationTime
-            )
-            triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
-            
-        case .week:
-            let dateComponents: DateComponents = Calendar.current.dateComponents(
-                [.minute, .hour, .weekday, .second],
-                from: firstNotificationTime
-            )
-            triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
-            
-        case .month:
-            let dateComponents: DateComponents = Calendar.current.dateComponents(
-                [.minute, .hour, .day, .second],
-                from: firstNotificationTime
-            )
-            triggers.append(UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true))
-            
-        case .never:
-            fallthrough
-            
-        default:
-            triggers = []
-        }
-        return triggers
+        } // close the optional check for custom note
+        return triggers 
     }
     
     static let previewNotes: [Note] = {

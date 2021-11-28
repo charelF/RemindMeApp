@@ -36,7 +36,7 @@ struct SettingsView: View {
                         case .ten_minutes, .never:
                             EmptyView()
                         default:
-                            DatePicker("First reminder per day at", selection: $config.priorityDates[priority.getIndex()], displayedComponents: [.hourAndMinute])
+                            DatePicker("Reminders at", selection: $config.priorityDates[priority.getIndex()], displayedComponents: [.hourAndMinute])
                         }
                         
                     }

@@ -62,6 +62,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A27B041A27540F99009B5AED /* RemindMeWidgetExtension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = RemindMeWidgetExtension.entitlements; sourceTree = SOURCE_ROOT; };
 		A2957A43268EF2C7005DF8C3 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		A2957A45268EF638005DF8C3 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
 		A2957A47268EF739005DF8C3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -75,7 +76,6 @@
 		A2957A5B2693A533005DF8C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2957A65269436DF005DF8C3 /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
 		A2957A722694E6CB005DF8C3 /* RemindMe.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = RemindMe.entitlements; path = RemindMe/RemindMe.entitlements; sourceTree = SOURCE_ROOT; };
-		A2957A732694EC1F005DF8C3 /* RemindMeWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RemindMeWidgetExtension.entitlements; sourceTree = "<group>"; };
 		A2A15B1C270CA2DA002FB8D3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		A2B36593268C4BBF00284561 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2B36596268C4BBF00284561 /* RemindMeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindMeApp.swift; sourceTree = "<group>"; };
@@ -132,10 +132,10 @@
 		A2B3658A268C4BBF00284561 = {
 			isa = PBXGroup;
 			children = (
-				A2957A732694EC1F005DF8C3 /* RemindMeWidgetExtension.entitlements */,
 				A2B36595268C4BBF00284561 /* RemindMe */,
 				A2957A552693A52F005DF8C3 /* RemindMeWidget */,
 				A2957A502693A52F005DF8C3 /* Frameworks */,
+				A27B041A27540F99009B5AED /* RemindMeWidgetExtension.entitlements */,
 				A2B36594268C4BBF00284561 /* Products */,
 			);
 			sourceTree = "<group>";
