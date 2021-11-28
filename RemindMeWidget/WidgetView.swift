@@ -31,7 +31,7 @@ struct WidgetView: View {
                 guard notes.count > 4 else {
                     return notes
                 }
-                return sortedPriorityNotes[0...3].sorted(by: { $0.timestamp!.timeIntervalSince1970 < $1.timestamp!.timeIntervalSince1970 })
+                return sortedPriorityNotes[0...4].sorted(by: { $0.timestamp!.timeIntervalSince1970 < $1.timestamp!.timeIntervalSince1970 })
             }
         }
     }
@@ -39,52 +39,35 @@ struct WidgetView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.widgetFamily) var family
     
-    // Notes
-    // - List not supported, so we have to use Vstack
-    
-    
-    
     var body: some View {
         Color.secondary.opacity(0.2).overlay(
-        ZStack(alignment: .top) {
-//            Color.secondary.opacity(0.2)
-            VStack(spacing: 0) {
-                Divider()
-                ForEach(displayNotes, id: \.self) { note in
-//                    LazyVStack(alignment: .leading) {
-                    VStack(alignment: .leading) {
-                        Text("\(note.content ?? "empty")")
-                            .lineLimit(
-                                notes.count > 2 ? 1 : 2
-                            )
-                            .foregroundColor(note.getPrimaryColor())
-                            .padding(.horizontal, 8)
-                            .padding(.top, 4.5)
-                            .padding([.bottom], -1.5)
-                            .font(.subheadline)
-                        Divider()
-                    }
-//                    .background(note.getBackgroundColor())
-//                    .background(getBackgroundColor()).opacity(1)
-                    .background(
-                        ZStack {
-                            colorScheme == .dark ? Color.black : Color.white
-                            note.getWidgetBackgroundColor()
+            ZStack(alignment: .top) {
+                VStack(spacing: 0) {
+                    Divider()
+                    ForEach(displayNotes, id: \.self) { note in
+                        VStack(alignment: .leading) {
+                            Text("\(note.content ?? "empty")")
+                                .lineLimit(
+                                    notes.count > 2 ? 1 : 2
+                                )
+                                .foregroundColor(note.getPrimaryColor())
+                                .padding(.horizontal, 8)
+                                .padding(.top, 4.5)
+                                .padding([.bottom], -1.5)
+                                .font(.subheadline)
+                            Divider()
                         }
-                    )
+                        .background(
+                            ZStack {
+                                colorScheme == .dark ? Color.black : Color.white
+                                note.getWidgetBackgroundColor()
+                            }
+                        )
+                    }
                 }
             }
-        })
+        )
     }
-    
-//    private func getBackgroundColor() -> Color {
-//        let darkBG = Color(red: 0.1, green: 0.1, blue: 0.1)
-//        if colorScheme == .dark {
-//            return darkBG
-//        } else {
-//            return Color.white
-//        }
-//    }
 }
 
 struct WidgetView_Previews: PreviewProvider {

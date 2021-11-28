@@ -18,7 +18,6 @@ enum ColorLocation: String {
 enum ColorTheme: String, CaseIterable {
     case defaultcolor = "Default"
     case retro = "Retro"
-    case remindme = "RemindMe"
 }
 
 class Colors {
@@ -32,7 +31,7 @@ class Colors {
         let theme: ColorTheme = config.colorTheme
         var color: Color
         switch theme {
-        case .retro, .remindme:
+        case .retro:
             let colorCode: String = "\(theme.rawValue.lowercased())_\(priority.getIndex())"
             if let uicolor = UIColor(named: colorCode) {
                 color =  Color(uicolor)
