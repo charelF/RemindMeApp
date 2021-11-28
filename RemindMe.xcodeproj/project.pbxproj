@@ -62,7 +62,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A27B041A27540F99009B5AED /* RemindMeWidgetExtension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = RemindMeWidgetExtension.entitlements; sourceTree = SOURCE_ROOT; };
+		A27B041A27540F99009B5AED /* RemindMeWidgetExtension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = RemindMeWidgetExtension.entitlements; path = RemindMeWidget/RemindMeWidgetExtension.entitlements; sourceTree = SOURCE_ROOT; };
 		A2957A43268EF2C7005DF8C3 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		A2957A45268EF638005DF8C3 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
 		A2957A47268EF739005DF8C3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -120,6 +120,7 @@
 		A2957A552693A52F005DF8C3 /* RemindMeWidget */ = {
 			isa = PBXGroup;
 			children = (
+				A27B041A27540F99009B5AED /* RemindMeWidgetExtension.entitlements */,
 				A2957A65269436DF005DF8C3 /* WidgetView.swift */,
 				A2957A562693A52F005DF8C3 /* RemindMeWidget.swift */,
 				A2957A582693A52F005DF8C3 /* RemindMeWidget.intentdefinition */,
@@ -135,7 +136,6 @@
 				A2B36595268C4BBF00284561 /* RemindMe */,
 				A2957A552693A52F005DF8C3 /* RemindMeWidget */,
 				A2957A502693A52F005DF8C3 /* Frameworks */,
-				A27B041A27540F99009B5AED /* RemindMeWidgetExtension.entitlements */,
 				A2B36594268C4BBF00284561 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -326,7 +326,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = RemindMeWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = RemindMeWidget/RemindMeWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V6DK8MURYX;
 				INFOPLIST_FILE = RemindMeWidget/Info.plist;
@@ -348,7 +348,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = RemindMeWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = RemindMeWidget/RemindMeWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V6DK8MURYX;
 				INFOPLIST_FILE = RemindMeWidget/Info.plist;
