@@ -6,11 +6,11 @@ Experimenting with a Note-Taking app in SwiftUI
 
 | Notes | Settings | Widgets | Notifications |
 |-|-|-|-|
-| ![complex](img/b/notes.png) | ![complex](img/b/settings.png) | ![complex](img/b/widgets.png) | ![complex](img/b/notifications.png) |
+| ![complex](Image/b/notes.png) | ![complex](Image/b/settings.png) | ![complex](Image/b/widgets.png) | ![complex](Image/b/notifications.png) |
 
 ## Version Beta 0.5
 - currently available as Testflight beta
 
 | Notes | Settings | Widgets | Notifications |
 |-|-|-|-|
-| ![complex](img/a/notes.png) | ![complex](img/a/settings.png) | ![complex](img/a/widgets.png) | ![complex](img/a/notifications.png) |
+| ![complex](Image/a/notes.png) | ![complex](Image/a/settings.png) | ![complex](Image/a/widgets.png) | ![complex](Image/a/notifications.png) |
