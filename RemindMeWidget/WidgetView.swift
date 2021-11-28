@@ -31,7 +31,7 @@ struct WidgetView: View {
                 guard notes.count > 4 else {
                     return notes
                 }
-                return sortedPriorityNotes[0...4].sorted(by: { $0.timestamp!.timeIntervalSince1970 < $1.timestamp!.timeIntervalSince1970 })
+                return sortedPriorityNotes[0...3].sorted(by: { $0.timestamp!.timeIntervalSince1970 < $1.timestamp!.timeIntervalSince1970 })
             }
         }
     }

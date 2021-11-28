@@ -22,7 +22,6 @@
 		A2957A6926943FD9005DF8C3 /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A65269436DF005DF8C3 /* WidgetView.swift */; };
 		A2957A6A26943FEB005DF8C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B3659A268C4BC100284561 /* Assets.xcassets */; };
 		A2957A6B26943FF1005DF8C3 /* RemindMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2B365A1268C4BC100284561 /* RemindMe.xcdatamodeld */; };
-		A2957A6E26944014005DF8C3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A47268EF739005DF8C3 /* SettingsView.swift */; };
 		A2957A6F2694401A005DF8C3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B3659F268C4BC100284561 /* Persistence.swift */; };
 		A2957A702694401E005DF8C3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A492692ECB9005DF8C3 /* Config.swift */; };
 		A2A15B1D270CA2DA002FB8D3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A15B1C270CA2DA002FB8D3 /* Colors.swift */; };
@@ -106,6 +105,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A27B041B27541E81009B5AED /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A2B3659F268C4BC100284561 /* Persistence.swift */,
+				A2A15B1C270CA2DA002FB8D3 /* Colors.swift */,
+				A2957A43268EF2C7005DF8C3 /* Note.swift */,
+				A2957A492692ECB9005DF8C3 /* Config.swift */,
+				A2B365A1268C4BC100284561 /* RemindMe.xcdatamodeld */,
+				A2B3659A268C4BC100284561 /* Assets.xcassets */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		A2957A502693A52F005DF8C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +142,7 @@
 		A2B3658A268C4BBF00284561 = {
 			isa = PBXGroup;
 			children = (
+				A27B041B27541E81009B5AED /* Shared */,
 				A2B36595268C4BBF00284561 /* RemindMe */,
 				A2957A552693A52F005DF8C3 /* RemindMeWidget */,
 				A2957A502693A52F005DF8C3 /* Frameworks */,
@@ -154,14 +167,8 @@
 				A2957A47268EF739005DF8C3 /* SettingsView.swift */,
 				A2C87106274A8F1B000027A5 /* OneNoteView.swift */,
 				A2957A45268EF638005DF8C3 /* NotesView.swift */,
-				A2957A43268EF2C7005DF8C3 /* Note.swift */,
-				A2A15B1C270CA2DA002FB8D3 /* Colors.swift */,
-				A2B3659F268C4BC100284561 /* Persistence.swift */,
-				A2957A492692ECB9005DF8C3 /* Config.swift */,
 				A2B365A4268C4BC100284561 /* Info.plist */,
-				A2B365A1268C4BC100284561 /* RemindMe.xcdatamodeld */,
 				A2957A722694E6CB005DF8C3 /* RemindMe.entitlements */,
-				A2B3659A268C4BC100284561 /* Assets.xcassets */,
 				A2B3659C268C4BC100284561 /* Preview Content */,
 			);
 			path = RemindMe;
@@ -277,7 +284,6 @@
 			files = (
 				A2957A6726943F5C005DF8C3 /* Note.swift in Sources */,
 				A2A15B1E270CA436002FB8D3 /* Colors.swift in Sources */,
-				A2957A6E26944014005DF8C3 /* SettingsView.swift in Sources */,
 				A2957A702694401E005DF8C3 /* Config.swift in Sources */,
 				A2957A5C2693A533005DF8C3 /* RemindMeWidget.intentdefinition in Sources */,
 				A2957A572693A52F005DF8C3 /* RemindMeWidget.swift in Sources */,
