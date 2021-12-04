@@ -15,7 +15,7 @@ struct PersistenceController {
     static let shared = PersistenceController()
     
     // these are static so we always use the same
-    static let appGroupName = "group.charelfelten.RemindMe"
+    static let appGroupName = "group.lu.cfx.remindme"
     static let SQLiteStoreAppendix = "RemindMe.sqlite"
     static let containerURL: URL = {
         FileManager.default.containerURL(
