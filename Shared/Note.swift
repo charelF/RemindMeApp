@@ -193,8 +193,11 @@ extension Note {
         let notificationCenter = UNUserNotificationCenter.current()
         
         let content = UNMutableNotificationContent()
-        content.title = self.content ?? "Empty Note"
+        content.title = "RemindMe"
+        content.body = self.content ?? "."
         content.sound = UNNotificationSound.default
+        // TODO: add badges, e.g. of messages that arrived since last time app was open
+        // TODO: also add other fields, see UNMutableNotificationContent, plenty possibilities
         
         var notificationid: String
         var request: UNNotificationRequest
