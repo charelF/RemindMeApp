@@ -35,7 +35,7 @@ struct Provider: IntentTimelineProvider {
         let containerURL = PersistenceController.containerURL
         let storeURL = containerURL.appendingPathComponent(PersistenceController.SQLiteStoreAppendix)
         let description = NSPersistentStoreDescription(url: storeURL)
-        let container = NSPersistentCloudKitContainer(name: "RemindMe")
+        let container = NSPersistentCloudKitContainer(name: PersistenceController.containerName)
         
         container.persistentStoreDescriptions = [description]
         

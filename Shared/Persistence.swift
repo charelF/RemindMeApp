@@ -17,6 +17,7 @@ struct PersistenceController {
     // these are static so we always use the same
     static let appGroupName = "group.lu.cfx.remindme"
     static let SQLiteStoreAppendix = "RemindMe.sqlite"
+    static let containerName = "RemindMe"
     static let containerURL: URL = {
         FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: PersistenceController.appGroupName)!
@@ -43,7 +44,7 @@ struct PersistenceController {
 
     init(inMemory: Bool = false) {
         
-        container = NSPersistentCloudKitContainer(name: "RemindMe")
+        container = NSPersistentCloudKitContainer(name: PersistenceController.containerName)
         
         let storeURL = PersistenceController.containerURL.appendingPathComponent(PersistenceController.SQLiteStoreAppendix)
         let description = NSPersistentStoreDescription(url: storeURL)
