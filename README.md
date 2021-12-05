@@ -1,10 +1,17 @@
 # RemindMe
-Experimenting with a Note-Taking app in SwiftUI
+
+Reminders App written in SwiftUI
+
+<img src="Shared/Assets.xcassets/AppIcon.appiconset/1024.png" width="100" />
+<img src="Images/b/notes.png" width="400" />
+
+
 
 ## Support
 
 If you have any questions or suggestions concerning the app, open a [github issue](https://github.com/charelF/RemindMeApp) or send me an email to `c[at]cfx[dot]lu`
 
+<!-- 
 ## Changelog
 
 ### Version Beta 1.0
@@ -23,7 +30,7 @@ If you have any questions or suggestions concerning the app, open a [github issu
 
 | Notes | Settings | Widgets | Notifications |
 |-|-|-|-|
-| <img src="Images/a/notes.png" width="200" /> | <img src="Images/a/settings.png" width="200" /> | <img src="Images/a/widgets.png" width="200" /> | <img src="Images/a/notifications.png" width="200" /> |
+| <img src="Images/a/notes.png" width="200" /> | <img src="Images/a/settings.png" width="200" /> | <img src="Images/a/widgets.png" width="200" /> | <img src="Images/a/notifications.png" width="200" /> | -->
 
 ## Privacy Policy
 
