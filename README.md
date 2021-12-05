@@ -12,14 +12,18 @@ If you have any questions or suggestions concerning the app, open a [github issu
 
 | Notes | Settings | Widgets | Notifications |
 |-|-|-|-|
-| ![complex](Images/b/notes.png) | ![complex](Images/b/settings.png) | ![complex](Images/b/widgets.png) | ![complex](Images/b/notifications.png) |
+| <img src="Images/b/notes.png" width="200" /> | <img src="Images/b/settings.png" width="200" /> | <img src="Images/b/widgets.png" width="200" /> | <img src="Images/b/notifications.png" width="200" /> |
+
+| Dark Theme | Context Menu |
+|-|-|
+| <img src="Images/b/theme.png" width="200" /> | <img src="Images/b/contextmenu.png" width="200" /> |
 
 ### Version Beta 0.5
 - currently available as Testflight beta
 
 | Notes | Settings | Widgets | Notifications |
 |-|-|-|-|
-| ![complex](Images/a/notes.png) | ![complex](Images/a/settings.png) | ![complex](Images/a/widgets.png) | ![complex](Images/a/notifications.png) |
+| <img src="Images/a/notes.png" width="200" /> | <img src="Images/a/settings.png" width="200" /> | <img src="Images/a/widgets.png" width="200" /> | <img src="Images/a/notifications.png" width="200" /> |
 
 ## Privacy Policy
 
