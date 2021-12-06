@@ -6,7 +6,7 @@ Reminders App written in SwiftUI. [Now available on the App Store](https://apps.
 <img src="Images/b/notes.png" width="400" /> -->
 
 <a href="https://apps.apple.com/lu/app/remindme-reminders/id1598734050">
-<img src="Images/remind_me_reminders_1200x628.png" width="400" />
+  <img src="Images/remind_me_reminders_1200x628.png" />
 </a>
 
 
