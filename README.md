@@ -1,10 +1,13 @@
 # RemindMe
 
-Reminders App written in SwiftUI
+Reminders App written in SwiftUI. [Now available on the App Store](https://apps.apple.com/lu/app/remindme-reminders/id1598734050)!
 
-<img src="Shared/Assets.xcassets/AppIcon.appiconset/1024.png" width="100" />
-<img src="Images/b/notes.png" width="400" />
+<!-- <img src="Shared/Assets.xcassets/AppIcon.appiconset/1024.png" width="100" />
+<img src="Images/b/notes.png" width="400" /> -->
 
+<a href="https://apps.apple.com/lu/app/remindme-reminders/id1598734050">
+<img src="Images/remind_me_reminders_1200x628.png" width="400" />
+</a>
 
 
 ## Support
