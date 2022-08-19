@@ -14,7 +14,7 @@ Reminders App written in SwiftUI. [Now available on the App Store](https://apps.
 
 If you have any questions or suggestions concerning the app, open a [github issue](https://github.com/charelF/RemindMeApp) or send me an email to `c[at]cfx[dot]lu`
 
-<!-- 
+ 
 ## Changelog
 
 ### Version Beta 1.0
@@ -33,7 +33,7 @@ If you have any questions or suggestions concerning the app, open a [github issu
 
 | Notes | Settings | Widgets | Notifications |
 |-|-|-|-|
-| <img src="Images/a/notes.png" width="200" /> | <img src="Images/a/settings.png" width="200" /> | <img src="Images/a/widgets.png" width="200" /> | <img src="Images/a/notifications.png" width="200" /> | -->
+| <img src="Images/a/notes.png" width="200" /> | <img src="Images/a/settings.png" width="200" /> | <img src="Images/a/widgets.png" width="200" /> | <img src="Images/a/notifications.png" width="200" /> |
 
 ## Privacy Policy
 
