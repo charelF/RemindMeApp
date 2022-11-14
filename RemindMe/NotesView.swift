@@ -37,6 +37,21 @@ struct NotesView: View {
   // dark mode
   @Environment(\.colorScheme) var colorScheme
   
+  func submitNewNote() {
+    Note.add(content: newNoteContent)
+    newNoteContent = ""
+    newNoteIsFocused = false
+  }
+  
+  func editExistingNote(note: Note?) {
+    guard let note else { return }
+    note.content = editNoteContent
+    PersistenceController.shared.save()
+    editNoteContent = ""
+    editNoteIsFocused = false
+    editNote = nil
+  }
+  
   var body: some View {
     List {
       ForEach(notes) { note in
@@ -44,72 +59,55 @@ struct NotesView: View {
           OneNoteView(config: config, note: note)
           
           // context menu for the note, cant be extracted because it works with both editNote and customDateNote
-            .contextMenu {
-              // bug in ios15: context menu may show outdated information
-              VStack {
-                Label("Created on: \(note.timestamp ?? Date(), formatter: Note.dateFormatter)", systemImage: "calendar")
-                Label("Reminders: \(note.priority.getIntervalDescription())", systemImage: "bell")
-                Button {
-                  customDateNote = note
-                  showCustomDateSheet = true
-                } label: {
-                  Label("Create Custom Reminder", systemImage: "calendar.badge.plus")
-                }
-                Button {
-                  editNote = note
-                  editNoteContent = note.content ?? newNoteContent
-                  editNoteIsFocused = true
-                } label: {
-                  Label("Edit Note", systemImage: "pencil")
-                }
+          .contextMenu {
+            // bug in ios15: context menu may show outdated information
+            VStack {
+              Label("Created on: \(note.timestamp ?? Date(), formatter: Note.dateFormatter)", systemImage: "calendar")
+              Label("Reminders: \(note.priority.getIntervalDescription())", systemImage: "bell")
+              Button {
+                customDateNote = note
+                showCustomDateSheet = true
+              } label: {
+                Label("Create Custom Reminder", systemImage: "calendar.badge.plus")
+              }
+              Button {
+                editNote = note
+                editNoteContent = note.content ?? newNoteContent
+                editNoteIsFocused = true
+              } label: {
+                Label("Edit Note", systemImage: "pencil")
               }
             }
+          }
           
-          // the background. We could add a backgroudn to the note view, but then it does not fill the whole row
+          // the background. We could add a backgroudn to the note view,
+          // but then it does not fill the whole row
           // we use a ZStack to get rid of the ugly default background
           // has to come after the context menu for some reason
-            .listRowBackground(
-              ZStack {
-                colorScheme == .dark ? Color.black : Color.white
-                note.getBackgroundColor()
-              }
-            )
+          .listRowBackground(
+            ZStack {
+              colorScheme == .dark ? Color.black : Color.white
+              note.getBackgroundColor()
+            }
+          )
           
           // swipe actions (cant be extracted, because they need to be in a list)
-            .swipeActions(edge: .trailing) {
-              Button(role: .destructive) {
-                note.delete()
-              } label: {
-                Label("Delete", systemImage: "trash")
-              }
+          .swipeActions(edge: .trailing) {
+            Button(role: .destructive) {
+              note.delete()
+            } label: {
+              Label("Delete", systemImage: "trash")
             }
+          }
+        
           
-          // TODO: refactor the editNote and newNote, maybe combine, just make it more elegant
         } else { // in the case the note is to be edited
           HStack {
-            TextField(
-              "\(editNoteContent)",
-              text: $editNoteContent,
-              onCommit:{
-                editNote = nil
-                print("editnote \(editNote)")
-                note.content = editNoteContent
-                PersistenceController.shared.save()
-                editNoteContent = ""
-                editNoteIsFocused = false
-              }
-            )
+            TextField(editNoteContent, text: $editNoteContent)
+            .onSubmit { editExistingNote(note: editNote)}
             .focused($editNoteIsFocused)
-            
             if (!editNoteContent.isEmpty) {
-              Button(action: {
-                editNote = nil
-                print("editnote \(editNote)")
-                note.content = editNoteContent
-                PersistenceController.shared.save()
-                editNoteContent = ""
-                editNoteIsFocused = false
-              }) {
+              Button(action: {editExistingNote(note: editNote)}) {
                 Image(systemName: "checkmark")
               }
             }
@@ -119,24 +117,11 @@ struct NotesView: View {
       
       if editNote == nil {
         HStack {
-          TextField(
-            "New Note",
-            text: $newNoteContent,
-            onCommit:{
-              //                            addNote()
-              Note.add(content: newNoteContent)
-              newNoteContent = ""
-              newNoteIsFocused = false
-            }
-          )
+          TextField("New Note", text: $newNoteContent)
+          .onSubmit(submitNewNote)
           .focused($newNoteIsFocused)
           if (!newNoteContent.isEmpty) {
-            Button(action: {
-              Note.add(content: newNoteContent)
-              newNoteContent = ""
-              newNoteIsFocused = false
-            }
-            ) {
+            Button(action: submitNewNote) {
               Image(systemName: "checkmark")
             }
           }
