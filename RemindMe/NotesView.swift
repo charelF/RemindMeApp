@@ -52,6 +52,23 @@ struct NotesView: View {
     editNote = nil
   }
   
+//  func editCell(
+//    noteContent: Binding<String>,
+//    submitFunc: @escaping () -> (),
+//    focus: FocusState<Bool>.Binding
+//  ) -> some View {
+//    return HStack {
+//      TextField("New Note", text: noteContent)
+//      .onSubmit(submitFunc)
+//      .focused(focus)
+//      if (!noteContent.isEmpty) {
+//        Button(action: submitFunc) {
+//          Image(systemName: "checkmark")
+//        }
+//      }
+//    }
+//  }
+  
   var body: some View {
     List {
       ForEach(notes) { note in
@@ -104,7 +121,7 @@ struct NotesView: View {
         } else { // in the case the note is to be edited
           HStack {
             TextField(editNoteContent, text: $editNoteContent)
-            .onSubmit { editExistingNote(note: editNote)}
+            .onSubmit({editExistingNote(note: editNote)})
             .focused($editNoteIsFocused)
             if (!editNoteContent.isEmpty) {
               Button(action: {editExistingNote(note: editNote)}) {
