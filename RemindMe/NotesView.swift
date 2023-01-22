@@ -16,7 +16,10 @@ struct NotesView: View {
   @ObservedObject var config: Config
   
   @FetchRequest(
-    sortDescriptors: [NSSortDescriptor(keyPath: \Note.timestamp, ascending: true)],
+    sortDescriptors: [
+      NSSortDescriptor(keyPath: \Note.int16priority, ascending: false),
+      NSSortDescriptor(keyPath: \Note.timestamp, ascending: true)
+    ],
     animation: .default
   ) private var notes: FetchedResults<Note>
   

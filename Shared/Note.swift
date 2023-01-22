@@ -19,6 +19,8 @@ extension Note {
     notes.append(Note(context: pvc, content: "Short note"))
     notes.append(Note(context: pvc, content: "This is a longer note with a higher priority, it may span 2 columns"))
     notes.append(Note(context: pvc, content: "Yet another note"))
+    notes.append(Note(context: pvc, content: "note 4"))
+    notes.append(Note(context: pvc, content: "note 5"))
     notes[0].priority = Priority.low
     notes[1].priority = Priority.medium
     notes[2].priority = Priority.high

@@ -6,98 +6,79 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct WidgetView: View {
   
   var notes: [Note]
-  var displayNotes: [Note] {
-    get {
-      let sortedPriorityNotes = notes.sorted(by: { $0.priority.getIndex() > $1.priority.getIndex() })
-      switch family {
-        
-      case .systemLarge:
-        guard notes.count > 10 else {
-          return notes
-        }
-        return sortedPriorityNotes[0...9].sorted(by: { $0.timestamp!.timeIntervalSince1970 < $1.timestamp!.timeIntervalSince1970 })
-        
-      case .systemSmall, .systemMedium:
-        fallthrough
-        
-      case .systemExtraLarge:
-        fallthrough
-        
-      case .accessoryCircular:
-        fallthrough
-      case .accessoryRectangular:
-        fallthrough
-      case .accessoryInline:
-        fallthrough
-        
-      @unknown default:
-        guard notes.count > 4 else {
-          return notes
-        }
-        return sortedPriorityNotes[0...3].sorted(by: { $0.timestamp!.timeIntervalSince1970 < $1.timestamp!.timeIntervalSince1970 })
-      }
-    }
-  }
   
   @Environment(\.colorScheme) var colorScheme
   @Environment(\.widgetFamily) var family
+  var realFamily: WidgetFamily
   
   var body: some View {
-    switch family {
-    case .systemSmall, .systemLarge, .systemMedium, .systemExtraLarge:
-      NormalWidgetView(displayNotes: displayNotes)
+    switch realFamily {
+    case .systemSmall, .systemMedium:
+      CleanWidgetView(displayNotes: Array(notes[..<4]))
+    case .systemLarge, .systemExtraLarge:
+      CleanWidgetView(displayNotes: Array(notes[..<8]))
+    case .accessoryCircular:
+      Text(String(notes.count))
     default:
-      VStack{
-        Text("123")
-      }
+      CleanWidgetView(displayNotes: Array(notes[..<2]))
     }
   }
 }
 
-struct NormalWidgetView: View {
-  
+struct CleanWidgetView: View {
   var displayNotes: [Note]
   @Environment(\.colorScheme) var colorScheme
   
   var body: some View {
-    Color.secondary.opacity(0.2).overlay(
-      ZStack(alignment: .top) {
-        VStack(spacing: 0) {
-          Divider()
-          ForEach(displayNotes, id: \.self) { note in
-            VStack(alignment: .leading) {
-              Text("\(note.content ?? "empty")")
-                .lineLimit(
-                  displayNotes.count > 2 ? 1 : 2
-                )
+    ZStack {
+      colorScheme == .dark ? Color.black : Color.white
+      
+      Rectangle()
+        .fill(colorScheme == .dark ? Color.black : Color.white)
+        .overlay {
+          VStack(alignment: .leading, spacing: 5) {
+            ForEach(displayNotes, id: \.self) { note in
+              Text(note.content!)
+                .fontWeight(.medium)
+                .font(.callout)
                 .foregroundColor(note.getPrimaryColor())
-                .padding(.horizontal, 8)
-                .padding(.top, 4.5)
-                .padding([.bottom], -1.5)
-                .font(.subheadline)
-              Divider()
+                .frame(maxWidth:.infinity, maxHeight: .infinity, alignment: .leading)
+                .padding(.vertical, 5)
+                .padding(.horizontal, 10)
+                .background(note.getWidgetBackgroundColor())
+                .cornerRadius(5)
             }
-            .background(
-              ZStack {
-                colorScheme == .dark ? Color.black : Color.white
-                note.getWidgetBackgroundColor()
-              }
-            )
           }
         }
-      }
-    )
+        .cornerRadius(15)
+        .padding(5)
+    }
   }
 }
   
-  struct WidgetView_Previews: PreviewProvider {
-    static var previews: some View {
-      WidgetView(
-        notes: Note.previewNotes
-      ).previewLayout(.fixed(width: 160, height: 160))
-    }
+struct WidgetView_Previews: PreviewProvider {
+  // NOTE: if it crahes its this bug: https://www.appsloveworld.com/coding/xcode/66/fail-to-preview-widget-in-xcode-with-swiftui-preview
+  // FIX: the membership of this class must be only the widgeet target, no other target
+  
+  static var previews: some View {
+    WidgetView(notes: Array(Note.previewNotes), realFamily: .systemSmall)
+      .previewContext(WidgetPreviewContext(family: .systemSmall))
+      .environment(\.widgetFamily, .systemSmall)
   }
+}
+
+extension WidgetFamily: EnvironmentKey {
+    public static var defaultValue: WidgetFamily = .systemMedium
+}
+
+extension EnvironmentValues {
+  var widgetFamily: WidgetFamily {
+    get { self[WidgetFamily.self] }
+    set { self[WidgetFamily.self] = newValue }
+  }
+}

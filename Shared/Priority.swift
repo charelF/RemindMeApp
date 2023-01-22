@@ -12,7 +12,7 @@ enum Priority: Identifiable {
   case low
   case medium
   case high
-  case custom(date: Date)
+  case custom(date: Date)  // prevents us from having rawvalue enum
   
   mutating func next() {
     switch self {
