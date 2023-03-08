@@ -29,6 +29,7 @@ struct RemindMeApp: App {
     WindowGroup {
       ContentView(config: config)
         .environment(\.managedObjectContext, persistenceController.container.viewContext)
+        .onAppear(perform: {print("hey 123")})
     }
   }
 }

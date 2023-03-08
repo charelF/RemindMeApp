@@ -17,7 +17,7 @@ struct NotesView: View {
   
   @FetchRequest(
     sortDescriptors: [
-      NSSortDescriptor(keyPath: \Note.int16priority, ascending: false),
+//      NSSortDescriptor(keyPath: \Note.int16priority, ascending: false),
       NSSortDescriptor(keyPath: \Note.timestamp, ascending: true)
     ],
     animation: .default
@@ -67,10 +67,25 @@ struct NotesView: View {
   }
   
   var body: some View {
-    List {
-      ForEach(notes) { note in
-        if (note != editNote) {
-          OneNoteView(config: config, note: note)
+    ScrollView(showsIndicators: false) {
+      VStack(spacing: 0) {
+        ForEach(notes, id: \.self) { note in
+          if (note != editNote) {
+            VStack {
+              OneNoteView(config: config, note: note)
+                .fontWeight(.medium)
+                .frame(maxWidth:.infinity, maxHeight: 100, alignment: .leading)
+                .padding(.vertical, 8)
+                .padding(.horizontal, 20)
+                .background(
+                  ZStack {
+                    colorScheme == .dark ? Color.black : Color.white
+                    note.getWidgetBackgroundColor()
+                  }
+                )
+                .cornerRadius(5)
+                .contentShape(Rectangle())
+            }
             .contextMenu {
               NoteContextMenu(
                 note: note,
@@ -78,46 +93,139 @@ struct NotesView: View {
                 switchToEditNote: switchToEditNote
               )
             }
-            .listRowBackground(
-              ZStack {
-                colorScheme == .dark ? Color.black : Color.white
-                note.getBackgroundColor()
-              }
-            )
-            .swipeActions(edge: .trailing) {
-              Button(role: .destructive) {
-                note.delete()
-              } label: {
-                Label("Delete", systemImage: "trash")
-              }
+            .onTapGesture {
+              UIImpactFeedbackGenerator(style: .light).impactOccurred()
+              note.updatePriority(optionalDate: nil)
             }
-        } else {
-          EditNoteView(
-            noteContent: $editNoteContent,
-            isNoteFocused: _editNoteIsFocused,
-            onsubmit: {editExistingNote(note: editNote)},
-            placeholder: editNoteContent
-          )
+            .padding(.init(top: 5, leading: 10, bottom: 0, trailing: 10))
+          } else {
+            VStack {
+              EditNoteView(
+                noteContent: $editNoteContent,
+                isNoteFocused: _editNoteIsFocused,
+                onsubmit: {editExistingNote(note: editNote)},
+                placeholder: editNoteContent
+              )
+                .fontWeight(.medium)
+                .font(.callout)
+                .frame(maxWidth:.infinity, maxHeight: 100, alignment: .leading)
+                .padding(.vertical, 10)
+                .padding(.horizontal, 20)
+                .background(Color(UIColor.systemGroupedBackground))
+                .cornerRadius(5)
+                .contentShape(Rectangle())
+            }
+            .padding(.init(top: 5, leading: 10, bottom: 0, trailing: 10))
+          }
+        }
+        if editNote == nil {
+          VStack {
+            EditNoteView(
+              noteContent: $newNoteContent,
+              isNoteFocused: _newNoteIsFocused,
+              onsubmit: submitNewNote,
+              placeholder: "New Note"
+            )
+              .fontWeight(.medium)
+              .font(.callout)
+              .frame(maxWidth:.infinity, maxHeight: 100, alignment: .leading)
+              .padding(.vertical, 10)
+              .padding(.horizontal, 20)
+              .background(Color(UIColor.systemGroupedBackground))
+              .cornerRadius(5)
+              .contentShape(Rectangle())
+          }
+          .padding(.init(top: 5, leading: 10, bottom: 0, trailing: 10))
+          
         }
       }
-      if editNote == nil {
-        EditNoteView(
-          noteContent: $newNoteContent,
-          isNoteFocused: _newNoteIsFocused,
-          onsubmit: submitNewNote,
-          placeholder: "New Note"
-        )
-      }
+      .cornerRadius(15)
+//      .padding(10)
     }
-    .listStyle(InsetGroupedListStyle())
-    .sheet(isPresented: $showCustomDateSheet) {
-      CustomDateSheet(
-        customDateNote: $customDateNote,
-        showCustomDateSheet: $showCustomDateSheet,
-        customDate: $customDate
-      )
-    }
+    .background(colorScheme == .dark ? Color.black : Color.white)
   }
+  
+  
+  
+//  var yyy: some View {
+//    ZStack {
+//      colorScheme == .dark ? Color.black : Color.white
+//      Rectangle()
+//        .fill(colorScheme == .dark ? Color.black : Color.white)
+//        .overlay {
+//          ScrollView {
+//            VStack(alignment: .leading, spacing: 5) {
+//              ForEach(notes, id: \.self) { note in
+//                Text(note.content!)
+//                  .fontWeight(.medium)
+//                  .font(.callout)
+//                  .foregroundColor(note.getPrimaryColor())
+//                  .frame(maxWidth:.infinity, maxHeight: 30, alignment: .leading)
+//                  .padding(.vertical, 10)
+//                  .padding(.horizontal, 20)
+//                  .background(note.getWidgetBackgroundColor())
+//                  .cornerRadius(5)
+//              }
+//            }
+//            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)          }
+//        }
+//        .cornerRadius(15)
+//        .padding(10)
+//    }
+//  }
+  
+//  var xxx: some View {
+//    List {
+//      ForEach(notes) { note in
+//        if (note != editNote) {
+//          OneNoteView(config: config, note: note)
+//            .contextMenu {
+//              NoteContextMenu(
+//                note: note,
+//                createCustomReminder: createCustomReminder,
+//                switchToEditNote: switchToEditNote
+//              )
+//            }
+//            .listRowBackground(
+//              ZStack {
+//                colorScheme == .dark ? Color.black : Color.white
+//                note.getBackgroundColor()
+//              }
+//            )
+//            .swipeActions(edge: .trailing) {
+//              Button(role: .destructive) {
+//                note.delete()
+//              } label: {
+//                Label("Delete", systemImage: "trash")
+//              }
+//            }
+//        } else {
+//          EditNoteView(
+//            noteContent: $editNoteContent,
+//            isNoteFocused: _editNoteIsFocused,
+//            onsubmit: {editExistingNote(note: editNote)},
+//            placeholder: editNoteContent
+//          )
+//        }
+//      }
+//      if editNote == nil {
+//        EditNoteView(
+//          noteContent: $newNoteContent,
+//          isNoteFocused: _newNoteIsFocused,
+//          onsubmit: submitNewNote,
+//          placeholder: "New Note"
+//        )
+//      }
+//    }
+//    .listStyle(InsetGroupedListStyle())
+//    .sheet(isPresented: $showCustomDateSheet) {
+//      CustomDateSheet(
+//        customDateNote: $customDateNote,
+//        showCustomDateSheet: $showCustomDateSheet,
+//        customDate: $customDate
+//      )
+//    }
+//  }
 }
 
 struct EditNoteView: View {
@@ -156,6 +264,11 @@ struct NoteContextMenu: View {
       Button(
         action: { switchToEditNote(note) },
         label: { Label("Edit Note", systemImage: "pencil") }
+      )
+      Button(
+        role: .destructive,
+        action: note.delete,
+        label: { Label("Delete", systemImage: "trash") }
       )
     }
   }

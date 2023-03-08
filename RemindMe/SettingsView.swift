@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct SettingsView: View {
   
@@ -31,6 +32,11 @@ struct SettingsView: View {
           }
           Toggle(isOn: $config.showCreationTime) {
             Text("Show date")
+          }
+          Button("Reload Widget") {
+            print("calling widgetcenter")
+            WidgetCenter.shared.reloadAllTimelines()
+            WidgetCenter.shared.getCurrentConfigurations({result in print(result)})
           }
         }
       }
@@ -64,11 +70,11 @@ struct PriorityView: View {
         DatePicker("Reminders at", selection: $config.priorityDates[priority.getIndex()], displayedComponents: [.hourAndMinute])
       }
     }
-    .foregroundColor(Colors.getColor(for: priority, in: .primary))
+    .foregroundColor(Config.shared.colorTheme.getColors().getColor(for: priority, in: .primary))
     .listRowBackground(
       ZStack {
         colorScheme == .dark ? Color.black : Color.white
-        Colors.getColor(for: priority, in: .background)
+        Config.shared.colorTheme.getColors().getColor(for: priority, in: .background)
       }
     )
   }

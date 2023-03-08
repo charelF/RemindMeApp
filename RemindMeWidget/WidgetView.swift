@@ -8,6 +8,8 @@
 import SwiftUI
 import WidgetKit
 
+
+
 struct WidgetView: View {
   
   var notes: [Note]
@@ -21,7 +23,7 @@ struct WidgetView: View {
     case .systemSmall, .systemMedium:
       CleanWidgetView(displayNotes: Array(notes[..<4]))
     case .systemLarge, .systemExtraLarge:
-      CleanWidgetView(displayNotes: Array(notes[..<8]))
+      CleanWidgetView(displayNotes: Array(notes[..<10]))
     case .accessoryCircular:
       Text(String(notes.count))
     default:
@@ -29,6 +31,8 @@ struct WidgetView: View {
     }
   }
 }
+
+
 
 struct CleanWidgetView: View {
   var displayNotes: [Note]
@@ -61,6 +65,8 @@ struct CleanWidgetView: View {
   }
 }
   
+
+
 struct WidgetView_Previews: PreviewProvider {
   // NOTE: if it crahes its this bug: https://www.appsloveworld.com/coding/xcode/66/fail-to-preview-widget-in-xcode-with-swiftui-preview
   // FIX: the membership of this class must be only the widgeet target, no other target
@@ -72,9 +78,13 @@ struct WidgetView_Previews: PreviewProvider {
   }
 }
 
+
+
 extension WidgetFamily: EnvironmentKey {
     public static var defaultValue: WidgetFamily = .systemMedium
 }
+
+
 
 extension EnvironmentValues {
   var widgetFamily: WidgetFamily {

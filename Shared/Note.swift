@@ -21,6 +21,14 @@ extension Note {
     notes.append(Note(context: pvc, content: "Yet another note"))
     notes.append(Note(context: pvc, content: "note 4"))
     notes.append(Note(context: pvc, content: "note 5"))
+    notes.append(Note(context: pvc, content: "note 6"))
+    notes.append(Note(context: pvc, content: "note 7"))
+    notes.append(Note(context: pvc, content: "note 8"))
+    notes.append(Note(context: pvc, content: "note 9"))
+    notes.append(Note(context: pvc, content: "note 10"))
+    notes.append(Note(context: pvc, content: "note 11"))
+    notes.append(Note(context: pvc, content: "note 12"))
+
     notes[0].priority = Priority.low
     notes[1].priority = Priority.medium
     notes[2].priority = Priority.high
@@ -103,19 +111,19 @@ extension Note {
   }
   
   func getPrimaryColor() -> Color {
-    return Colors.getColor(for: self, in: .primary)
+    return Config.shared.colorTheme.getColors().getColor(for: self, in: .primary)
   }
   
   func getSecondaryColor() -> Color {
-    return Colors.getColor(for: self, in: .secondary)
+    return Config.shared.colorTheme.getColors().getColor(for: self, in: .secondary)
   }
   
   func getBackgroundColor() -> Color {
-    return Colors.getColor(for: self, in: .background)
+    return Config.shared.colorTheme.getColors().getColor(for: self, in: .background)
   }
   
   func getWidgetBackgroundColor() -> Color {
-    return Colors.getColor(for: self, in: .widgetbackground)
+    return Config.shared.colorTheme.getColors().getColor(for: self, in: .background)
   }
   
   func deleteNotifications() {

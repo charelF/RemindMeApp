@@ -10,6 +10,8 @@ import SwiftUI
 import Intents
 import CoreData
 
+
+
 struct Provider: IntentTimelineProvider {
   func placeholder(in context: Context) -> SimpleEntry {
     SimpleEntry(
@@ -31,6 +33,8 @@ struct Provider: IntentTimelineProvider {
   }
   
   func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    
+    print("get timeline is called")
     
     var notes: [Note] = []
     
@@ -73,10 +77,13 @@ struct Provider: IntentTimelineProvider {
       notes: notes,
       realFamily: context.family
     )
+    print("hey")
     let timeline = Timeline(entries: [entry], policy: .atEnd)
     completion(timeline)
   }
 }
+
+
 
 struct SimpleEntry: TimelineEntry {
   let date: Date
@@ -85,6 +92,8 @@ struct SimpleEntry: TimelineEntry {
   var realFamily: WidgetFamily
 }
 
+
+
 struct RemindMeWidgetEntryView : View {
   var entry: Provider.Entry
   
@@ -92,6 +101,8 @@ struct RemindMeWidgetEntryView : View {
     WidgetView(notes: entry.notes, realFamily: entry.realFamily)
   }
 }
+
+
 
 @main
 struct RemindMeWidget: Widget {
@@ -105,6 +116,8 @@ struct RemindMeWidget: Widget {
     .description("This is an example widget.")
   }
 }
+
+
 
 struct RemindMeWidget_Previews: PreviewProvider {
   static var previews: some View {

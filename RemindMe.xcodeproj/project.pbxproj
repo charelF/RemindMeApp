@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A21D6E572926C71C00A7BA31 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21D6E562926C71C00A7BA31 /* Priority.swift */; };
 		A21D6E582926C71C00A7BA31 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21D6E562926C71C00A7BA31 /* Priority.swift */; };
+		A247A6DE298531FD003DCBE2 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A247A6DD298531FD003DCBE2 /* TestView.swift */; };
 		A24F103B297D814400004332 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F103A297D814400004332 /* Theme.swift */; };
 		A24F103C297D814400004332 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F103A297D814400004332 /* Theme.swift */; };
 		A24F1074297DAB4F00004332 /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A65269436DF005DF8C3 /* WidgetView.swift */; };
@@ -64,6 +65,7 @@
 
 /* Begin PBXFileReference section */
 		A21D6E562926C71C00A7BA31 /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
+		A247A6DD298531FD003DCBE2 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		A24F103A297D814400004332 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		A27B041A27540F99009B5AED /* RemindMeWidgetExtension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = RemindMeWidgetExtension.entitlements; path = RemindMeWidget/RemindMeWidgetExtension.entitlements; sourceTree = SOURCE_ROOT; };
 		A2957A43268EF2C7005DF8C3 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				A2957A47268EF739005DF8C3 /* SettingsView.swift */,
 				A2C87106274A8F1B000027A5 /* OneNoteView.swift */,
 				A2957A45268EF638005DF8C3 /* NotesView.swift */,
+				A247A6DD298531FD003DCBE2 /* TestView.swift */,
 				A2B365A4268C4BC100284561 /* Info.plist */,
 				A2957A722694E6CB005DF8C3 /* RemindMe.entitlements */,
 				A2B3659C268C4BC100284561 /* Preview Content */,
@@ -306,6 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A247A6DE298531FD003DCBE2 /* TestView.swift in Sources */,
 				A2957A48268EF739005DF8C3 /* SettingsView.swift in Sources */,
 				A2A15B1D270CA2DA002FB8D3 /* Colors.swift in Sources */,
 				A2B365A0268C4BC100284561 /* Persistence.swift in Sources */,
