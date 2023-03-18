@@ -9,9 +9,8 @@
 /* Begin PBXBuildFile section */
 		A21D6E572926C71C00A7BA31 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21D6E562926C71C00A7BA31 /* Priority.swift */; };
 		A21D6E582926C71C00A7BA31 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21D6E562926C71C00A7BA31 /* Priority.swift */; };
+		A23268B129BA7A3A0056DAC4 /* CustomNotesViewBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23268B029BA7A3A0056DAC4 /* CustomNotesViewBackup.swift */; };
 		A247A6DE298531FD003DCBE2 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A247A6DD298531FD003DCBE2 /* TestView.swift */; };
-		A24F103B297D814400004332 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F103A297D814400004332 /* Theme.swift */; };
-		A24F103C297D814400004332 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F103A297D814400004332 /* Theme.swift */; };
 		A24F1074297DAB4F00004332 /* WidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A65269436DF005DF8C3 /* WidgetView.swift */; };
 		A2957A44268EF2C7005DF8C3 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A43268EF2C7005DF8C3 /* Note.swift */; };
 		A2957A46268EF638005DF8C3 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A45268EF638005DF8C3 /* NotesView.swift */; };
@@ -20,8 +19,6 @@
 		A2957A522693A52F005DF8C3 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2957A512693A52F005DF8C3 /* WidgetKit.framework */; };
 		A2957A542693A52F005DF8C3 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2957A532693A52F005DF8C3 /* SwiftUI.framework */; };
 		A2957A572693A52F005DF8C3 /* RemindMeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A562693A52F005DF8C3 /* RemindMeWidget.swift */; };
-		A2957A5C2693A533005DF8C3 /* RemindMeWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A2957A582693A52F005DF8C3 /* RemindMeWidget.intentdefinition */; };
-		A2957A5D2693A533005DF8C3 /* RemindMeWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A2957A582693A52F005DF8C3 /* RemindMeWidget.intentdefinition */; };
 		A2957A602693A533005DF8C3 /* RemindMeWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A2957A4F2693A52F005DF8C3 /* RemindMeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A2957A6726943F5C005DF8C3 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2957A43268EF2C7005DF8C3 /* Note.swift */; };
 		A2957A6A26943FEB005DF8C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2B3659A268C4BC100284561 /* Assets.xcassets */; };
@@ -65,8 +62,8 @@
 
 /* Begin PBXFileReference section */
 		A21D6E562926C71C00A7BA31 /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
+		A23268B029BA7A3A0056DAC4 /* CustomNotesViewBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotesViewBackup.swift; sourceTree = "<group>"; };
 		A247A6DD298531FD003DCBE2 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
-		A24F103A297D814400004332 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		A27B041A27540F99009B5AED /* RemindMeWidgetExtension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = RemindMeWidgetExtension.entitlements; path = RemindMeWidget/RemindMeWidgetExtension.entitlements; sourceTree = SOURCE_ROOT; };
 		A2957A43268EF2C7005DF8C3 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		A2957A45268EF638005DF8C3 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
@@ -76,7 +73,6 @@
 		A2957A512693A52F005DF8C3 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		A2957A532693A52F005DF8C3 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		A2957A562693A52F005DF8C3 /* RemindMeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindMeWidget.swift; sourceTree = "<group>"; };
-		A2957A582693A52F005DF8C3 /* RemindMeWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = RemindMeWidget.intentdefinition; sourceTree = "<group>"; };
 		A2957A5B2693A533005DF8C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2957A65269436DF005DF8C3 /* WidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetView.swift; sourceTree = "<group>"; };
 		A2957A722694E6CB005DF8C3 /* RemindMe.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = RemindMe.entitlements; path = RemindMe/RemindMe.entitlements; sourceTree = SOURCE_ROOT; };
@@ -117,7 +113,6 @@
 			children = (
 				A2B3659F268C4BC100284561 /* Persistence.swift */,
 				A2A15B1C270CA2DA002FB8D3 /* Colors.swift */,
-				A24F103A297D814400004332 /* Theme.swift */,
 				A2957A43268EF2C7005DF8C3 /* Note.swift */,
 				A21D6E562926C71C00A7BA31 /* Priority.swift */,
 				A2957A492692ECB9005DF8C3 /* Config.swift */,
@@ -142,7 +137,6 @@
 				A27B041A27540F99009B5AED /* RemindMeWidgetExtension.entitlements */,
 				A2957A65269436DF005DF8C3 /* WidgetView.swift */,
 				A2957A562693A52F005DF8C3 /* RemindMeWidget.swift */,
-				A2957A582693A52F005DF8C3 /* RemindMeWidget.intentdefinition */,
 				A2957A5B2693A533005DF8C3 /* Info.plist */,
 			);
 			path = RemindMeWidget;
@@ -176,6 +170,7 @@
 				A2957A47268EF739005DF8C3 /* SettingsView.swift */,
 				A2C87106274A8F1B000027A5 /* OneNoteView.swift */,
 				A2957A45268EF638005DF8C3 /* NotesView.swift */,
+				A23268B029BA7A3A0056DAC4 /* CustomNotesViewBackup.swift */,
 				A247A6DD298531FD003DCBE2 /* TestView.swift */,
 				A2B365A4268C4BC100284561 /* Info.plist */,
 				A2957A722694E6CB005DF8C3 /* RemindMe.entitlements */,
@@ -295,11 +290,9 @@
 				A2957A6726943F5C005DF8C3 /* Note.swift in Sources */,
 				A2A15B1E270CA436002FB8D3 /* Colors.swift in Sources */,
 				A2957A702694401E005DF8C3 /* Config.swift in Sources */,
-				A2957A5C2693A533005DF8C3 /* RemindMeWidget.intentdefinition in Sources */,
 				A24F1074297DAB4F00004332 /* WidgetView.swift in Sources */,
 				A2957A572693A52F005DF8C3 /* RemindMeWidget.swift in Sources */,
 				A2957A6B26943FF1005DF8C3 /* RemindMe.xcdatamodeld in Sources */,
-				A24F103C297D814400004332 /* Theme.swift in Sources */,
 				A2957A6F2694401A005DF8C3 /* Persistence.swift in Sources */,
 				A21D6E582926C71C00A7BA31 /* Priority.swift in Sources */,
 			);
@@ -316,12 +309,11 @@
 				A2957A4A2692ECB9005DF8C3 /* Config.swift in Sources */,
 				A2B365A3268C4BC100284561 /* RemindMe.xcdatamodeld in Sources */,
 				A2957A46268EF638005DF8C3 /* NotesView.swift in Sources */,
-				A24F103B297D814400004332 /* Theme.swift in Sources */,
 				A2C87107274A8F1B000027A5 /* OneNoteView.swift in Sources */,
 				A2B36599268C4BBF00284561 /* ContentView.swift in Sources */,
 				A2957A44268EF2C7005DF8C3 /* Note.swift in Sources */,
 				A21D6E572926C71C00A7BA31 /* Priority.swift in Sources */,
-				A2957A5D2693A533005DF8C3 /* RemindMeWidget.intentdefinition in Sources */,
+				A23268B129BA7A3A0056DAC4 /* CustomNotesViewBackup.swift in Sources */,
 				A2B36597268C4BBF00284561 /* RemindMeApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,7 +11,7 @@ import SwiftUI
 enum ColorTheme: String, CaseIterable {
   case defaultcolor = "Default"
   case retro = "Retro"
-  case monotone = "Monotone"
+  case monotone = "Bold"
   
   func getColors() -> Colors {
     switch self {
@@ -32,7 +32,19 @@ enum ColorTheme: String, CaseIterable {
         fallthrough
       }
     case .monotone:
-      return Colors(lowPrimary: Color.black, mediumPrimary: Color.black, highPrimary: Color.black, customPrimary: Color.black, lowSecondary: Color.black, mediumSecondary: Color.black, highSecondary: Color.black, customSecondary: Color.black, lowBackground: Color.clear, mediumBackground: Color.clear, highBackground: Color.clear, customBackground: Color.clear)
+      return Colors(
+        lowPrimary: Color.black,
+        mediumPrimary: Color.black,
+        highPrimary: Color.black,
+        customPrimary: Color.black,
+        lowSecondary: Color.gray,
+        mediumSecondary: Color.gray,
+        highSecondary: Color.gray,
+        customSecondary: Color.gray,
+        lowBackground: Color(UIColor(hex: "#8ac926ff")!),
+        mediumBackground: Color(UIColor(hex: "#ffca3aff")!),
+        highBackground: Color(UIColor(hex: "#ff595eff")!),
+        customBackground: Color(UIColor(hex: "#2dc7ffff")!))
     default:
       return Colors()
     }
@@ -100,10 +112,10 @@ extension Colors {
     self.mediumSecondary = mediumPrimary.opacity(0.5)
     self.highSecondary = highPrimary.opacity(0.5)
     self.customSecondary = customPrimary.opacity(0.5)
-    self.lowBackground = lowPrimary.opacity(0.2)
-    self.mediumBackground = mediumPrimary.opacity(0.2)
-    self.highBackground = highPrimary.opacity(0.2)
-    self.customBackground = customPrimary.opacity(0.2)
+    self.lowBackground = lowPrimary.opacity(0.1)
+    self.mediumBackground = mediumPrimary.opacity(0.1)
+    self.highBackground = highPrimary.opacity(0.1)
+    self.customBackground = customPrimary.opacity(0.1)
   }
   
   init() {
@@ -114,6 +126,35 @@ extension Colors {
       customPrimary: Color.blue
     )
   }
+}
+
+
+extension UIColor {
+    public convenience init?(hex: String) {
+        let r, g, b, a: CGFloat
+
+        if hex.hasPrefix("#") {
+            let start = hex.index(hex.startIndex, offsetBy: 1)
+            let hexColor = String(hex[start...])
+
+            if hexColor.count == 8 {
+                let scanner = Scanner(string: hexColor)
+                var hexNumber: UInt64 = 0
+
+                if scanner.scanHexInt64(&hexNumber) {
+                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                    a = CGFloat(hexNumber & 0x000000ff) / 255
+
+                    self.init(red: r, green: g, blue: b, alpha: a)
+                    return
+                }
+            }
+        }
+
+        return nil
+    }
 }
 
 

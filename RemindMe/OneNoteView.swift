@@ -20,6 +20,7 @@ struct OneNoteView: View {
     VStack(alignment: .leading) {
       HStack {
         Text("\(note.content ?? "")")
+          .fontWeight(.medium)
           .padding(.vertical, 0.2)
           .fixedSize(horizontal: false, vertical: true)
         Spacer()
