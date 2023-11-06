@@ -33,10 +33,15 @@ struct SettingsView: View {
           Toggle(isOn: $config.showCreationTime) {
             Text("Show date")
           }
-          Button("Reload Widget") {
-            print("calling widgetcenter")
+        }
+        
+        Section(header: Text("DEBUG")) {
+          Button("Widget reloadAllTimelines") {
             WidgetCenter.shared.reloadAllTimelines()
             WidgetCenter.shared.getCurrentConfigurations({result in print(result)})
+          }
+          withUnsafePointer(to: config) { address in
+            Text(String(describing: address))
           }
         }
       }

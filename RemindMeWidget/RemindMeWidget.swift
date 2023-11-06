@@ -68,9 +68,11 @@ struct MyWidgetEntry: TimelineEntry {
 @main
 struct MyWidget: Widget {
     let kind: String = "RemindMeWidget"
+  @ObservedObject var config = Config.shared
+  
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: MyWidgetProvider()) { entry in
-          WidgetView(entry: entry)
+          WidgetView(entry: entry, config: config)
         }
         .configurationDisplayName("RemindMe Widget")
         .description("Your most important reminders at a glance.")
@@ -83,5 +85,6 @@ struct MyWidget: Widget {
           .accessoryRectangular,
           .accessoryInline,
       ])
+        .contentMarginsDisabled()
     }
 }

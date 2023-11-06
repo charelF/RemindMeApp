@@ -105,8 +105,8 @@ class Config: ObservableObject {
         
         // on first launch, we write default config to user defaults
         // on subsequent launches, we overwrite default config from user defaults
-        if !UserDefaults.standard.bool(forKey: "launchedBefore") {
-            UserDefaults.standard.set(true, forKey: "launchedBefore")
+        if !UserDefaults.appGroup.bool(forKey: "launchedBefore") {
+            UserDefaults.appGroup.set(true, forKey: "launchedBefore")
             self.save()
         } else {
             self.load()
@@ -115,26 +115,26 @@ class Config: ObservableObject {
     
     func save() {
         // saves the current state of the config object in userdefaults
-        UserDefaults.standard.set(priorityDates, forKey: "priorityDates")
+        UserDefaults.appGroup.set(priorityDates, forKey: "priorityDates")
         
         let stringPriorityIntervals: [String] = priorityIntervals.map { $0.rawValue }
-        UserDefaults.standard.set(stringPriorityIntervals, forKey: "priorityIntervals")
+        UserDefaults.appGroup.set(stringPriorityIntervals, forKey: "priorityIntervals")
         
-        UserDefaults.standard.set(showNotificationTime, forKey: "showNotificationTime")
-        UserDefaults.standard.set(showCreationTime, forKey: "showCreationTime")
-        UserDefaults.standard.set(colorTheme.rawValue, forKey: "colorTheme")
+        UserDefaults.appGroup.set(showNotificationTime, forKey: "showNotificationTime")
+        UserDefaults.appGroup.set(showCreationTime, forKey: "showCreationTime")
+        UserDefaults.appGroup.set(colorTheme.rawValue, forKey: "colorTheme")
     }
     
     func load() {
         
         // then we load the saved settings from userdefaults
-        if let priorityDatesAnyOpt = UserDefaults.standard.array(forKey: "priorityDates") {
+        if let priorityDatesAnyOpt = UserDefaults.appGroup.array(forKey: "priorityDates") {
             if let priorityDatesAny = priorityDatesAnyOpt as? [Date] {
                 self.priorityDates = priorityDatesAny
             }
         }
         
-        if let priorityIntervalsAnyOpt = UserDefaults.standard.array(forKey: "priorityIntervals") {
+        if let priorityIntervalsAnyOpt = UserDefaults.appGroup.array(forKey: "priorityIntervals") {
             if let priorityIntervalsAny = priorityIntervalsAnyOpt as? [String] {
                 self.priorityIntervals = priorityIntervalsAny.map { Interval(rawValue: $0) ?? .day }
             }
@@ -163,10 +163,10 @@ class Config: ObservableObject {
             }
         }
         
-        self.showNotificationTime = UserDefaults.standard.bool(forKey: "showNotificationTime")
-        self.showCreationTime = UserDefaults.standard.bool(forKey: "showCreationTime")
+        self.showNotificationTime = UserDefaults.appGroup.bool(forKey: "showNotificationTime")
+        self.showCreationTime = UserDefaults.appGroup.bool(forKey: "showCreationTime")
         
-        if let colorThemeString = UserDefaults.standard.string(forKey: "colorTheme") {
+        if let colorThemeString = UserDefaults.appGroup.string(forKey: "colorTheme") {
             if let colorTheme = ColorTheme(rawValue: colorThemeString) {
                 self.colorTheme = colorTheme
             } else {
